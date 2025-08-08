@@ -5,9 +5,13 @@
 - **Dark spooky theme** with moving starry background and white/black/red color scheme
 - **Moving star system** with 75 twinkling stars and horizontal scrolling animation
 - **Gothic brick design** with spooky gradient progression (white → gray → red)
-- **Spooky sound system** with Web Audio API-generated atmospheric effects
-- **Three sound effects**: Dull thump (brick hit), glass shattering (brick break), violin screech (life lost)
+- **Hybrid audio system** combining external MP3 files with Web Audio API effects
+- **Background ambient music** with looping atmospheric sound (assets/audio/background.mp3)
+- **Dramatic end game sound** for frightening game over effect (assets/audio/endgame.mp3)
+- **Spooky game over image** that replaces entire canvas with face.png on game over
+- **Three programmatic sound effects**: Dull thump (brick hit), glass shattering (brick break), violin screech (life lost)
 - **Sound controls** with toggle button (🔊/🔇) and M key shortcut
+- **Image preloading system** with error handling and state management
 - **AI assistance system** with 3 levels of help (none, subtle, active)
 - **Performance tracking** monitoring player accuracy and struggle indicators
 - **Physics assistance** with subtle ball magnetism for struggling players
@@ -44,17 +48,18 @@
 - Leaderboard system with localStorage
 
 ## Current Status
-**✅ PROJECT COMPLETE, FUNCTIONAL, AND DEPLOYED WITH SPOOKY SOUND SYSTEM (v1.2.0)**
-- Game runs smoothly at 60fps with moving starry background and atmospheric sound effects
+**✅ PROJECT COMPLETE, FUNCTIONAL, AND DEPLOYED WITH HYBRID HORROR SYSTEM (v1.3.0)**
+- Game runs smoothly at 60fps with moving starry background, atmospheric audio, and visual effects
 - Dark spooky theme with white/black/red color scheme fully implemented
-- Spooky sound system with Web Audio API-generated effects enhances immersion
+- Hybrid audio system combining external MP3 files with programmatic sound effects
+- Spooky game over image creates dramatic visual shock when losing
 - AI assistance provides meaningful help without being obvious
-- Visual and audio effects create cohesive atmospheric gameplay experience
-- All technical constraints met (single file, no dependencies, offline)
+- Complete sensory horror experience with coordinated audio and visual elements
+- Multi-file architecture with organized asset management (HTML + assets folder)
 - Layout optimized with 9 brick columns and 8px ball radius
 - **Git repository established**: https://github.com/rokaN8/AITIaan.git
 - **Version control active**: Comprehensive commit history and upstream tracking
-- **Professional versioning**: Semantic versioning (v1.2.0) with changelog and documentation
+- **Professional versioning**: Semantic versioning (v1.3.0) with changelog and documentation
 - **Version tracking**: In-game version display and console logging
 - **Git workflow**: Conventional commits with version references established
 - **Ready for distribution and further development**
@@ -134,7 +139,7 @@
    - Performance-optimized star system maintaining 60fps
    - Comprehensive documentation updates across all files
 
-8. **✅ Spooky Sound System Implementation** (Latest milestone - v1.2.0)
+8. **✅ Spooky Sound System Implementation** (v1.2.0)
    - Web Audio API-based sound manager with programmatic sound generation
    - Three atmospheric sound effects: dull thump, glass shattering, violin screech
    - Sound toggle controls with button (🔊/🔇) and M key shortcut
@@ -142,6 +147,16 @@
    - Efficient audio synthesis without external dependencies
    - Graceful fallback for browsers without Web Audio API support
    - Performance optimization maintaining 60fps with audio processing
+
+9. **✅ Hybrid Audio & Visual Horror System** (Latest milestone - v1.3.0)
+   - External MP3 audio files for rich atmospheric experience
+   - Background ambient music (assets/audio/background.mp3) with looping and volume control
+   - Dramatic end game sound (assets/audio/endgame.mp3) for frightening climax
+   - Spooky game over image (assets/sprites/face.png) replacing entire canvas
+   - Image preloading system with error handling and state management
+   - Multi-file architecture transition while maintaining core functionality
+   - Audio timing coordination (music starts on ball launch, stops on game over)
+   - Complete sensory horror experience combining audio and visual shock elements
 
 ## Upcoming Milestones
 **No upcoming milestones** - Project is complete, deployed, and meets all requirements.

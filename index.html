@@ -99,9 +99,17 @@
         <button onclick="restartGame()">Play Again</button>
     </div>
 
+    <!-- Audio Elements -->
+    <audio id="backgroundMusic" preload="auto" loop>
+        <source src="assets/audio/background.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="endGameSound" preload="auto">
+        <source src="assets/audio/endgame.mp3" type="audio/mpeg">
+    </audio>
+
     <script>
         // Version tracking
-        const GAME_VERSION = '1.2.0';
+        const GAME_VERSION = '1.3.0';
         
         // Game canvas and context
         const canvas = document.getElementById('gameCanvas');
@@ -307,6 +315,13 @@
         // Sound System
         let audioContext = null;
         let soundEnabled = true;
+        let backgroundMusic = null;
+        let endGameSound = null;
+        let musicStarted = false;
+        
+        // Game over image
+        let gameOverImage = null;
+        let imageLoaded = false;
         
         const soundManager = {
             init() {
@@ -315,6 +330,57 @@
                 } catch (e) {
                     console.warn('Web Audio API not supported');
                     soundEnabled = false;
+                }
+                
+                // Initialize HTML5 audio elements
+                backgroundMusic = document.getElementById('backgroundMusic');
+                endGameSound = document.getElementById('endGameSound');
+                
+                // Set volume levels
+                if (backgroundMusic) {
+                    backgroundMusic.volume = 0.3; // Lower volume for ambiance
+                }
+                if (endGameSound) {
+                    endGameSound.volume = 0.7; // Higher volume for dramatic effect
+                }
+            },
+            
+            startBackgroundMusic() {
+                if (!soundEnabled || !backgroundMusic || musicStarted) return;
+                
+                try {
+                    backgroundMusic.currentTime = 0;
+                    backgroundMusic.play().catch(e => {
+                        console.warn('Background music failed to play:', e);
+                    });
+                    musicStarted = true;
+                } catch (e) {
+                    console.warn('Background music error:', e);
+                }
+            },
+            
+            stopBackgroundMusic() {
+                if (!backgroundMusic) return;
+                
+                try {
+                    backgroundMusic.pause();
+                    backgroundMusic.currentTime = 0;
+                    musicStarted = false;
+                } catch (e) {
+                    console.warn('Background music stop error:', e);
+                }
+            },
+            
+            playEndGameSound() {
+                if (!soundEnabled || !endGameSound) return;
+                
+                try {
+                    endGameSound.currentTime = 0;
+                    endGameSound.play().catch(e => {
+                        console.warn('End game sound failed to play:', e);
+                    });
+                } catch (e) {
+                    console.warn('End game sound error:', e);
                 }
             },
             
@@ -412,6 +478,17 @@
             
             toggleSound() {
                 soundEnabled = !soundEnabled;
+                
+                // Handle background music based on sound state
+                if (!soundEnabled) {
+                    this.stopBackgroundMusic();
+                } else if (gameState === 'playing' || gameState === 'waiting') {
+                    // Only restart music if we're in an active game state
+                    if (gameState === 'playing') {
+                        this.startBackgroundMusic();
+                    }
+                }
+                
                 return soundEnabled;
             }
         };
@@ -517,6 +594,18 @@
             // Initialize sound system
             soundManager.init();
             
+            // Load game over image
+            gameOverImage = new Image();
+            gameOverImage.onload = function() {
+                imageLoaded = true;
+                console.log('Game over image loaded successfully');
+            };
+            gameOverImage.onerror = function() {
+                console.warn('Failed to load game over image');
+                imageLoaded = false;
+            };
+            gameOverImage.src = 'assets/sprites/face.png';
+            
             // Initialize star field
             initStars();
             
@@ -569,6 +658,9 @@
                 ball.vx = (Math.random() - 0.5) * 4;
                 ball.vy = -ball.speed;
                 gameState = 'playing';
+                
+                // Start background music when gameplay begins
+                soundManager.startBackgroundMusic();
             }
         }
         
@@ -765,6 +857,11 @@
         // Game over
         function gameOver() {
             gameState = 'gameOver';
+            
+            // Stop background music and play dramatic end game sound
+            soundManager.stopBackgroundMusic();
+            soundManager.playEndGameSound();
+            
             document.getElementById('finalScore').textContent = score;
             document.getElementById('gameOverScreen').style.display = 'block';
         }
@@ -1009,6 +1106,14 @@
             
             ctx.fillStyle = '#000';
             ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+            
+            // If game over, show spooky face image instead of normal game
+            if (gameState === 'gameOver' && imageLoaded && gameOverImage) {
+                // Draw the face image to fill the entire canvas
+                ctx.drawImage(gameOverImage, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+                ctx.restore();
+                return; // Don't draw normal game elements
+            }
             
             // Draw stars behind everything
             drawStars();

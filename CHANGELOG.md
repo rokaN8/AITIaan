@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.0] - 2025-08-08
+
+### Added
+- **Hybrid audio system** combining external MP3 files with Web Audio API programmatic sounds
+- **Background ambient music** from `assets/audio/background.mp3` with looping and volume control (0.3)
+- **Dramatic end game sound** from `assets/audio/endgame.mp3` for frightening climax (0.7 volume)
+- **Spooky game over image** from `assets/sprites/face.png` that replaces entire canvas on game over
+- **Image preloading system** with proper error handling and loading state management
+- **Multi-file architecture** with organized asset folder structure (HTML + assets)
+- **Audio timing coordination** - background music starts on ball launch, stops on game over
+
+### Changed
+- **Architecture transition** from single-file to multi-file distribution with asset dependencies
+- **Game over experience** now features dramatic visual shock with full-canvas face image
+- **Audio experience** enhanced with rich external audio files alongside existing sound effects
+- **Distribution method** now requires HTML file + assets folder for complete experience
+
+### Technical Details
+- **HTML5 Audio API integration** for external MP3 file playback with volume control
+- **Image loading management** with preload, error handling, and state tracking
+- **Canvas rendering enhancement** for full-screen image display during game over
+- **Asset organization** with logical folder structure for audio and sprite files
+- **Performance maintained** - 60fps gameplay preserved with additional audio and image processing
+
 ## [1.2.0] - 2025-08-08
 
 ### Added
@@ -107,6 +131,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Version History
 
+- **1.3.0** (2025-08-08): Hybrid audio & visual horror system with external assets
 - **1.2.0** (2025-08-08): Spooky sound system with atmospheric effects
 - **1.1.0** (2025-08-08): Dark spooky theme with moving starry background
 - **1.0.0** (2025-01-08): Initial release with complete game and AI system

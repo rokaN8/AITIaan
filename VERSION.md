@@ -1,7 +1,7 @@
 # Version Management
 
 ## Current Version
-**1.2.0** - Spooky sound system with atmospheric effects
+**1.3.0** - Hybrid audio & visual horror system with external assets
 
 ## Versioning Strategy
 
@@ -91,6 +91,16 @@ style(v1.0.3): improve visual effects and animations
 7. **Push to repository**
 
 ## Version History
+
+- **1.3.0** (2025-08-08): Hybrid audio & visual horror system with external assets
+  - External MP3 audio files for rich atmospheric experience
+  - Background ambient music (assets/audio/background.mp3) with looping and volume control
+  - Dramatic end game sound (assets/audio/endgame.mp3) for frightening climax
+  - Spooky game over image (assets/sprites/face.png) replacing entire canvas
+  - Image preloading system with error handling and state management
+  - Multi-file architecture transition while maintaining core functionality
+  - Audio timing coordination (music starts on ball launch, stops on game over)
+  - Complete sensory horror experience combining audio and visual shock elements
 
 - **1.2.0** (2025-08-08): Spooky sound system with atmospheric effects
   - Web Audio API-based sound manager with programmatic sound generation
