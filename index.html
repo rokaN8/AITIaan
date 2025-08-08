@@ -239,10 +239,13 @@
     <audio id="explosionSound" preload="auto">
         <source src="assets/audio/explosion.mp3" type="audio/mpeg">
     </audio>
+    <audio id="ghostSound" preload="auto">
+        <source src="assets/audio/ghostsound.mp3" type="audio/mpeg">
+    </audio>
 
     <script>
         // Version tracking
-        const GAME_VERSION = '1.11.0';
+        const GAME_VERSION = '1.12.0';
         
         // Game canvas and context
         const canvas = document.getElementById('gameCanvas');
@@ -455,6 +458,7 @@
         let backgroundMusic = null;
         let endGameSound = null;
         let explosionSound = null;
+        let ghostSound = null;
         let musicStarted = false;
         
         // Game over image
@@ -464,6 +468,16 @@
         // Background image
         let backgroundImage = null;
         let backgroundImageLoaded = false;
+        
+        // Ghost sprite system
+        let ghostImage = null;
+        let ghostImageLoaded = false;
+        const floatingGhosts = [];
+        let lastGhostSpawn = 0;
+        let lastGhostSound = 0;
+        const GHOST_SPAWN_INTERVAL = 8000; // 8 seconds between ghost spawns
+        const GHOST_SOUND_INTERVAL = 25000; // 25+ seconds between ghost sounds
+        const MAX_GHOSTS = 8; // Maximum number of floating ghosts
         
         // Leaderboard System
         const LEADERBOARD_KEY = 'spookyBreakoutLeaderboard';
@@ -486,6 +500,7 @@
                 backgroundMusic = document.getElementById('backgroundMusic');
                 endGameSound = document.getElementById('endGameSound');
                 explosionSound = document.getElementById('explosionSound');
+                ghostSound = document.getElementById('ghostSound');
                 
                 // Set volume levels
                 if (backgroundMusic) {
@@ -496,6 +511,9 @@
                 }
                 if (explosionSound) {
                     explosionSound.volume = 0.8; // High volume for explosion impact
+                }
+                if (ghostSound) {
+                    ghostSound.volume = 0.15; // Half the volume of background music
                 }
             },
             
@@ -640,6 +658,19 @@
                     });
                 } catch (e) {
                     console.warn('Explosion sound error:', e);
+                }
+            },
+            
+            playGhostSound() {
+                if (!soundEnabled || !ghostSound) return;
+                
+                try {
+                    ghostSound.currentTime = 0;
+                    ghostSound.play().catch(e => {
+                        console.warn('Ghost sound failed to play:', e);
+                    });
+                } catch (e) {
+                    console.warn('Ghost sound error:', e);
                 }
             },
             
@@ -922,6 +953,18 @@
                 backgroundImageLoaded = false;
             };
             backgroundImage.src = 'assets/sprites/backgroundImage.jpg';
+            
+            // Load ghost sprite
+            ghostImage = new Image();
+            ghostImage.onload = function() {
+                ghostImageLoaded = true;
+                console.log('Ghost sprite loaded successfully');
+            };
+            ghostImage.onerror = function() {
+                console.warn('Failed to load ghost sprite');
+                ghostImageLoaded = false;
+            };
+            ghostImage.src = 'assets/sprites/ghost.png';
             
             // Initialize leaderboard
             loadLeaderboard();
@@ -1787,6 +1830,180 @@
             }
         }
         
+        // Floating Ghost System Functions
+        function spawnFloatingGhost() {
+            if (!ghostImageLoaded || floatingGhosts.length >= MAX_GHOSTS) return;
+            
+            const now = Date.now();
+            if (now - lastGhostSpawn < GHOST_SPAWN_INTERVAL) return;
+            
+            // Get full page dimensions
+            const pageWidth = window.innerWidth;
+            const pageHeight = window.innerHeight;
+            
+            // Spawn ghost at random edge of full page
+            const spawnSide = Math.floor(Math.random() * 4); // 0=top, 1=right, 2=bottom, 3=left
+            let x, y, vx, vy;
+            
+            switch(spawnSide) {
+                case 0: // Top
+                    x = Math.random() * pageWidth;
+                    y = -50;
+                    vx = (Math.random() - 0.5) * 2;
+                    vy = Math.random() * 1 + 0.5;
+                    break;
+                case 1: // Right
+                    x = pageWidth + 50;
+                    y = Math.random() * pageHeight;
+                    vx = -(Math.random() * 1 + 0.5);
+                    vy = (Math.random() - 0.5) * 2;
+                    break;
+                case 2: // Bottom
+                    x = Math.random() * pageWidth;
+                    y = pageHeight + 50;
+                    vx = (Math.random() - 0.5) * 2;
+                    vy = -(Math.random() * 1 + 0.5);
+                    break;
+                case 3: // Left
+                    x = -50;
+                    y = Math.random() * pageHeight;
+                    vx = Math.random() * 1 + 0.5;
+                    vy = (Math.random() - 0.5) * 2;
+                    break;
+            }
+            
+            floatingGhosts.push({
+                x: x,
+                y: y,
+                vx: vx,
+                vy: vy,
+                size: Math.random() * 60 + 80, // 80-140 pixels
+                opacity: Math.random() * 0.4 + 0.3, // 0.3-0.7 opacity
+                floatPhase: Math.random() * Math.PI * 2,
+                floatSpeed: Math.random() * 0.02 + 0.01,
+                lifetime: 0,
+                maxLifetime: Math.random() * 20000 + 15000, // 15-35 seconds
+                pageX: x, // Track page coordinates
+                pageY: y
+            });
+            
+            lastGhostSpawn = now;
+        }
+        
+        function updateFloatingGhosts() {
+            const now = Date.now();
+            const pageWidth = window.innerWidth;
+            const pageHeight = window.innerHeight;
+            
+            // Update existing ghosts
+            for (let i = floatingGhosts.length - 1; i >= 0; i--) {
+                const ghost = floatingGhosts[i];
+                
+                // Update position
+                ghost.x += ghost.vx;
+                ghost.y += ghost.vy;
+                
+                // Update floating animation
+                ghost.floatPhase += ghost.floatSpeed;
+                ghost.lifetime += 16; // Assuming 60fps
+                
+                // Add some random drift to movement
+                ghost.vx += (Math.random() - 0.5) * 0.1;
+                ghost.vy += (Math.random() - 0.5) * 0.1;
+                
+                // Limit velocity
+                const maxSpeed = 2;
+                const speed = Math.sqrt(ghost.vx * ghost.vx + ghost.vy * ghost.vy);
+                if (speed > maxSpeed) {
+                    ghost.vx = (ghost.vx / speed) * maxSpeed;
+                    ghost.vy = (ghost.vy / speed) * maxSpeed;
+                }
+                
+                // Remove ghost if it's been alive too long or moved too far off full page
+                if (ghost.lifetime > ghost.maxLifetime || 
+                    ghost.x < -200 || ghost.x > pageWidth + 200 ||
+                    ghost.y < -200 || ghost.y > pageHeight + 200) {
+                    floatingGhosts.splice(i, 1);
+                }
+            }
+            
+            // Spawn new ghosts
+            spawnFloatingGhost();
+            
+            // Play ghost sound randomly
+            if (now - lastGhostSound > GHOST_SOUND_INTERVAL) {
+                // Add some randomness to the interval (25-35 seconds)
+                const randomInterval = GHOST_SOUND_INTERVAL + Math.random() * 10000;
+                if (now - lastGhostSound > randomInterval) {
+                    soundManager.playGhostSound();
+                    lastGhostSound = now;
+                }
+            }
+        }
+        
+        function drawFloatingGhosts() {
+            if (!ghostImageLoaded || !ghostImage) return;
+            
+            floatingGhosts.forEach(ghost => {
+                // Create or update ghost DOM element for full page coverage
+                let ghostElement = document.getElementById(`ghost-${floatingGhosts.indexOf(ghost)}`);
+                
+                if (!ghostElement) {
+                    ghostElement = document.createElement('div');
+                    ghostElement.id = `ghost-${floatingGhosts.indexOf(ghost)}`;
+                    ghostElement.style.position = 'fixed';
+                    ghostElement.style.pointerEvents = 'none';
+                    ghostElement.style.zIndex = '10';
+                    ghostElement.style.backgroundImage = `url('assets/sprites/ghost.png')`;
+                    ghostElement.style.backgroundSize = 'contain';
+                    ghostElement.style.backgroundRepeat = 'no-repeat';
+                    ghostElement.style.filter = 'drop-shadow(0 0 15px #88ccff)';
+                    document.body.appendChild(ghostElement);
+                }
+                
+                // Calculate position with floating animation
+                const floatOffset = Math.sin(ghost.floatPhase) * 5;
+                const drawX = ghost.x;
+                const drawY = ghost.y + floatOffset;
+                
+                // Calculate rotation based on movement direction
+                const angle = Math.atan2(ghost.vy, ghost.vx);
+                const rotation = (angle * 180 / Math.PI) + 90; // +90 to align head with direction
+                
+                // Determine opacity based on game area overlap
+                let opacity = ghost.opacity;
+                const canvas = document.getElementById('gameCanvas');
+                const canvasRect = canvas.getBoundingClientRect();
+                const gameAreaLeft = canvasRect.left + BRICK_OFFSET_LEFT - 20;
+                const gameAreaRight = canvasRect.left + BRICK_OFFSET_LEFT + (BRICK_COLS * (BRICK_WIDTH + BRICK_PADDING)) + 20;
+                const gameAreaTop = canvasRect.top + BRICK_OFFSET_TOP - 20;
+                const gameAreaBottom = canvasRect.top + paddle.y + paddle.height + 20;
+                
+                // If ghost overlaps with game area, reduce opacity significantly
+                if (drawX + ghost.size > gameAreaLeft && drawX < gameAreaRight &&
+                    drawY + ghost.size > gameAreaTop && drawY < gameAreaBottom) {
+                    opacity *= 0.3; // Much more transparent when behind game
+                }
+                
+                // Update ghost element styles
+                ghostElement.style.left = `${drawX}px`;
+                ghostElement.style.top = `${drawY}px`;
+                ghostElement.style.width = `${ghost.size}px`;
+                ghostElement.style.height = `${ghost.size}px`;
+                ghostElement.style.opacity = opacity;
+                ghostElement.style.transform = `rotate(${rotation}deg)`;
+            });
+            
+            // Clean up removed ghosts
+            const existingGhosts = document.querySelectorAll('[id^="ghost-"]');
+            existingGhosts.forEach(element => {
+                const index = parseInt(element.id.split('-')[1]);
+                if (index >= floatingGhosts.length) {
+                    element.remove();
+                }
+            });
+        }
+        
         // Handle input
         function handleInput() {
             if (keys.space && gameState === 'waiting') {
@@ -1805,6 +2022,7 @@
             updateSpecialBricks();
             updateScreenShake();
             updateStars();
+            updateFloatingGhosts();
             updateUI();
             
             // Create ball trail sparkles
@@ -1858,6 +2076,9 @@
             
             // Draw stars on top of background
             drawStars();
+            
+            // Draw floating ghosts (behind game elements but above background)
+            drawFloatingGhosts();
             
             // Draw ball trail sparkles first (behind everything else)
             ballTrailParticles.forEach(particle => {

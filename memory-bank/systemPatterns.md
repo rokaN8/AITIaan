@@ -260,5 +260,59 @@ Colors: ['#ffffff', '#ffdd00', '#88ccff', '#cc88ff'] (white, gold, cyan, purple)
 - **Trail particle management**: Automatic array splicing when limit exceeded
 - **Special brick state**: Proper timer reset and property initialization
 
+## Enhanced Floating Ghost System (v1.12.0)
+
+### Ghost Entity Structure
+```javascript
+const floatingGhosts = [];
+const MAX_GHOSTS = 8; // Maximum number of floating ghosts
+
+// Ghost object structure
+{
+    x: number, y: number,           // Position coordinates
+    vx: number, vy: number,         // Velocity vectors
+    size: number,                   // Ghost size (80-140 pixels)
+    opacity: number,                // Base opacity (0.3-0.7)
+    floatPhase: number,             // Floating animation phase
+    floatSpeed: number,             // Animation speed
+    lifetime: number,               // Current lifetime
+    maxLifetime: number,            // Maximum lifetime (15-35 seconds)
+    pageX: number, pageY: number    // Page coordinate tracking
+}
+```
+
+### Enhanced Ghost Features
+```
+Full Page Coverage → DOM-based Rendering → Directional Rotation → Smart Opacity
+    ↓
+Ghost Spawning: Random edges of entire browser window (window.innerWidth/Height)
+Movement Physics: Random drift + velocity limiting + floating animation
+Directional Rotation: Math.atan2(vy, vx) + 90° offset for head alignment
+Smart Opacity: Reduced transparency when overlapping game area
+```
+
+### Ghost Audio Integration
+```javascript
+// Ghost sound system
+const GHOST_SOUND_INTERVAL = 25000; // 25+ seconds between sounds
+ghostSound.volume = 0.15; // Half the volume of background music
+
+// Random ghost sound timing
+if (now - lastGhostSound > randomInterval) {
+    soundManager.playGhostSound();
+    lastGhostSound = now;
+}
+```
+
+### Performance Optimization
+```
+DOM Element Management → CSS Positioning → Efficient Cleanup → Performance Monitoring
+    ↓
+- Fixed positioning for full page coverage
+- CSS transforms for rotation and positioning
+- Automatic cleanup of expired ghost elements
+- Maximum 8 simultaneous ghosts for optimal performance
+```
+
 ---
 *This architecture successfully balances performance, maintainability, and feature richness while maintaining the constraint of a single HTML file.*

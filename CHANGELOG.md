@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.12.0] - 2025-08-08
+
+### Added
+- **Enhanced floating ghost system** with dramatically improved atmospheric presence
+- **Doubled ghost size** from 40-70 pixels to 80-140 pixels for much greater visibility
+- **Increased ghost population** from 4 to 8 maximum simultaneous ghosts for enhanced spooky atmosphere
+- **Full webpage coverage** - ghosts now float across entire browser window, not just game canvas
+- **Directional rotation system** - ghost sprites rotate to face their movement direction using Math.atan2 calculations
+- **Smart opacity management** - ghosts become transparent when overlapping game area to avoid obscuring gameplay
+- **Ghost audio integration** - random ghost sounds every 25+ seconds at half background music volume
+- **DOM-based rendering** - efficient CSS positioning and transforms for full-page ghost coverage
+
+### Changed
+- **Ghost spawning system** - now uses full browser window dimensions (window.innerWidth/Height) instead of canvas-only
+- **Ghost rendering architecture** - switched from canvas rendering to DOM elements for true full-page coverage
+- **Performance optimization** - enhanced cleanup system for up to 8 simultaneous ghosts with proper DOM management
+- **Atmospheric experience** - dramatically more immersive with larger, more numerous ghosts across entire webpage
+
+### Technical Details
+- **DOM element management**: Fixed positioning with CSS transforms for rotation and positioning
+- **Full page dimensions**: Ghost spawning and movement across entire browser viewport
+- **Directional physics**: Math.atan2(vy, vx) + 90° offset for realistic head-forward movement
+- **Smart layering**: z-index management and opacity reduction when overlapping game elements
+- **Audio timing**: Random ghost sound intervals (25-35 seconds) integrated with existing sound system
+- **Performance maintained**: 60fps gameplay preserved with enhanced ghost system and cleanup
+
 ## [1.11.0] - 2025-08-08
 
 ### Added

@@ -1,19 +1,25 @@
 # Active Context
 
 ## Current Work Focus
-**Spooky Breakout v1.11.0 completed** - Background image integration, accessibility improvements, and enhanced visual experience successfully implemented. Game now features atmospheric spooky forest background with improved readability and user comfort.
+**Spooky Breakout v1.12.0 completed** - Enhanced floating ghost system successfully implemented as the final atmospheric feature. Game now features dramatically improved ghostly presence with larger, more numerous floating ghosts across the entire webpage.
 
 ## Recent Changes
+- **Enhanced floating ghost system**: Dramatically improved ghostly atmosphere with larger, more numerous floating ghosts
+- **Ghost size enhancement**: Doubled ghost size from 40-70 pixels to 80-140 pixels for much greater visibility
+- **Ghost population increase**: Increased maximum ghost count from 4 to 8 for enhanced atmospheric presence
+- **Full webpage coverage**: Ghosts now float across entire browser window, not just game canvas area
+- **Directional rotation**: Ghost sprites rotate to face their movement direction for realistic floating behavior
+- **Smart opacity system**: Ghosts become transparent when passing over game area to avoid obscuring gameplay
+- **Ghost audio integration**: Random ghost sounds every 25+ seconds at half background music volume
+- **Performance optimization**: Efficient DOM-based rendering with proper cleanup for up to 8 simultaneous ghosts
 - **Atmospheric background integration**: Added spooky forest background from deepai.org with proper attribution
 - **Ball speed accessibility**: Reduced initial ball speed by 20% (from 5 to 4 units) for improved player comfort
 - **Game scale enhancement**: Increased entire game by 10% for better readability and modern screen compatibility
 - **Canvas expansion**: Upgraded from 800x600 to 880x660 pixels with proportional element scaling
 - **UI improvements**: Font sizes increased (18px→20px main UI, 24px→26px canvas text)
 - **Leaderboard enhancement**: Width increased from 250px to 275px for better proportions
-- **Background rendering system**: Image loading with error handling and graceful fallback
-- **Attribution compliance**: Proper credit link to deepai.org in instructions area
-- **Version updates**: All files updated to v1.11.0 (VERSION.md, index.html, CHANGELOG.md)
-- **Documentation updates**: Memory bank and changelog updated to reflect new improvements
+- **Version updates**: All files updated to v1.12.0 (VERSION.md, index.html, CHANGELOG.md)
+- **Documentation updates**: Memory bank and changelog updated to reflect ghost system enhancements
 
 ## Next Steps
 **Project enhanced with atmospheric audio** - Sound system successfully integrated. Game ready for continued development:
@@ -75,7 +81,7 @@
 - **File size**: Approximately 67KB for complete game with all features
 - **Repository**: https://github.com/rokaN8/AITIaan.git (main branch)
 - **Version control**: Git tracking established with comprehensive commit history
-- **Current version**: v1.11.0 with background image, accessibility improvements, and enhanced visual experience
+- **Current version**: v1.12.0 with enhanced floating ghost system, doubled ghost size, and increased ghost population
 - **Deployment status**: Ready for Git commit and continued development
 
 ---
