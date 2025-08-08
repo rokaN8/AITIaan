@@ -1,7 +1,7 @@
 # Version Management
 
 ## Current Version
-**1.1.0** - Dark spooky theme with moving starry background
+**1.2.0** - Spooky sound system with atmospheric effects
 
 ## Versioning Strategy
 
@@ -91,6 +91,15 @@ style(v1.0.3): improve visual effects and animations
 7. **Push to repository**
 
 ## Version History
+
+- **1.2.0** (2025-08-08): Spooky sound system with atmospheric effects
+  - Web Audio API-based sound manager with programmatic sound generation
+  - Three atmospheric sound effects: dull thump (brick hit), glass shattering (brick break), violin screech (life lost)
+  - Sound toggle controls with button (🔊/🔇) and M key shortcut
+  - Background music removal per user preference (event-based sounds only)
+  - Efficient audio synthesis without external dependencies
+  - Graceful fallback for browsers without Web Audio API support
+  - Performance optimization maintaining 60fps with audio processing
 
 - **1.1.0** (2025-08-08): Dark spooky theme with moving starry background
   - Moving starry background with 75 twinkling stars

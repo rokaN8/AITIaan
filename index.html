@@ -89,7 +89,8 @@
     
     <div class="ui">
         <div>Use ← → arrow keys or mouse to control paddle</div>
-        <div>Press SPACE to launch ball</div>
+        <div>Press SPACE to launch ball • Press M to toggle sound</div>
+        <button id="soundToggle" onclick="toggleSound()">🔊 Sound: ON</button>
     </div>
     
     <div id="gameOverScreen" class="game-over">
@@ -100,7 +101,7 @@
 
     <script>
         // Version tracking
-        const GAME_VERSION = '1.1.0';
+        const GAME_VERSION = '1.2.0';
         
         // Game canvas and context
         const canvas = document.getElementById('gameCanvas');
@@ -303,6 +304,118 @@
         // Screen shake
         let screenShake = { x: 0, y: 0, intensity: 0, duration: 0 };
         
+        // Sound System
+        let audioContext = null;
+        let soundEnabled = true;
+        
+        const soundManager = {
+            init() {
+                try {
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                } catch (e) {
+                    console.warn('Web Audio API not supported');
+                    soundEnabled = false;
+                }
+            },
+            
+            playBrickHit() {
+                if (!audioContext || !soundEnabled) return;
+                
+                // Dull thump sound
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                const filter = audioContext.createBiquadFilter();
+                
+                oscillator.frequency.setValueAtTime(80, audioContext.currentTime);
+                oscillator.type = 'square';
+                
+                filter.type = 'lowpass';
+                filter.frequency.setValueAtTime(200, audioContext.currentTime);
+                
+                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+                
+                oscillator.connect(filter);
+                filter.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.start();
+                oscillator.stop(audioContext.currentTime + 0.2);
+            },
+            
+            playBrickBreak() {
+                if (!audioContext || !soundEnabled) return;
+                
+                // Glass shattering sound
+                const oscillator1 = audioContext.createOscillator();
+                const oscillator2 = audioContext.createOscillator();
+                const oscillator3 = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                const filter = audioContext.createBiquadFilter();
+                
+                // Multiple high frequencies for glass-like sound
+                oscillator1.frequency.setValueAtTime(800, audioContext.currentTime);
+                oscillator2.frequency.setValueAtTime(1200, audioContext.currentTime);
+                oscillator3.frequency.setValueAtTime(1600, audioContext.currentTime);
+                
+                oscillator1.type = 'triangle';
+                oscillator2.type = 'triangle';
+                oscillator3.type = 'triangle';
+                
+                filter.type = 'highpass';
+                filter.frequency.setValueAtTime(400, audioContext.currentTime);
+                
+                gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+                
+                oscillator1.connect(filter);
+                oscillator2.connect(filter);
+                oscillator3.connect(filter);
+                filter.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator1.start();
+                oscillator2.start();
+                oscillator3.start();
+                
+                oscillator1.stop(audioContext.currentTime + 0.3);
+                oscillator2.stop(audioContext.currentTime + 0.3);
+                oscillator3.stop(audioContext.currentTime + 0.3);
+            },
+            
+            playLifeLost() {
+                if (!audioContext || !soundEnabled) return;
+                
+                // High pitch violin screech
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                const filter = audioContext.createBiquadFilter();
+                
+                oscillator.frequency.setValueAtTime(1200, audioContext.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(2000, audioContext.currentTime + 0.5);
+                oscillator.type = 'sawtooth';
+                
+                filter.type = 'bandpass';
+                filter.frequency.setValueAtTime(1500, audioContext.currentTime);
+                filter.Q.setValueAtTime(10, audioContext.currentTime);
+                
+                gainNode.gain.setValueAtTime(0.4, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.8);
+                
+                oscillator.connect(filter);
+                filter.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.start();
+                oscillator.stop(audioContext.currentTime + 0.8);
+            },
+            
+            toggleSound() {
+                soundEnabled = !soundEnabled;
+                return soundEnabled;
+            }
+        };
+        
         // Star system for spooky background
         const stars = [];
         
@@ -365,6 +478,10 @@
                     keys.space = true;
                     e.preventDefault();
                     break;
+                case 'KeyM':
+                    toggleSound();
+                    e.preventDefault();
+                    break;
             }
         });
         
@@ -396,6 +513,9 @@
             
             // Update version display
             document.getElementById('version').textContent = GAME_VERSION;
+            
+            // Initialize sound system
+            soundManager.init();
             
             // Initialize star field
             initStars();
@@ -575,6 +695,9 @@
                             brick.visible = false;
                             score += brickTypes[brick.type].points;
                             
+                            // Play glass shattering sound for brick break
+                            soundManager.playBrickBreak();
+                            
                             // Create particles
                             createParticles(brick.x + brick.width / 2, brick.y + brick.height / 2, brickTypes[brick.type].color);
                             
@@ -585,6 +708,9 @@
                             if (shouldSpawnHelpfulPowerUp()) {
                                 spawnPowerUp(brick.x + brick.width / 2, brick.y + brick.height / 2);
                             }
+                        } else {
+                            // Play dull thump sound for brick hit (not destroyed)
+                            soundManager.playBrickHit();
                         }
                         
                         // Check if level complete
@@ -617,6 +743,9 @@
             lives--;
             playerMetrics.ballsLost++;
             playerMetrics.paddleMisses++;
+            
+            // Play high pitch violin screech for life lost
+            soundManager.playLifeLost();
             
             const now = Date.now();
             if (now - playerMetrics.lastBallLoss < 5000) {
@@ -971,6 +1100,13 @@
             render();
             
             requestAnimationFrame(gameLoop);
+        }
+        
+        // Toggle sound function (global for button onclick)
+        function toggleSound() {
+            const enabled = soundManager.toggleSound();
+            const button = document.getElementById('soundToggle');
+            button.textContent = enabled ? '🔊 Sound: ON' : '🔇 Sound: OFF';
         }
         
         // Start the game

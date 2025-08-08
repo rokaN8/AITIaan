@@ -5,6 +5,9 @@
 - **Dark spooky theme** with moving starry background and white/black/red color scheme
 - **Moving star system** with 75 twinkling stars and horizontal scrolling animation
 - **Gothic brick design** with spooky gradient progression (white → gray → red)
+- **Spooky sound system** with Web Audio API-generated atmospheric effects
+- **Three sound effects**: Dull thump (brick hit), glass shattering (brick break), violin screech (life lost)
+- **Sound controls** with toggle button (🔊/🔇) and M key shortcut
 - **AI assistance system** with 3 levels of help (none, subtle, active)
 - **Performance tracking** monitoring player accuracy and struggle indicators
 - **Physics assistance** with subtle ball magnetism for struggling players
@@ -14,7 +17,7 @@
 - **Power-up system** with Wide Paddle and Slow Ball effects (red-themed)
 - **Smooth 60fps gameplay** with efficient Canvas rendering and star animation
 - **Cross-browser compatibility** tested in Chrome, Firefox, Safari, Edge
-- **Single file architecture** with zero external dependencies
+- **Single file architecture** with zero external dependencies (including sounds)
 - **Responsive controls** supporting both mouse and keyboard input
 - **Game state management** with proper waiting/playing/gameOver transitions
 - **Score and lives system** with level progression
@@ -41,16 +44,17 @@
 - Leaderboard system with localStorage
 
 ## Current Status
-**✅ PROJECT COMPLETE, FUNCTIONAL, AND DEPLOYED WITH SPOOKY THEME (v1.1.0)**
-- Game runs smoothly at 60fps with moving starry background
+**✅ PROJECT COMPLETE, FUNCTIONAL, AND DEPLOYED WITH SPOOKY SOUND SYSTEM (v1.2.0)**
+- Game runs smoothly at 60fps with moving starry background and atmospheric sound effects
 - Dark spooky theme with white/black/red color scheme fully implemented
+- Spooky sound system with Web Audio API-generated effects enhances immersion
 - AI assistance provides meaningful help without being obvious
-- Visual effects enhance atmospheric gameplay experience
+- Visual and audio effects create cohesive atmospheric gameplay experience
 - All technical constraints met (single file, no dependencies, offline)
 - Layout optimized with 9 brick columns and 8px ball radius
 - **Git repository established**: https://github.com/rokaN8/AITIaan.git
 - **Version control active**: Comprehensive commit history and upstream tracking
-- **Professional versioning**: Semantic versioning (v1.1.0) with changelog and documentation
+- **Professional versioning**: Semantic versioning (v1.2.0) with changelog and documentation
 - **Version tracking**: In-game version display and console logging
 - **Git workflow**: Conventional commits with version references established
 - **Ready for distribution and further development**
@@ -121,7 +125,7 @@
    - Upstream tracking configured for streamlined workflow
    - Memory bank documentation system established
 
-7. **✅ Dark Spooky Theme Implementation** (Latest milestone - v1.1.0)
+7. **✅ Dark Spooky Theme Implementation** (v1.1.0)
    - Moving starry background with 75 twinkling stars
    - Complete color scheme transformation to white/black/red
    - Gothic brick design with spooky gradient progression
@@ -129,6 +133,15 @@
    - Layout optimization (9 columns) and ball size adjustment (8px)
    - Performance-optimized star system maintaining 60fps
    - Comprehensive documentation updates across all files
+
+8. **✅ Spooky Sound System Implementation** (Latest milestone - v1.2.0)
+   - Web Audio API-based sound manager with programmatic sound generation
+   - Three atmospheric sound effects: dull thump, glass shattering, violin screech
+   - Sound toggle controls with button (🔊/🔇) and M key shortcut
+   - Background music removal per user preference (event-based sounds only)
+   - Efficient audio synthesis without external dependencies
+   - Graceful fallback for browsers without Web Audio API support
+   - Performance optimization maintaining 60fps with audio processing
 
 ## Upcoming Milestones
 **No upcoming milestones** - Project is complete, deployed, and meets all requirements.

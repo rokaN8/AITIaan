@@ -34,6 +34,18 @@ update() calls:
 - updatePowerUps()
 - updateParticles()
 - updateScreenShake()
+- updateStars()
+```
+
+### Sound System Integration
+```
+Game Events → Sound Manager → Web Audio API → Audio Output
+    ↓
+Sound Events:
+- Brick Hit → playBrickHit() → Low-frequency thump
+- Brick Break → playBrickBreak() → High-frequency glass shatter
+- Life Lost → playLifeLost() → Violin screech sweep
+- Sound Toggle → toggleSound() → Enable/disable all effects
 ```
 
 ### AI System Integration

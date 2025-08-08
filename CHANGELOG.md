@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2025-08-08
+
+### Added
+- **Spooky sound system** with Web Audio API-based programmatic sound generation
+- **Three atmospheric sound effects**: Dull thump (brick hit), glass shattering (brick break), high-pitch violin screech (life lost)
+- **Sound toggle controls** with visual button (🔊/🔇) and M key shortcut for quick muting
+- **Graceful audio fallback** for browsers without Web Audio API support
+- **Performance-optimized audio** maintaining 60fps gameplay with sound processing
+
+### Changed
+- **Background music removed** per user preference - now features event-based sound effects only
+- **Sound integration** seamlessly woven into existing game events and collision system
+- **Version updated** to 1.2.0 to reflect sound system addition
+
+### Technical Details
+- **Web Audio API implementation**: Oscillators, gain nodes, and filters for realistic sound synthesis
+- **Zero external dependencies**: All sounds generated programmatically, no audio files required
+- **Efficient audio processing**: Sounds created on-demand without memory leaks
+- **Cross-browser compatibility**: Maintains compatibility with graceful degradation
+- **Single-file architecture preserved**: Audio system integrated without breaking portability
+
 ## [1.1.0] - 2025-08-08
 
 ### Added
@@ -86,5 +107,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Version History
 
+- **1.2.0** (2025-08-08): Spooky sound system with atmospheric effects
 - **1.1.0** (2025-08-08): Dark spooky theme with moving starry background
 - **1.0.0** (2025-01-08): Initial release with complete game and AI system
