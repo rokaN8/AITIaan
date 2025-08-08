@@ -80,6 +80,7 @@
             <div>Score: <span id="score">0</span></div>
             <div>Lives: <span id="lives">3</span></div>
             <div>Level: <span id="level">1</span></div>
+            <div>Version: <span id="version">1.0.0</span></div>
         </div>
         <div id="powerUpTimers"></div>
     </div>
@@ -98,6 +99,9 @@
     </div>
 
     <script>
+        // Version tracking
+        const GAME_VERSION = '1.0.0';
+        
         // Game canvas and context
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
@@ -341,6 +345,13 @@
         
         // Initialize game
         function init() {
+            // Log version information for debugging
+            console.log(`Adaptive Breakout v${GAME_VERSION} - AI-Enhanced Brick Ball Game`);
+            console.log('Game initialized successfully');
+            
+            // Update version display
+            document.getElementById('version').textContent = GAME_VERSION;
+            
             createLevel(level);
             resetBall();
             gameLoop();
