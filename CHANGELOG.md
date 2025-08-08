@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.12.1] - 2025-08-08
+
+### Changed
+- **Paddle visual redesign** - Changed from white paddle with red glow to black paddle with clean white border (2px)
+- **Ball visual redesign** - Changed from solid white ball to hollow ball with white border and transparent center
+- **Enhanced visual contrast** - Both paddle and ball now provide better contrast against spooky background
+- **Modern aesthetic** - Updated styling creates more distinctive and visually appealing game elements
+
+### Technical Details
+- **Paddle rendering**: Updated to use black fill (`#000000`) with white stroke border
+- **Ball rendering**: Changed from `ctx.fill()` to `ctx.stroke()` for hollow circle effect
+- **Maintained functionality**: All collision detection, AI assistance, and visual effects preserved
+- **Performance impact**: No performance changes, purely cosmetic improvements
+
 ## [1.12.0] - 2025-08-08
 
 ### Added

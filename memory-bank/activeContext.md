@@ -4,6 +4,9 @@
 **Spooky Breakout v1.12.0 completed** - Enhanced floating ghost system successfully implemented as the final atmospheric feature. Game now features dramatically improved ghostly presence with larger, more numerous floating ghosts across the entire webpage.
 
 ## Recent Changes
+- **Visual styling improvements**: Enhanced paddle and ball appearance for better visual appeal
+- **Paddle redesign**: Changed from white paddle with red glow to black paddle with clean white border
+- **Ball redesign**: Changed from solid white ball to hollow ball with white border and transparent center
 - **Enhanced floating ghost system**: Dramatically improved ghostly atmosphere with larger, more numerous floating ghosts
 - **Ghost size enhancement**: Doubled ghost size from 40-70 pixels to 80-140 pixels for much greater visibility
 - **Ghost population increase**: Increased maximum ghost count from 4 to 8 for enhanced atmospheric presence

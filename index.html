@@ -245,7 +245,7 @@
 
     <script>
         // Version tracking
-        const GAME_VERSION = '1.12.0';
+        const GAME_VERSION = '1.12.1';
         
         // Game canvas and context
         const canvas = document.getElementById('gameCanvas');
@@ -2145,27 +2145,27 @@
             }
             
             // Draw paddle
-            ctx.fillStyle = '#ffffff';
+            ctx.fillStyle = '#000000';
             ctx.fillRect(paddle.x, paddle.y, paddle.width, paddle.height);
             
-            // Add paddle glow
-            ctx.shadowColor = '#cc0000';
-            ctx.shadowBlur = 10;
-            ctx.fillRect(paddle.x, paddle.y, paddle.width, paddle.height);
-            ctx.shadowBlur = 0;
+            // Add white border
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(paddle.x, paddle.y, paddle.width, paddle.height);
             
-            // Draw ball
-            ctx.fillStyle = '#ffffff';
+            // Draw ball (hollow with white border)
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 2;
             ctx.beginPath();
             ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
-            ctx.fill();
+            ctx.stroke();
             
             // Add ball glow
             ctx.shadowColor = '#ffffff';
             ctx.shadowBlur = 15;
             ctx.beginPath();
             ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
-            ctx.fill();
+            ctx.stroke();
             ctx.shadowBlur = 0;
             
             // Draw power-ups
