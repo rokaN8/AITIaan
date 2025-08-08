@@ -209,6 +209,7 @@
                 <div style="margin-bottom: 8px;">• Press B to explode ball (costs a life!)</div>
                 <div style="margin-bottom: 8px;">• Press M to toggle sound</div>
                 <div style="margin-bottom: 8px;">• Press D for developer mode (5 bricks, no score)</div>
+                <div style="margin-bottom: 8px;">• Developer mode: +/- keys change level, [ ] keys adjust lives</div>
             </div>
         </div>
         
@@ -238,7 +239,7 @@
 
     <script>
         // Version tracking
-        const GAME_VERSION = '1.9.0';
+        const GAME_VERSION = '1.10.0';
         
         // Game canvas and context
         const canvas = document.getElementById('gameCanvas');
@@ -728,6 +729,22 @@
                     activateDeveloperMode();
                     e.preventDefault();
                     break;
+                case 'Minus':
+                    if (developerMode) changeDeveloperLevel(-1);
+                    e.preventDefault();
+                    break;
+                case 'Equal': // + key
+                    if (developerMode) changeDeveloperLevel(1);
+                    e.preventDefault();
+                    break;
+                case 'BracketLeft': // [ key
+                    if (developerMode) adjustDeveloperLives(-1);
+                    e.preventDefault();
+                    break;
+                case 'BracketRight': // ] key
+                    if (developerMode) adjustDeveloperLives(1);
+                    e.preventDefault();
+                    break;
             }
         });
         
@@ -911,8 +928,8 @@
                     let type;
                     
                     // Determine brick type based on level and position
-                    if (levelNum >= 3 && Math.random() < 0.15) {
-                        // 15% chance for special bricks from level 3+
+                    if (levelNum >= 2 && Math.random() < 0.15) {
+                        // 15% chance for special bricks from level 2+
                         type = specialTypes[Math.floor(Math.random() * specialTypes.length)];
                     } else {
                         // Regular brick progression
@@ -1015,6 +1032,35 @@
             resetBall();
             
             console.log('Developer mode activated - 5 bricks, 3 lives, no high score saving');
+        }
+        
+        // Change developer level (+ and - keys)
+        function changeDeveloperLevel(direction) {
+            if (!developerMode) return;
+            
+            const newLevel = Math.max(1, level + direction);
+            level = newLevel;
+            
+            // Create full level layout for the new level
+            createLevel(level);
+            resetBall();
+            
+            console.log(`Developer mode: Changed to level ${level}`);
+        }
+        
+        // Adjust developer lives ([ and ] keys)
+        function adjustDeveloperLives(change) {
+            if (!developerMode) return;
+            
+            const newLives = Math.max(0, Math.min(10, lives + change));
+            lives = newLives;
+            
+            // Check for game over if lives reach 0
+            if (lives <= 0 && gameState !== 'gameOver') {
+                gameOver();
+            }
+            
+            console.log(`Developer mode: Lives adjusted to ${lives}`);
         }
         
         // Reset ball to paddle

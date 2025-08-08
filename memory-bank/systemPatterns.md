@@ -77,6 +77,12 @@ Developer Mode Process:
 6. Hide game over screen if visible
 7. Provide console logging for debug feedback
 8. Prevent high score saving when game ends
+
+Enhanced Developer Controls (v1.10.0):
+- "+/-" Keys → changeDeveloperLevel() → Full level navigation with complete brick layouts
+- "[/]" Keys → adjustDeveloperLives() → Life management (0-10 range) with bounds checking
+- Console logging for all developer actions and state changes
+- UI instructions updated to include new developer mode controls
 ```
 
 ### AI System Integration
@@ -205,7 +211,7 @@ const brickTypes = {
 
 ### Supernatural Systems Integration
 ```
-Level Creation → Special Brick Spawning (15% chance from level 3+)
+Level Creation → Special Brick Spawning (15% chance from level 2+)
     ↓
 Ghost Bricks: Phase Cycle (3s visible, 2s invisible) + Floating Animation
 Vampire Bricks: Health Regeneration (every 8s) + Pulsing Effects

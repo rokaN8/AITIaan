@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.10.0] - 2025-08-08
+
+### Added
+- **Enhanced developer mode controls** for level navigation using +/- keys
+- **Developer mode life management** with [ and ] keys (0-10 lives range)
+- **Improved debugging capabilities** for gameplay testing and balancing
+- **Full level layouts** available in developer mode for comprehensive testing
+
+### Changed
+- **Special bricks appearance level** - now appear from level 2 instead of level 3 (15% chance)
+- **UI instructions updated** to include new developer mode controls
+- **Developer mode functionality** expanded beyond basic 5-brick testing
+
+### Technical Details
+- **Level navigation system**: +/- keys change levels in developer mode with full brick layouts
+- **Life adjustment system**: [ and ] keys modify lives with bounds checking (0-10 range)
+- **Enhanced testing environment**: Full level generation instead of limited 5-brick setup
+- **Console logging**: Debug feedback for level changes and life adjustments
+- **Game balance improvement**: Earlier special brick introduction for better progression
+
 ## [1.9.0] - 2025-08-08
 
 ### Added

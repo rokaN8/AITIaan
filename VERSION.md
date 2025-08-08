@@ -1,7 +1,7 @@
 # Version Management
 
 ## Current Version
-**1.9.0** - Spooky Breakout with supernatural bricks and magical ball trail
+**1.10.0** - Spooky Breakout with developer mode enhancements and gameplay improvements
 
 ## Versioning Strategy
 
@@ -91,6 +91,14 @@ style(v1.0.3): improve visual effects and animations
 7. **Push to repository**
 
 ## Version History
+
+- **1.10.0** (2025-08-08): Developer mode enhancements and gameplay improvements
+  - Enhanced developer mode with level navigation using +/- keys
+  - Developer mode life management with [ and ] keys (0-10 lives range)
+  - Special bricks now appear from level 2 instead of level 3 (15% chance)
+  - Updated UI instructions to include new developer mode controls
+  - Improved debugging capabilities for gameplay testing and balancing
+  - Full level layouts available in developer mode for comprehensive testing
 
 - **1.9.0** (2025-08-08): Supernatural bricks and magical ball trail system
   - Ghost bricks that phase in/out every 5 seconds (3s visible, 2s invisible)
