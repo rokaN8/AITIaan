@@ -64,6 +64,21 @@ Explosion Process:
 8. Apply life cost or advance to next level
 ```
 
+### Developer Mode System Integration
+```
+"D" Key Press → activateDeveloperMode() → Game State Reset → createDeveloperLevel() → Testing Environment
+    ↓
+Developer Mode Process:
+1. Set developerMode flag to true
+2. Reset game state (lives=3, score=0, waiting state)
+3. Reset all metrics and power-ups
+4. Create full brick layout then randomly select 5 visible bricks
+5. Reset ball to paddle position
+6. Hide game over screen if visible
+7. Provide console logging for debug feedback
+8. Prevent high score saving when game ends
+```
+
 ### AI System Integration
 ```
 Player Actions → Performance Metrics → Struggle Analysis → Assistance Level

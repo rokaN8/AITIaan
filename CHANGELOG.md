@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.8.0] - 2025-08-08
+
+### Added
+- **Developer mode testing system** activated by "D" key for quick endgame scenario testing
+- **Isolated testing environment** with 5 randomly selected bricks and 3 lives for rapid testing
+- **High score protection** prevents developer mode scores from affecting leaderboard integrity
+- **Clear visual feedback** with "DEVELOPER MODE - NO SCORE SAVED" warning message on game over
+- **Random brick selection algorithm** provides varied testing scenarios on each activation
+- **UI integration** with developer mode instruction added to control panel
+- **Console logging** provides debug feedback for development workflow
+
+### Changed
+- **Game over screen enhancement** - dynamic content based on developer mode state
+- **High score system modification** - conditional high score checking excludes developer mode
+- **Game restart behavior** - developer mode flag properly reset on game restart
+- **Testing workflow improvement** - enhanced capabilities for testing explosion mechanics, AI assistance, and power-ups
+
+### Technical Details
+- **Developer mode state management**: Boolean flag tracks developer mode activation
+- **Random brick distribution**: Algorithm shuffles all brick positions and selects first 5 for visibility
+- **Score system isolation**: Developer mode scores completely separated from legitimate gameplay
+- **State persistence**: Developer mode persists until manual game restart
+- **Debug integration**: Console logging confirms activation and provides development feedback
+- **UI responsiveness**: Instructions panel updated to include developer mode control
+
 ## [1.7.0] - 2025-08-08
 
 ### Added
@@ -156,6 +181,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Version History
 
+- **1.8.0** (2025-08-08): Developer mode testing system for endgame scenarios
 - **1.7.0** (2025-08-08): Explosion powerup feature with enhanced UI
 - **1.3.0** (2025-08-08): Hybrid audio & visual horror system with external assets
 - **1.2.0** (2025-08-08): Spooky sound system with atmospheric effects

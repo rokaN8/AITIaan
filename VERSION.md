@@ -1,7 +1,7 @@
 # Version Management
 
 ## Current Version
-**1.7.0** - Spooky Breakout with explosion powerup feature
+**1.8.0** - Spooky Breakout with developer mode testing system
 
 ## Versioning Strategy
 
@@ -91,6 +91,17 @@ style(v1.0.3): improve visual effects and animations
 7. **Push to repository**
 
 ## Version History
+
+- **1.8.0** (2025-08-08): Developer mode testing system for endgame scenarios
+  - Developer mode activated by "D" key for quick endgame scenario testing
+  - Isolated testing environment with 5 randomly selected bricks and 3 lives
+  - High score protection prevents developer mode scores from affecting leaderboard integrity
+  - Clear visual feedback with "DEVELOPER MODE - NO SCORE SAVED" warning message
+  - Random brick selection algorithm provides varied testing scenarios on each activation
+  - Developer mode state properly managed through game restart cycle
+  - UI integration with developer mode instruction added to control panel
+  - Console logging provides debug feedback for development workflow
+  - Enhanced testing capabilities for explosion mechanics, AI assistance, and power-ups
 
 - **1.7.0** (2025-08-08): Explosion powerup feature with enhanced UI
   - Explosion powerup triggered by "B" key during active gameplay

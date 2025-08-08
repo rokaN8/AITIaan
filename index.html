@@ -208,6 +208,7 @@
                 <div style="margin-bottom: 8px;">• Press SPACE to launch ball</div>
                 <div style="margin-bottom: 8px;">• Press B to explode ball (costs a life!)</div>
                 <div style="margin-bottom: 8px;">• Press M to toggle sound</div>
+                <div style="margin-bottom: 8px;">• Press D for developer mode (5 bricks, no score)</div>
             </div>
         </div>
         
@@ -237,7 +238,7 @@
 
     <script>
         // Version tracking
-        const GAME_VERSION = '1.7.0';
+        const GAME_VERSION = '1.8.0';
         
         // Game canvas and context
         const canvas = document.getElementById('gameCanvas');
@@ -263,6 +264,7 @@
         let score = 0;
         let level = 1;
         let lastTime = 0;
+        let developerMode = false;
         
         // Input handling
         const keys = {
@@ -719,6 +721,10 @@
                     toggleSound();
                     e.preventDefault();
                     break;
+                case 'KeyD':
+                    activateDeveloperMode();
+                    e.preventDefault();
+                    break;
             }
         });
         
@@ -915,6 +921,75 @@
             }
             
             playerMetrics.levelStartTime = Date.now();
+        }
+        
+        // Create developer level with only 5 random bricks
+        function createDeveloperLevel() {
+            // First create a full level
+            createLevel(1);
+            
+            // Get all brick positions
+            const allBricks = [];
+            for (let row = 0; row < BRICK_ROWS; row++) {
+                for (let col = 0; col < BRICK_COLS; col++) {
+                    allBricks.push({ row, col });
+                }
+            }
+            
+            // Shuffle the array to randomize selection
+            for (let i = allBricks.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [allBricks[i], allBricks[j]] = [allBricks[j], allBricks[i]];
+            }
+            
+            // Hide all bricks first
+            for (let row = 0; row < BRICK_ROWS; row++) {
+                for (let col = 0; col < BRICK_COLS; col++) {
+                    bricks[row][col].visible = false;
+                }
+            }
+            
+            // Show only the first 5 random bricks
+            for (let i = 0; i < Math.min(5, allBricks.length); i++) {
+                const { row, col } = allBricks[i];
+                bricks[row][col].visible = true;
+            }
+            
+            console.log('Developer mode activated: 5 random bricks remaining');
+        }
+        
+        // Activate developer mode
+        function activateDeveloperMode() {
+            developerMode = true;
+            lives = 3;
+            score = 0;
+            level = 1;
+            gameState = 'waiting';
+            
+            // Reset metrics
+            Object.keys(playerMetrics).forEach(key => {
+                if (typeof playerMetrics[key] === 'number') {
+                    playerMetrics[key] = 0;
+                }
+            });
+            playerMetrics.levelStartTime = Date.now();
+            
+            // Reset power-ups
+            powerUps.length = 0;
+            activePowerUps.length = 0;
+            
+            // Reset paddle and ball
+            paddle.width = paddle.originalWidth;
+            ball.speed = ball.originalSpeed;
+            
+            // Hide game over screen if visible
+            document.getElementById('gameOverScreen').style.display = 'none';
+            
+            // Create developer level with 5 random bricks
+            createDeveloperLevel();
+            resetBall();
+            
+            console.log('Developer mode activated - 5 bricks, 3 lives, no high score saving');
         }
         
         // Reset ball to paddle
@@ -1147,16 +1222,40 @@
             soundManager.stopBackgroundMusic();
             soundManager.playEndGameSound();
             
-            // Check if this is a high score
-            isNewHighScore = isHighScore(score);
+            // Check if this is a high score (but not in developer mode)
+            isNewHighScore = !developerMode && isHighScore(score);
             
             document.getElementById('finalScore').textContent = score;
             
             if (isNewHighScore) {
                 showNameEntry();
             } else {
-                document.getElementById('gameOverScreen').style.display = 'block';
+                showDeveloperGameOverScreen();
             }
+        }
+        
+        // Show game over screen with developer mode message if applicable
+        function showDeveloperGameOverScreen() {
+            const gameOverScreen = document.getElementById('gameOverScreen');
+            
+            if (developerMode) {
+                gameOverScreen.innerHTML = `
+                    <h2>Game Over!</h2>
+                    <div>Final Score: <span id="finalScore">${score}</span></div>
+                    <div style="color: #ffaa00; margin: 15px 0; font-size: 14px;">
+                        DEVELOPER MODE - NO SCORE SAVED
+                    </div>
+                    <button onclick="restartGame()">Play Again</button>
+                `;
+            } else {
+                gameOverScreen.innerHTML = `
+                    <h2>Game Over!</h2>
+                    <div>Final Score: <span id="finalScore">${score}</span></div>
+                    <button onclick="restartGame()">Play Again</button>
+                `;
+            }
+            
+            gameOverScreen.style.display = 'block';
         }
         
         // Show name entry for high score
@@ -1236,6 +1335,7 @@
             score = 0;
             level = 1;
             gameState = 'waiting';
+            developerMode = false; // Reset developer mode
             
             // Reset metrics
             Object.keys(playerMetrics).forEach(key => {

@@ -1,18 +1,19 @@
 # Active Context
 
 ## Current Work Focus
-**Spooky Breakout v1.7.0 completed** - Explosion powerup feature successfully implemented with doubled radius, enhanced UI layout, and comprehensive documentation updates. All version files updated and ready for Git commit.
+**Spooky Breakout v1.8.0 completed** - Developer mode feature successfully implemented for endgame testing scenarios. Enhanced testing capabilities with isolated developer environment and comprehensive documentation updates.
 
 ## Recent Changes
-- **Explosion powerup feature**: "B" key triggers ball explosion with 180-pixel radius (doubled from 90px)
-- **Strategic gameplay mechanic**: Explosion costs a life but can complete levels on 0 lives if last bricks destroyed
-- **Enhanced visual effects**: 25 explosion particles with red/orange colors and intense screen shake (8 intensity, 400ms)
-- **Sound integration**: Explosion sound from `assets/audio/explosion.mp3` integrated with existing sound system
-- **UI reorganization**: Instructions moved from below game to leaderboard sidebar in clean bullet-point format
-- **Life cost warning**: Clear warning added: "Press B to explode ball (costs a life!)"
-- **Smart game logic**: Level completion check occurs before life loss to prevent unfair game over
-- **Version updates**: All files updated to v1.7.0 (VERSION.md, index.html, CHANGELOG.md)
-- **Documentation updates**: Comprehensive changelog entry and version history updates
+- **Developer mode feature**: "D" key activates testing mode with 5 random bricks and 3 lives
+- **Endgame testing capability**: Quick access to near-completion scenarios for testing explosion mechanics, AI assistance, and power-ups
+- **High score protection**: Developer mode prevents score saving to maintain leaderboard integrity
+- **Visual feedback**: Clear "DEVELOPER MODE - NO SCORE SAVED" warning on game over screen
+- **Random brick selection**: Algorithm randomly selects 5 bricks from all possible positions for varied testing scenarios
+- **State management**: Developer mode flag properly managed through game restart cycle
+- **UI integration**: Developer mode instruction added to control panel ("Press D for developer mode (5 bricks, no score)")
+- **Console logging**: Debug feedback confirms developer mode activation for development workflow
+- **Version updates**: All files updated to v1.8.0 (VERSION.md, index.html, CHANGELOG.md)
+- **Documentation updates**: Memory bank and changelog updated to reflect new testing capabilities
 
 ## Next Steps
 **Project enhanced with atmospheric audio** - Sound system successfully integrated. Game ready for continued development:
@@ -74,7 +75,7 @@
 - **File size**: Approximately 67KB for complete game with all features
 - **Repository**: https://github.com/rokaN8/AITIaan.git (main branch)
 - **Version control**: Git tracking established with comprehensive commit history
-- **Current version**: v1.7.0 with explosion powerup feature and enhanced UI
+- **Current version**: v1.8.0 with developer mode testing feature and enhanced UI
 - **Deployment status**: Ready for Git commit and continued development
 
 ---
