@@ -31,7 +31,7 @@
         
         .ui {
             margin: 10px 0;
-            font-size: 18px;
+            font-size: 20px;
             text-align: center;
         }
         
@@ -57,7 +57,7 @@
         }
         
         .leaderboard {
-            width: 250px;
+            width: 275px;
             background: rgba(0, 0, 0, 0.8);
             border: 2px solid #cc0000;
             border-radius: 10px;
@@ -210,10 +210,13 @@
                 <div style="margin-bottom: 8px;">• Press M to toggle sound</div>
                 <div style="margin-bottom: 8px;">• Press D for developer mode (5 bricks, no score)</div>
                 <div style="margin-bottom: 8px;">• Developer mode: +/- keys change level, [ ] keys adjust lives</div>
+                <div style="margin-top: 15px; padding-top: 10px; border-top: 1px solid #333; color: #888; font-size: 10px;">
+                    Background by <a href="https://deepai.org/" target="_blank" style="color: #cc0000; text-decoration: none;">deepai.org</a>
+                </div>
             </div>
         </div>
         
-        <canvas id="gameCanvas" width="800" height="600"></canvas>
+        <canvas id="gameCanvas" width="880" height="660"></canvas>
     </div>
     
     <div class="ui">
@@ -239,25 +242,25 @@
 
     <script>
         // Version tracking
-        const GAME_VERSION = '1.10.0';
+        const GAME_VERSION = '1.11.0';
         
         // Game canvas and context
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
         
         // Game constants
-        const CANVAS_WIDTH = 800;
-        const CANVAS_HEIGHT = 600;
-        const PADDLE_WIDTH = 100;
-        const PADDLE_HEIGHT = 15;
-        const BALL_RADIUS = 8;
-        const BRICK_WIDTH = 75;
-        const BRICK_HEIGHT = 20;
+        const CANVAS_WIDTH = 880;
+        const CANVAS_HEIGHT = 660;
+        const PADDLE_WIDTH = 110;
+        const PADDLE_HEIGHT = 17;
+        const BALL_RADIUS = 9;
+        const BRICK_WIDTH = 83;
+        const BRICK_HEIGHT = 22;
         const BRICK_ROWS = 6;
         const BRICK_COLS = 9;
-        const BRICK_PADDING = 5;
-        const BRICK_OFFSET_TOP = 60;
-        const BRICK_OFFSET_LEFT = 35;
+        const BRICK_PADDING = 6;
+        const BRICK_OFFSET_TOP = 66;
+        const BRICK_OFFSET_LEFT = 39;
         
         // Game state
         let gameState = 'waiting'; // 'waiting', 'playing', 'gameOver'
@@ -293,8 +296,8 @@
             vx: 0,
             vy: 0,
             radius: BALL_RADIUS,
-            speed: 5,
-            originalSpeed: 5,
+            speed: 4,
+            originalSpeed: 4,
             onPaddle: true
         };
         
@@ -457,6 +460,10 @@
         // Game over image
         let gameOverImage = null;
         let imageLoaded = false;
+        
+        // Background image
+        let backgroundImage = null;
+        let backgroundImageLoaded = false;
         
         // Leaderboard System
         const LEADERBOARD_KEY = 'spookyBreakoutLeaderboard';
@@ -903,6 +910,18 @@
                 imageLoaded = false;
             };
             gameOverImage.src = 'assets/sprites/face.png';
+            
+            // Load background image
+            backgroundImage = new Image();
+            backgroundImage.onload = function() {
+                backgroundImageLoaded = true;
+                console.log('Background image loaded successfully');
+            };
+            backgroundImage.onerror = function() {
+                console.warn('Failed to load background image');
+                backgroundImageLoaded = false;
+            };
+            backgroundImage.src = 'assets/sprites/backgroundImage.jpg';
             
             // Initialize leaderboard
             loadLeaderboard();
@@ -1821,8 +1840,13 @@
             ctx.save();
             ctx.translate(screenShake.x, screenShake.y);
             
-            ctx.fillStyle = '#000';
-            ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+            // Draw background image if loaded, otherwise use black background
+            if (backgroundImageLoaded && backgroundImage) {
+                ctx.drawImage(backgroundImage, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+            } else {
+                ctx.fillStyle = '#000';
+                ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+            }
             
             // If game over, show spooky face image instead of normal game
             if (gameState === 'gameOver' && imageLoaded && gameOverImage) {
@@ -1832,7 +1856,7 @@
                 return; // Don't draw normal game elements
             }
             
-            // Draw stars behind everything
+            // Draw stars on top of background
             drawStars();
             
             // Draw ball trail sparkles first (behind everything else)
@@ -1948,7 +1972,7 @@
             // Draw waiting message
             if (gameState === 'waiting') {
                 ctx.fillStyle = '#ffff00';
-                ctx.font = '24px ScaryFont, Courier New, monospace';
+                ctx.font = '26px ScaryFont, Courier New, monospace';
                 ctx.textAlign = 'center';
                 ctx.fillText('Press SPACE to launch ball', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
             }

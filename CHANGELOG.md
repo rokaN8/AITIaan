@@ -7,6 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.11.0] - 2025-08-08
+
+### Added
+- **Atmospheric spooky forest background** from deepai.org with proper attribution link
+- **Enhanced visual experience** with detailed forest scene featuring hanging lanterns and twisted trees
+- **Background image loading system** with error handling and fallback to black background
+- **Attribution credit** discretely placed in instructions area linking to deepai.org
+
+### Changed
+- **Ball speed reduced by 20%** from 5 to 4 units for improved accessibility and player comfort
+- **Game scale increased by 10%** across all elements for better readability and modern screen compatibility
+- **Canvas dimensions** expanded from 800x600 to 880x660 pixels (10% larger)
+- **All game elements scaled proportionally**: paddle (110x17), ball radius (9px), bricks (83x22)
+- **UI font sizes increased**: main UI (18px→20px), canvas text (24px→26px), leaderboard width (250px→275px)
+- **Enhanced user experience** with larger, more readable interface elements
+
+### Technical Details
+- **Background rendering system**: Image drawn first with stars and game elements layered on top
+- **Proportional scaling**: All game constants updated to maintain perfect gameplay balance
+- **Performance maintained**: 60fps gameplay preserved with larger canvas and background image
+- **Graceful fallback**: Game works perfectly even if background image fails to load
+- **Asset integration**: Background image properly integrated into existing asset structure
+- **Attribution compliance**: Proper credit given to deepai.org for background image generation
+
+### Improved Accessibility
+- **Slower ball speed**: 20% reduction makes game more approachable for all skill levels
+- **Larger interface**: 10% scale increase improves readability and reduces eye strain
+- **Better proportions**: Enhanced element sizing provides more comfortable gameplay experience
+- **Maintained balance**: All gameplay mechanics and AI assistance remain perfectly calibrated
+
 ## [1.10.0] - 2025-08-08
 
 ### Added
