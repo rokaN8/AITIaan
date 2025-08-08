@@ -202,14 +202,19 @@
             </div>
             <div id="powerUpTimers"></div>
             <button onclick="resetLeaderboard()" class="reset-button">Reset Scores</button>
+            
+            <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #333; font-size: 12px; line-height: 1.4;">
+                <div style="margin-bottom: 8px;">• Use ← → arrow keys or mouse to control paddle</div>
+                <div style="margin-bottom: 8px;">• Press SPACE to launch ball</div>
+                <div style="margin-bottom: 8px;">• Press B to explode ball (costs a life!)</div>
+                <div style="margin-bottom: 8px;">• Press M to toggle sound</div>
+            </div>
         </div>
         
         <canvas id="gameCanvas" width="800" height="600"></canvas>
     </div>
     
     <div class="ui">
-        <div>Use ← → arrow keys or mouse to control paddle</div>
-        <div>Press SPACE to launch ball • Press M to toggle sound</div>
         <button id="soundToggle" onclick="toggleSound()">🔊 Sound: ON</button>
     </div>
     
@@ -226,10 +231,13 @@
     <audio id="endGameSound" preload="auto">
         <source src="assets/audio/endgame.mp3" type="audio/mpeg">
     </audio>
+    <audio id="explosionSound" preload="auto">
+        <source src="assets/audio/explosion.mp3" type="audio/mpeg">
+    </audio>
 
     <script>
         // Version tracking
-        const GAME_VERSION = '1.6.0';
+        const GAME_VERSION = '1.7.0';
         
         // Game canvas and context
         const canvas = document.getElementById('gameCanvas');
@@ -437,6 +445,7 @@
         let soundEnabled = true;
         let backgroundMusic = null;
         let endGameSound = null;
+        let explosionSound = null;
         let musicStarted = false;
         
         // Game over image
@@ -463,6 +472,7 @@
                 // Initialize HTML5 audio elements
                 backgroundMusic = document.getElementById('backgroundMusic');
                 endGameSound = document.getElementById('endGameSound');
+                explosionSound = document.getElementById('explosionSound');
                 
                 // Set volume levels
                 if (backgroundMusic) {
@@ -470,6 +480,9 @@
                 }
                 if (endGameSound) {
                     endGameSound.volume = 0.7; // Higher volume for dramatic effect
+                }
+                if (explosionSound) {
+                    explosionSound.volume = 0.8; // High volume for explosion impact
                 }
             },
             
@@ -604,6 +617,19 @@
                 oscillator.stop(audioContext.currentTime + 0.8);
             },
             
+            playExplosion() {
+                if (!soundEnabled || !explosionSound) return;
+                
+                try {
+                    explosionSound.currentTime = 0;
+                    explosionSound.play().catch(e => {
+                        console.warn('Explosion sound failed to play:', e);
+                    });
+                } catch (e) {
+                    console.warn('Explosion sound error:', e);
+                }
+            },
+            
             toggleSound() {
                 soundEnabled = !soundEnabled;
                 
@@ -681,6 +707,12 @@
                     break;
                 case 'Space':
                     keys.space = true;
+                    e.preventDefault();
+                    break;
+                case 'KeyB':
+                    if (gameState === 'playing' && !ball.onPaddle) {
+                        explodeBall();
+                    }
                     e.preventDefault();
                     break;
                 case 'KeyM':
@@ -1091,6 +1123,15 @@
             }
             playerMetrics.lastBallLoss = now;
             
+            // Check if level is complete before checking game over
+            // This allows finishing the level even with 0 lives
+            if (isLevelComplete()) {
+                level++;
+                createLevel(level);
+                resetBall();
+                return; // Don't check for game over if level is complete
+            }
+            
             if (lives <= 0) {
                 gameOver();
             } else {
@@ -1342,6 +1383,77 @@
                     size: Math.random() * 4 + 2
                 });
             }
+        }
+        
+        // Create explosion particles
+        function createExplosionParticles(x, y) {
+            for (let i = 0; i < 25; i++) {
+                particles.push({
+                    x: x,
+                    y: y,
+                    vx: (Math.random() - 0.5) * 15,
+                    vy: (Math.random() - 0.5) * 15,
+                    life: 1.0,
+                    decay: 0.015,
+                    color: ['#ff4444', '#ff8800', '#ffaa00', '#cc0000'][Math.floor(Math.random() * 4)],
+                    size: Math.random() * 6 + 3
+                });
+            }
+        }
+        
+        // Explode ball function
+        function explodeBall() {
+            const explosionRadius = 180;
+            let bricksDestroyed = 0;
+            
+            // Play explosion sound
+            soundManager.playExplosion();
+            
+            // Create massive explosion particles
+            createExplosionParticles(ball.x, ball.y);
+            
+            // Add intense screen shake
+            addScreenShake(8, 400);
+            
+            // Check all bricks for destruction within explosion radius
+            for (let row = 0; row < BRICK_ROWS; row++) {
+                for (let col = 0; col < BRICK_COLS; col++) {
+                    const brick = bricks[row][col];
+                    if (!brick.visible) continue;
+                    
+                    // Calculate distance from explosion center to brick center
+                    const brickCenterX = brick.x + brick.width / 2;
+                    const brickCenterY = brick.y + brick.height / 2;
+                    const distance = Math.sqrt(
+                        Math.pow(ball.x - brickCenterX, 2) + 
+                        Math.pow(ball.y - brickCenterY, 2)
+                    );
+                    
+                    // Destroy brick if within explosion radius
+                    if (distance <= explosionRadius) {
+                        brick.visible = false;
+                        score += brickTypes[brick.type].points;
+                        bricksDestroyed++;
+                        
+                        // Create particles for each destroyed brick
+                        createParticles(brickCenterX, brickCenterY, brickTypes[brick.type].color);
+                    }
+                }
+            }
+            
+            // Update player metrics
+            playerMetrics.bricksHit += bricksDestroyed;
+            
+            // Check if level is complete before losing life
+            if (isLevelComplete()) {
+                level++;
+                createLevel(level);
+                resetBall();
+                return; // Don't lose a life if level is complete
+            }
+            
+            // Lose a life (ball is destroyed in explosion)
+            loseLife();
         }
         
         // Update particles

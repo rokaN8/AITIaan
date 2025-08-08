@@ -1,7 +1,7 @@
 # Version Management
 
 ## Current Version
-**1.6.0** - Spooky Breakout with leaderboard system and font integration
+**1.7.0** - Spooky Breakout with explosion powerup feature
 
 ## Versioning Strategy
 
@@ -91,6 +91,16 @@ style(v1.0.3): improve visual effects and animations
 7. **Push to repository**
 
 ## Version History
+
+- **1.7.0** (2025-08-08): Explosion powerup feature with enhanced UI
+  - Explosion powerup triggered by "B" key during active gameplay
+  - 180-pixel explosion radius destroys all bricks within range
+  - Ball destruction mechanic costs a life but can complete levels on 0 lives
+  - Enhanced visual effects with 25 explosion particles and intense screen shake
+  - Explosion sound integration with assets/audio/explosion.mp3
+  - UI reorganization: instructions moved to leaderboard sidebar in bullet-point format
+  - Life cost warning added to instructions: "Press B to explode ball (costs a life!)"
+  - Strategic risk/reward gameplay mechanic for clearing difficult brick formations
 
 - **1.6.0** (2025-08-08): Spooky Breakout with leaderboard system and font integration
   - Game renamed from "Adaptive Breakout" to "Spooky Breakout"

@@ -39,13 +39,29 @@ update() calls:
 
 ### Sound System Integration
 ```
-Game Events → Sound Manager → Web Audio API → Audio Output
+Game Events → Sound Manager → Web Audio API/HTML5 Audio → Audio Output
     ↓
 Sound Events:
 - Brick Hit → playBrickHit() → Low-frequency thump
 - Brick Break → playBrickBreak() → High-frequency glass shatter
 - Life Lost → playLifeLost() → Violin screech sweep
+- Explosion → playExplosion() → External MP3 explosion sound
 - Sound Toggle → toggleSound() → Enable/disable all effects
+```
+
+### Explosion System Integration
+```
+"B" Key Press → explodeBall() → Radius Calculation → Brick Destruction → Visual/Audio Effects
+    ↓
+Explosion Process:
+1. Check game state (playing, ball not on paddle)
+2. Play explosion sound (assets/audio/explosion.mp3)
+3. Create 25 explosion particles with red/orange colors
+4. Apply intense screen shake (8 intensity, 400ms duration)
+5. Calculate 180-pixel radius from ball position
+6. Destroy all bricks within radius and award points
+7. Check level completion before losing life
+8. Apply life cost or advance to next level
 ```
 
 ### AI System Integration

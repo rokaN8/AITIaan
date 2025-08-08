@@ -1,19 +1,18 @@
 # Active Context
 
 ## Current Work Focus
-**Spooky Breakout v1.6.0 completed** - Game successfully transformed from "Adaptive Breakout" to "Spooky Breakout" with comprehensive leaderboard system, font integration, and UI reorganization. All features implemented and tested. Project ready for Git commit and deployment.
+**Spooky Breakout v1.7.0 completed** - Explosion powerup feature successfully implemented with doubled radius, enhanced UI layout, and comprehensive documentation updates. All version files updated and ready for Git commit.
 
 ## Recent Changes
-- **Game renamed**: "Adaptive Breakout" transformed to "Spooky Breakout" throughout entire interface
-- **ScaryFont integration**: Custom font loaded from `assets/font/scaryfont.ttf` and applied to all game text
-- **Leaderboard system**: Top 10 high scores with localStorage persistence and migration from old key
-- **Name entry system**: 3-character maximum input with validation for high score entries
-- **UI reorganization**: Power-up timers moved from above game to inside leaderboard area
-- **Reset functionality**: Leaderboard reset button with confirmation dialog to clear all scores
-- **Empty slot display**: Always show all 10 leaderboard positions with "---" for empty entries
-- **Enhanced localStorage**: Error handling and automatic migration from "adaptiveBreakoutLeaderboard"
-- **Left-side positioning**: Leaderboard positioned to left of game canvas with proper spacing
-- **Version synchronization**: Updated to v1.6.0 across all files and documentation
+- **Explosion powerup feature**: "B" key triggers ball explosion with 180-pixel radius (doubled from 90px)
+- **Strategic gameplay mechanic**: Explosion costs a life but can complete levels on 0 lives if last bricks destroyed
+- **Enhanced visual effects**: 25 explosion particles with red/orange colors and intense screen shake (8 intensity, 400ms)
+- **Sound integration**: Explosion sound from `assets/audio/explosion.mp3` integrated with existing sound system
+- **UI reorganization**: Instructions moved from below game to leaderboard sidebar in clean bullet-point format
+- **Life cost warning**: Clear warning added: "Press B to explode ball (costs a life!)"
+- **Smart game logic**: Level completion check occurs before life loss to prevent unfair game over
+- **Version updates**: All files updated to v1.7.0 (VERSION.md, index.html, CHANGELOG.md)
+- **Documentation updates**: Comprehensive changelog entry and version history updates
 
 ## Next Steps
 **Project enhanced with atmospheric audio** - Sound system successfully integrated. Game ready for continued development:
@@ -75,7 +74,7 @@
 - **File size**: Approximately 67KB for complete game with all features
 - **Repository**: https://github.com/rokaN8/AITIaan.git (main branch)
 - **Version control**: Git tracking established with comprehensive commit history
-- **Current version**: v1.6.0 with leaderboard system and font integration
+- **Current version**: v1.7.0 with explosion powerup feature and enhanced UI
 - **Deployment status**: Ready for Git commit and continued development
 
 ---

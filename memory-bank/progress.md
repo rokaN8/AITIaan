@@ -5,9 +5,13 @@
 - **Dark spooky theme** with moving starry background and white/black/red color scheme
 - **Moving star system** with 75 twinkling stars and horizontal scrolling animation
 - **Gothic brick design** with spooky gradient progression (white → gray → red)
+- **Explosion powerup system** with "B" key trigger and 180-pixel destruction radius
+- **Strategic explosion mechanic** that costs a life but can complete levels on 0 lives
+- **Enhanced explosion effects** with 25 particles, intense screen shake, and explosion sound
 - **Hybrid audio system** combining external MP3 files with Web Audio API effects
 - **Background ambient music** with looping atmospheric sound (assets/audio/background.mp3)
 - **Dramatic end game sound** for frightening game over effect (assets/audio/endgame.mp3)
+- **Explosion sound integration** from assets/audio/explosion.mp3 with high volume impact
 - **Spooky game over image** that replaces entire canvas with face.png on game over
 - **Three programmatic sound effects**: Dull thump (brick hit), glass shattering (brick break), violin screech (life lost)
 - **Sound controls** with toggle button (🔊/🔇) and M key shortcut
@@ -48,12 +52,16 @@
 - Leaderboard system with localStorage
 
 ## Current Status
-**✅ PROJECT COMPLETE, FUNCTIONAL, AND DEPLOYED AS SPOOKY BREAKOUT (v1.6.0)**
+**✅ PROJECT COMPLETE, FUNCTIONAL, AND DEPLOYED AS SPOOKY BREAKOUT (v1.7.0)**
+- Explosion powerup feature successfully implemented with "B" key trigger and 180-pixel radius
+- Strategic risk/reward mechanic allows completing levels on 0 lives if explosion clears remaining bricks
+- Enhanced visual effects with 25 explosion particles, intense screen shake, and explosion sound
+- UI reorganized with instructions moved to leaderboard sidebar in clean bullet-point format
+- Life cost warning clearly displayed: "Press B to explode ball (costs a life!)"
 - Game successfully transformed to "Spooky Breakout" with comprehensive leaderboard system
 - ScaryFont integration throughout entire game interface for enhanced spooky atmosphere
 - Top 10 leaderboard with localStorage persistence and automatic migration from old data
 - Name entry system for high scores with 3-character validation and input filtering
-- UI reorganized with left-side leaderboard and power-up timers integrated below scores
 - Reset functionality with confirmation dialog to clear all leaderboard data
 - Always displays all 10 leaderboard slots with "---" placeholders for empty positions
 - Enhanced localStorage error handling and seamless data migration
@@ -63,7 +71,7 @@
 - Multi-file architecture with organized asset management (HTML + assets folder)
 - **Git repository established**: https://github.com/rokaN8/AITIaan.git
 - **Version control active**: Comprehensive commit history and upstream tracking
-- **Professional versioning**: Semantic versioning (v1.6.0) with changelog and documentation
+- **Professional versioning**: Semantic versioning (v1.7.0) with changelog and documentation
 - **Version tracking**: In-game version display and console logging synchronized
 - **Git workflow**: Conventional commits with version references established
 - **Ready for Git commit and continued development**
@@ -162,7 +170,7 @@
    - Audio timing coordination (music starts on ball launch, stops on game over)
    - Complete sensory horror experience combining audio and visual shock elements
 
-10. **✅ Spooky Breakout Transformation & Leaderboard System** (Latest milestone - v1.6.0)
+10. **✅ Spooky Breakout Transformation & Leaderboard System** (v1.6.0)
     - Game renamed from "Adaptive Breakout" to "Spooky Breakout" throughout interface
     - ScaryFont integration from assets/font/scaryfont.ttf applied to all game text
     - Comprehensive leaderboard system with top 10 high scores and localStorage persistence
@@ -173,6 +181,17 @@
     - Enhanced localStorage with error handling and automatic migration from old keys
     - Version synchronization across all files and documentation to v1.6.0
     - Complete transformation maintaining all existing functionality and performance
+
+11. **✅ Explosion Powerup Feature & Enhanced UI** (Latest milestone - v1.7.0)
+    - Explosion powerup triggered by "B" key during active gameplay with 180-pixel destruction radius
+    - Strategic risk/reward mechanic - explosion costs a life but can complete levels on 0 lives
+    - Enhanced visual effects with 25 explosion particles in red/orange colors and intense screen shake
+    - Explosion sound integration from assets/audio/explosion.mp3 with high volume impact
+    - UI reorganization with instructions moved to leaderboard sidebar in bullet-point format
+    - Life cost warning prominently displayed: "Press B to explode ball (costs a life!)"
+    - Smart game logic prevents unfair game over when explosion completes level
+    - Version synchronization across all files and documentation to v1.7.0
+    - Complete feature integration maintaining 60fps performance and existing functionality
 
 ## Upcoming Milestones
 **No upcoming milestones** - Project is complete, deployed, and meets all requirements.

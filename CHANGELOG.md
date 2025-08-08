@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.7.0] - 2025-08-08
+
+### Added
+- **Explosion powerup feature** triggered by "B" key during active gameplay
+- **180-pixel explosion radius** that destroys all bricks within range (doubled from initial 90px)
+- **Strategic risk/reward mechanic** - explosion costs a life but can complete levels on 0 lives
+- **Enhanced visual effects** with 25 explosion particles in red/orange colors and intense screen shake
+- **Explosion sound integration** using `assets/audio/explosion.mp3` with high volume (0.8)
+- **Life cost warning** prominently displayed in instructions: "Press B to explode ball (costs a life!)"
+
+### Changed
+- **UI reorganization** - instructions moved from below game to leaderboard sidebar for better layout
+- **Instruction format** - converted to clean bullet-point format with each control on separate line
+- **Enhanced game logic** - level completion check occurs before life loss, allowing victory on 0 lives
+- **Sound system expansion** - added explosion sound to existing audio architecture
+- **Strategic gameplay** - explosion provides powerful area-of-effect brick clearing for difficult situations
+
+### Technical Details
+- **Explosion mechanics**: Radius-based brick destruction with distance calculation from ball center
+- **Particle system enhancement**: 25 explosion particles with varied colors and enhanced decay
+- **Screen shake intensification**: 8 intensity, 400ms duration for dramatic explosion feedback
+- **Audio integration**: Explosion sound properly integrated with sound toggle functionality
+- **Game state management**: Smart level completion logic prevents unfair game over scenarios
+- **UI layout optimization**: Instructions positioned in leaderboard sidebar with proper styling
+
 ## [1.3.0] - 2025-08-08
 
 ### Added
@@ -131,6 +156,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Version History
 
+- **1.7.0** (2025-08-08): Explosion powerup feature with enhanced UI
 - **1.3.0** (2025-08-08): Hybrid audio & visual horror system with external assets
 - **1.2.0** (2025-08-08): Spooky sound system with atmospheric effects
 - **1.1.0** (2025-08-08): Dark spooky theme with moving starry background
