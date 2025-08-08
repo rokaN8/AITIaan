@@ -1,7 +1,7 @@
 # Version Management
 
 ## Current Version
-**1.0.0** - Initial release with complete game and AI system
+**1.1.0** - Dark spooky theme with moving starry background
 
 ## Versioning Strategy
 
@@ -91,6 +91,16 @@ style(v1.0.3): improve visual effects and animations
 7. **Push to repository**
 
 ## Version History
+
+- **1.1.0** (2025-08-08): Dark spooky theme with moving starry background
+  - Moving starry background with 75 twinkling stars
+  - Complete color scheme transformation to white/black/red theme
+  - Gothic brick design with spooky gradient (white → gray → red)
+  - Red glowing effects throughout UI and game elements
+  - Layout fixes: reduced to 9 brick columns for proper fit
+  - Ball size reduced from 12px to 8px radius
+  - Performance-optimized star system with smooth animation
+  - Maintained all AI assistance and gameplay features
 
 - **1.0.0** (2025-01-08): Initial release with complete adaptive breakout game
   - AI assistance system with 3 levels

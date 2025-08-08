@@ -1,15 +1,18 @@
 # Active Context
 
 ## Current Work Focus
-**Project completed and deployed** - Adaptive Breakout game is fully functional with all requested features implemented and now properly version controlled on GitHub. Recent work included git repository setup and deployment.
+**Dark spooky theme implementation completed** - Adaptive Breakout game has been successfully transformed with a dark, spooky theme featuring moving starry background and white/black/red color scheme. Project updated to version 1.1.0 with comprehensive documentation updates.
 
 ## Recent Changes
-- **Git repository setup**: Successfully committed and pushed complete project to GitHub
-- **Version control established**: All files properly tracked with comprehensive commit message
-- **Upstream tracking configured**: Git branch setup for streamlined future pushes
-- **Memory bank documentation**: Complete project documentation system established
-- **Deployment ready**: Project now accessible at https://github.com/rokaN8/AITIaan.git
-- **Ball size enhancement**: Previously increased BALL_RADIUS from 8 to 12 pixels for accessibility
+- **Dark spooky theme**: Complete visual transformation to white/black/red color scheme
+- **Moving starry background**: Added 75 twinkling stars with horizontal scrolling animation
+- **Gothic brick design**: Implemented spooky gradient (white → light gray → dark gray → blood red)
+- **Red glowing effects**: Updated all UI elements and game components with red accents
+- **Layout optimization**: Reduced brick columns from 10 to 9 for proper canvas fit
+- **Ball size adjustment**: Reduced radius from 12px back to 8px for better proportions
+- **Performance optimization**: Star system designed for smooth 60fps gameplay
+- **Version update**: Bumped to v1.1.0 with comprehensive changelog and documentation
+- **Memory bank updates**: Updated all documentation to reflect theme changes
 
 ## Next Steps
 **Project is complete and deployed** - No immediate next steps required. Game is ready for play, distribution, and further development. Git workflow established for future enhancements:
@@ -27,10 +30,13 @@
 - Leaderboard system with localStorage
 
 ## Active Decisions
-- **Ball size**: 12 pixels provides optimal visibility without affecting gameplay balance
+- **Ball size**: Reduced to 8 pixels for better proportions with new theme
+- **Theme choice**: Dark spooky theme with white/black/red colors creates atmospheric gameplay
+- **Star system**: 75 stars provide optimal visual depth without performance impact
+- **Brick layout**: 9 columns ensure perfect fit within canvas boundaries
 - **AI assistance**: Working perfectly - subtle help for struggling players, no interference for skilled players
-- **Visual effects**: Particle explosions, screen shake, and glowing effects enhance gameplay experience
-- **Performance**: Maintaining smooth 60fps across all tested browsers
+- **Visual effects**: Particle explosions, screen shake, and red glowing effects enhance spooky atmosphere
+- **Performance**: Maintaining smooth 60fps with new star system and visual effects
 
 ## Important Patterns & Preferences
 - **Single file architecture**: Maintains portability and zero-dependency requirement
@@ -55,14 +61,16 @@
 
 ## Context Notes
 - **Game state**: Fully functional with waiting/playing/gameOver states
-- **Power-up system**: Wide Paddle and Slow Ball working with visual timers
-- **Brick system**: 4 types (red, orange, yellow, green) with different hit points and scores
+- **Power-up system**: Wide Paddle and Slow Ball working with red-themed visual timers
+- **Brick system**: 4 types (white, light gray, dark gray, blood red) with spooky gradient design
+- **Star system**: 75 twinkling stars with horizontal movement and wrapping animation
 - **AI metrics**: Tracking accuracy, consecutive deaths, and time per level for assistance decisions
-- **Visual theme**: Dark cyberpunk aesthetic with neon glowing effects
+- **Visual theme**: Dark spooky aesthetic with white/black/red color scheme and moving stars
 - **Controls**: Both arrow keys and mouse control working smoothly
 - **File size**: Approximately 67KB for complete game with all features
 - **Repository**: https://github.com/rokaN8/AITIaan.git (main branch)
 - **Version control**: Git tracking established with comprehensive commit history
+- **Current version**: v1.1.0 with spooky theme implementation
 - **Deployment status**: Ready for immediate distribution and further development
 
 ---

@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2025-08-08
+
+### Added
+- **Moving starry background** with 75 twinkling white stars that scroll horizontally
+- **Dark spooky theme** with complete white/black/red color transformation
+- **Gothic brick design** with spooky gradient progression (white → light gray → dark gray → blood red)
+- **Red glowing effects** throughout all UI elements and game components
+- **Performance-optimized star system** with efficient twinkling animation and wrapping
+- **Enhanced atmospheric experience** while maintaining smooth 60fps gameplay
+
+### Changed
+- **Color scheme transformation**: Complete visual overhaul from cyberpunk cyan to spooky red theme
+- **Brick layout optimization**: Reduced from 10 to 9 columns to ensure proper fit within canvas
+- **Ball size adjustment**: Reduced radius from 12px back to 8px for better proportions
+- **Paddle appearance**: White paddle with red glow instead of cyan
+- **Power-up colors**: Updated to red theme variants for consistency
+- **Canvas border**: Red glowing border instead of cyan
+- **UI accents**: All interface elements now use red accent colors
+
+### Technical Details
+- **Star system architecture**: 75 star objects with individual twinkling phases and speeds
+- **Performance maintained**: All visual enhancements preserve 60fps target
+- **Memory efficiency**: Star system uses minimal computational overhead
+- **Animation smoothness**: Stars move at varying speeds for depth perception
+- **Theme consistency**: All visual elements unified under spooky aesthetic
+
 ## [1.0.0] - 2025-01-08
 
 ### Added
@@ -60,4 +86,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Version History
 
+- **1.1.0** (2025-08-08): Dark spooky theme with moving starry background
 - **1.0.0** (2025-01-08): Initial release with complete game and AI system
