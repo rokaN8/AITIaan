@@ -1,7 +1,7 @@
 # Version Management
 
 ## Current Version
-**1.3.0** - Hybrid audio & visual horror system with external assets
+**1.6.0** - Spooky Breakout with leaderboard system and font integration
 
 ## Versioning Strategy
 
@@ -91,6 +91,29 @@ style(v1.0.3): improve visual effects and animations
 7. **Push to repository**
 
 ## Version History
+
+- **1.6.0** (2025-08-08): Spooky Breakout with leaderboard system and font integration
+  - Game renamed from "Adaptive Breakout" to "Spooky Breakout"
+  - ScaryFont integration throughout entire game interface
+  - Leaderboard system with top 10 high scores stored in localStorage
+  - Name entry system for high scores (3-character maximum)
+  - Power-up timers moved from above game to inside leaderboard
+  - Reset button to clear leaderboard with confirmation dialog
+  - Always show all 10 leaderboard slots (empty slots show "---")
+  - localStorage migration from old key to new "spookyBreakoutLeaderboard"
+  - Enhanced UI layout with left-side leaderboard positioning
+
+- **1.5.0** (2025-08-08): UI reorganization and enhanced leaderboard features
+  - Power-up timer relocation to leaderboard area
+  - Leaderboard reset functionality with confirmation
+  - Improved empty slot display system
+  - Enhanced localStorage error handling
+
+- **1.4.0** (2025-08-08): Core leaderboard system implementation
+  - localStorage-based high score tracking
+  - Top 10 leaderboard with persistent storage
+  - High score detection and name entry system
+  - Leaderboard display with rank, name, and score
 
 - **1.3.0** (2025-08-08): Hybrid audio & visual horror system with external assets
   - External MP3 audio files for rich atmospheric experience

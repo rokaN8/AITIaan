@@ -3,14 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adaptive Breakout - AI-Enhanced Brick Ball Game</title>
+    <title>Spooky Breakout - AI-Enhanced Brick Ball Game</title>
     <style>
+        @font-face {
+            font-family: 'ScaryFont';
+            src: url('assets/font/scaryfont.ttf') format('truetype');
+            font-display: swap;
+        }
+        
         body {
             margin: 0;
             padding: 20px;
             background: #000000;
             color: #ffffff;
-            font-family: 'Courier New', monospace;
+            font-family: 'ScaryFont', 'Courier New', monospace;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -43,6 +49,79 @@
             border: 1px solid #cc0000;
         }
         
+        .game-container {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            justify-content: center;
+        }
+        
+        .leaderboard {
+            width: 250px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #cc0000;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 0 15px rgba(204, 0, 0, 0.3);
+        }
+        
+        .leaderboard h3 {
+            margin: 0 0 15px 0;
+            color: #cc0000;
+            text-align: center;
+            font-size: 20px;
+            text-shadow: 0 0 10px rgba(204, 0, 0, 0.8);
+        }
+        
+        .leaderboard-entry {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid #333;
+            font-size: 14px;
+        }
+        
+        .leaderboard-entry:last-child {
+            border-bottom: none;
+        }
+        
+        .leaderboard-rank {
+            color: #888;
+            width: 25px;
+        }
+        
+        .leaderboard-name {
+            color: #fff;
+            flex: 1;
+            text-align: center;
+        }
+        
+        .leaderboard-score {
+            color: #cc0000;
+            font-weight: bold;
+        }
+        
+        .leaderboard-entry.empty .leaderboard-name,
+        .leaderboard-entry.empty .leaderboard-score {
+            color: #444;
+        }
+        
+        .reset-button {
+            width: 100%;
+            margin: 15px 0 5px 0;
+            padding: 8px 15px;
+            background: #222;
+            color: #cc0000;
+            border: 2px solid #cc0000;
+            font-size: 14px;
+        }
+        
+        .reset-button:hover {
+            background: #333;
+            border-color: #ff4444;
+            color: #ff4444;
+        }
+        
         .game-over {
             position: absolute;
             top: 50%;
@@ -54,6 +133,30 @@
             border-radius: 10px;
             text-align: center;
             display: none;
+            z-index: 1000;
+        }
+        
+        .name-entry {
+            margin: 20px 0;
+        }
+        
+        .name-entry input {
+            background: #333;
+            color: #fff;
+            border: 2px solid #cc0000;
+            padding: 10px;
+            font-family: inherit;
+            font-size: 18px;
+            text-align: center;
+            text-transform: uppercase;
+            max-width: 80px;
+            letter-spacing: 2px;
+        }
+        
+        .name-entry input:focus {
+            outline: none;
+            border-color: #ff4444;
+            box-shadow: 0 0 10px rgba(204, 0, 0, 0.5);
         }
         
         button {
@@ -71,10 +174,17 @@
             background: #555;
             border-color: #888;
         }
+        
+        button:disabled {
+            background: #222;
+            color: #666;
+            border-color: #444;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
-    <h1>Adaptive Breakout</h1>
+    <h1>Spooky Breakout</h1>
     <div class="ui">
         <div class="game-info">
             <div>Score: <span id="score">0</span></div>
@@ -82,10 +192,20 @@
             <div>Level: <span id="level">1</span></div>
             <div>Version: <span id="version">1.0.0</span></div>
         </div>
-        <div id="powerUpTimers"></div>
     </div>
     
-    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <div class="game-container">
+        <div class="leaderboard">
+            <h3>HIGH SCORES</h3>
+            <div id="leaderboardList">
+                <!-- Leaderboard entries will be populated here -->
+            </div>
+            <div id="powerUpTimers"></div>
+            <button onclick="resetLeaderboard()" class="reset-button">Reset Scores</button>
+        </div>
+        
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
+    </div>
     
     <div class="ui">
         <div>Use ← → arrow keys or mouse to control paddle</div>
@@ -109,7 +229,7 @@
 
     <script>
         // Version tracking
-        const GAME_VERSION = '1.3.0';
+        const GAME_VERSION = '1.6.0';
         
         // Game canvas and context
         const canvas = document.getElementById('gameCanvas');
@@ -322,6 +442,14 @@
         // Game over image
         let gameOverImage = null;
         let imageLoaded = false;
+        
+        // Leaderboard System
+        const LEADERBOARD_KEY = 'spookyBreakoutLeaderboard';
+        const OLD_LEADERBOARD_KEY = 'adaptiveBreakoutLeaderboard';
+        const MAX_LEADERBOARD_ENTRIES = 10;
+        let leaderboard = [];
+        let isNewHighScore = false;
+        let playerName = '';
         
         const soundManager = {
             init() {
@@ -582,10 +710,122 @@
             useMouseControl = true;
         });
         
+        // Leaderboard Management Functions
+        function loadLeaderboard() {
+            try {
+                // Try to load from new key first
+                let saved = localStorage.getItem(LEADERBOARD_KEY);
+                if (saved) {
+                    leaderboard = JSON.parse(saved);
+                } else {
+                    // Check for old key and migrate
+                    const oldSaved = localStorage.getItem(OLD_LEADERBOARD_KEY);
+                    if (oldSaved) {
+                        leaderboard = JSON.parse(oldSaved);
+                        // Save to new key
+                        localStorage.setItem(LEADERBOARD_KEY, oldSaved);
+                        // Remove old key
+                        localStorage.removeItem(OLD_LEADERBOARD_KEY);
+                        console.log('Migrated leaderboard from Adaptive Breakout to Spooky Breakout');
+                    } else {
+                        leaderboard = [];
+                    }
+                }
+            } catch (e) {
+                console.warn('Failed to load leaderboard:', e);
+                leaderboard = [];
+            }
+        }
+        
+        function saveLeaderboard() {
+            try {
+                localStorage.setItem(LEADERBOARD_KEY, JSON.stringify(leaderboard));
+            } catch (e) {
+                console.warn('Failed to save leaderboard:', e);
+            }
+        }
+        
+        function isHighScore(score) {
+            if (leaderboard.length < MAX_LEADERBOARD_ENTRIES) {
+                return true;
+            }
+            return score > leaderboard[leaderboard.length - 1].score;
+        }
+        
+        function addToLeaderboard(name, score) {
+            const entry = {
+                name: name.toUpperCase().substring(0, 3),
+                score: score,
+                date: Date.now()
+            };
+            
+            leaderboard.push(entry);
+            leaderboard.sort((a, b) => b.score - a.score);
+            
+            if (leaderboard.length > MAX_LEADERBOARD_ENTRIES) {
+                leaderboard = leaderboard.slice(0, MAX_LEADERBOARD_ENTRIES);
+            }
+            
+            saveLeaderboard();
+            updateLeaderboardDisplay();
+        }
+        
+        function updateLeaderboardDisplay() {
+            const listElement = document.getElementById('leaderboardList');
+            listElement.innerHTML = '';
+            
+            // Always show exactly 10 entries
+            for (let i = 0; i < MAX_LEADERBOARD_ENTRIES; i++) {
+                const entryDiv = document.createElement('div');
+                entryDiv.className = 'leaderboard-entry';
+                
+                const rankSpan = document.createElement('span');
+                rankSpan.className = 'leaderboard-rank';
+                rankSpan.textContent = `${i + 1}.`;
+                
+                const nameSpan = document.createElement('span');
+                nameSpan.className = 'leaderboard-name';
+                
+                const scoreSpan = document.createElement('span');
+                scoreSpan.className = 'leaderboard-score';
+                
+                if (i < leaderboard.length) {
+                    // Real entry
+                    const entry = leaderboard[i];
+                    nameSpan.textContent = entry.name;
+                    scoreSpan.textContent = entry.score.toLocaleString();
+                } else {
+                    // Empty slot
+                    entryDiv.classList.add('empty');
+                    nameSpan.textContent = '---';
+                    scoreSpan.textContent = '---';
+                }
+                
+                entryDiv.appendChild(rankSpan);
+                entryDiv.appendChild(nameSpan);
+                entryDiv.appendChild(scoreSpan);
+                
+                listElement.appendChild(entryDiv);
+            }
+        }
+        
+        function resetLeaderboard() {
+            if (confirm('Are you sure you want to reset all high scores? This cannot be undone.')) {
+                leaderboard = [];
+                saveLeaderboard();
+                updateLeaderboardDisplay();
+            }
+        }
+        
+        function validatePlayerName(name) {
+            // Remove non-alphanumeric characters and limit to 3 characters
+            return name.replace(/[^A-Z0-9]/g, '').substring(0, 3);
+        }
+        
         // Initialize game
         function init() {
             // Log version information for debugging
-            console.log(`Adaptive Breakout v${GAME_VERSION} - AI-Enhanced Brick Ball Game`);
+            console.log(`Spooky Breakout v${GAME_VERSION} - AI-Enhanced Brick Ball Game`);
             console.log('Game initialized successfully');
             
             // Update version display
@@ -605,6 +845,10 @@
                 imageLoaded = false;
             };
             gameOverImage.src = 'assets/sprites/face.png';
+            
+            // Initialize leaderboard
+            loadLeaderboard();
+            updateLeaderboardDisplay();
             
             // Initialize star field
             initStars();
@@ -862,8 +1106,87 @@
             soundManager.stopBackgroundMusic();
             soundManager.playEndGameSound();
             
+            // Check if this is a high score
+            isNewHighScore = isHighScore(score);
+            
             document.getElementById('finalScore').textContent = score;
-            document.getElementById('gameOverScreen').style.display = 'block';
+            
+            if (isNewHighScore) {
+                showNameEntry();
+            } else {
+                document.getElementById('gameOverScreen').style.display = 'block';
+            }
+        }
+        
+        // Show name entry for high score
+        function showNameEntry() {
+            const gameOverScreen = document.getElementById('gameOverScreen');
+            
+            // Create name entry HTML
+            gameOverScreen.innerHTML = `
+                <h2>NEW HIGH SCORE!</h2>
+                <div>Final Score: <span id="finalScore">${score}</span></div>
+                <div class="name-entry">
+                    <div style="margin-bottom: 10px;">Enter your name (3 characters):</div>
+                    <input type="text" id="playerNameInput" maxlength="3" placeholder="ABC" 
+                           style="text-transform: uppercase;" autocomplete="off">
+                </div>
+                <button onclick="submitHighScore()" id="submitButton">Submit Score</button>
+                <button onclick="skipHighScore()">Skip</button>
+            `;
+            
+            gameOverScreen.style.display = 'block';
+            
+            // Focus on input and add event listeners
+            const nameInput = document.getElementById('playerNameInput');
+            nameInput.focus();
+            
+            // Handle input validation
+            nameInput.addEventListener('input', function(e) {
+                let value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+                e.target.value = value;
+                
+                // Enable/disable submit button
+                const submitButton = document.getElementById('submitButton');
+                submitButton.disabled = value.length === 0;
+            });
+            
+            // Handle Enter key
+            nameInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && e.target.value.length > 0) {
+                    submitHighScore();
+                }
+            });
+        }
+        
+        // Submit high score
+        function submitHighScore() {
+            const nameInput = document.getElementById('playerNameInput');
+            const name = nameInput.value.trim();
+            
+            if (name.length > 0) {
+                addToLeaderboard(name, score);
+                showGameOverScreen();
+            }
+        }
+        
+        // Skip high score entry
+        function skipHighScore() {
+            showGameOverScreen();
+        }
+        
+        // Show regular game over screen
+        function showGameOverScreen() {
+            const gameOverScreen = document.getElementById('gameOverScreen');
+            
+            gameOverScreen.innerHTML = `
+                <h2>Game Over!</h2>
+                <div>Final Score: <span id="finalScore">${score}</span></div>
+                <button onclick="restartGame()">Play Again</button>
+            `;
+            
+            isNewHighScore = false;
+            playerName = '';
         }
         
         // Restart game
@@ -1186,7 +1509,7 @@
             // Draw waiting message
             if (gameState === 'waiting') {
                 ctx.fillStyle = '#ffff00';
-                ctx.font = '24px Courier New';
+                ctx.font = '24px ScaryFont, Courier New, monospace';
                 ctx.textAlign = 'center';
                 ctx.fillText('Press SPACE to launch ball', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
             }
