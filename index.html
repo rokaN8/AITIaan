@@ -238,7 +238,7 @@
 
     <script>
         // Version tracking
-        const GAME_VERSION = '1.8.0';
+        const GAME_VERSION = '1.9.0';
         
         // Game canvas and context
         const canvas = document.getElementById('gameCanvas');
@@ -297,12 +297,14 @@
             onPaddle: true
         };
         
-        // Brick types - Spooky theme: white to red gradient
+        // Brick types - Spooky theme: white to red gradient + supernatural bricks
         const brickTypes = {
             white: { hits: 1, points: 10, color: '#ffffff' },
             lightGray: { hits: 1, points: 20, color: '#cccccc' },
             darkGray: { hits: 2, points: 30, color: '#666666' },
-            bloodRed: { hits: 2, points: 40, color: '#cc0000' }
+            bloodRed: { hits: 2, points: 40, color: '#cc0000' },
+            ghost: { hits: 1, points: 50, color: '#88ccff', special: 'ghost' },
+            vampire: { hits: 2, points: 60, color: '#660033', special: 'vampire' }
         };
         
         // Bricks array
@@ -438,6 +440,7 @@
         
         // Particles for visual effects
         const particles = [];
+        const ballTrailParticles = [];
         
         // Screen shake
         let screenShake = { x: 0, y: 0, intensity: 0, duration: 0 };
@@ -899,15 +902,25 @@
         // Create level with bricks
         function createLevel(levelNum) {
             bricks = [];
-            const typeKeys = Object.keys(brickTypes);
+            const regularTypes = ['white', 'lightGray', 'darkGray', 'bloodRed'];
+            const specialTypes = ['ghost', 'vampire'];
             
             for (let row = 0; row < BRICK_ROWS; row++) {
                 bricks[row] = [];
                 for (let col = 0; col < BRICK_COLS; col++) {
-                    const typeIndex = Math.min(row, typeKeys.length - 1);
-                    const type = typeKeys[typeIndex];
+                    let type;
                     
-                    bricks[row][col] = {
+                    // Determine brick type based on level and position
+                    if (levelNum >= 3 && Math.random() < 0.15) {
+                        // 15% chance for special bricks from level 3+
+                        type = specialTypes[Math.floor(Math.random() * specialTypes.length)];
+                    } else {
+                        // Regular brick progression
+                        const typeIndex = Math.min(row, regularTypes.length - 1);
+                        type = regularTypes[typeIndex];
+                    }
+                    
+                    const brick = {
                         x: col * (BRICK_WIDTH + BRICK_PADDING) + BRICK_OFFSET_LEFT,
                         y: row * (BRICK_HEIGHT + BRICK_PADDING) + BRICK_OFFSET_TOP,
                         width: BRICK_WIDTH,
@@ -917,6 +930,18 @@
                         maxHits: brickTypes[type].hits,
                         visible: true
                     };
+                    
+                    // Add special properties for supernatural bricks
+                    if (brickTypes[type].special === 'ghost') {
+                        brick.phaseTimer = 0;
+                        brick.isPhased = false;
+                        brick.floatOffset = Math.random() * Math.PI * 2;
+                    } else if (brickTypes[type].special === 'vampire') {
+                        brick.regenerationTimer = 0;
+                        brick.lastRegenTime = Date.now();
+                    }
+                    
+                    bricks[row][col] = brick;
                 }
             }
             
@@ -1110,6 +1135,11 @@
                 for (let col = 0; col < BRICK_COLS; col++) {
                     const brick = bricks[row][col];
                     if (!brick.visible) continue;
+                    
+                    // Skip ghost bricks when they're phased out
+                    if (brickTypes[brick.type].special === 'ghost' && brick.isPhased) {
+                        continue;
+                    }
                     
                     if (ball.x + ball.radius >= brick.x &&
                         ball.x - ball.radius <= brick.x + brick.width &&
@@ -1556,6 +1586,107 @@
             loseLife();
         }
         
+        // Create ball trail sparkles
+        function createBallTrail() {
+            if (ball.onPaddle) return;
+            
+            // Create sparkle particles at ball position
+            const colors = ['#ffffff', '#ffdd00', '#88ccff', '#cc88ff'];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            
+            ballTrailParticles.push({
+                x: ball.x + (Math.random() - 0.5) * 4,
+                y: ball.y + (Math.random() - 0.5) * 4,
+                vx: (Math.random() - 0.5) * 2,
+                vy: (Math.random() - 0.5) * 2,
+                life: 1.0,
+                decay: 0.03,
+                color: color,
+                size: Math.random() * 2 + 1,
+                twinkle: Math.random() * Math.PI * 2,
+                twinkleSpeed: Math.random() * 0.1 + 0.05
+            });
+            
+            // Limit trail particles to prevent performance issues
+            if (ballTrailParticles.length > 50) {
+                ballTrailParticles.splice(0, ballTrailParticles.length - 50);
+            }
+        }
+        
+        // Update ball trail particles
+        function updateBallTrail() {
+            for (let i = ballTrailParticles.length - 1; i >= 0; i--) {
+                const particle = ballTrailParticles[i];
+                particle.x += particle.vx;
+                particle.y += particle.vy;
+                particle.life -= particle.decay;
+                particle.size *= 0.99;
+                particle.twinkle += particle.twinkleSpeed;
+                
+                // Add slight gravity
+                particle.vy += 0.02;
+                
+                if (particle.life <= 0) {
+                    ballTrailParticles.splice(i, 1);
+                }
+            }
+        }
+        
+        // Update special bricks
+        function updateSpecialBricks() {
+            const now = Date.now();
+            
+            for (let row = 0; row < BRICK_ROWS; row++) {
+                for (let col = 0; col < BRICK_COLS; col++) {
+                    const brick = bricks[row][col];
+                    if (!brick.visible) continue;
+                    
+                    // Update ghost bricks
+                    if (brickTypes[brick.type].special === 'ghost') {
+                        brick.phaseTimer += 16; // Assuming 60fps
+                        brick.floatOffset += 0.02;
+                        
+                        // Phase cycle: 3 seconds visible, 2 seconds invisible
+                        const cycleTime = 5000; // 5 seconds total
+                        const visibleTime = 3000; // 3 seconds visible
+                        
+                        const cyclePosition = brick.phaseTimer % cycleTime;
+                        brick.isPhased = cyclePosition > visibleTime;
+                    }
+                    
+                    // Update vampire bricks
+                    else if (brickTypes[brick.type].special === 'vampire') {
+                        brick.regenerationTimer += 16;
+                        
+                        // Regenerate 1 hit point every 8 seconds if not at max health
+                        if (brick.regenerationTimer >= 8000 && brick.hits < brick.maxHits) {
+                            brick.hits++;
+                            brick.regenerationTimer = 0;
+                            
+                            // Create blood drip particles
+                            createVampireRegenParticles(brick.x + brick.width / 2, brick.y + brick.height);
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Create vampire regeneration particles
+        function createVampireRegenParticles(x, y) {
+            for (let i = 0; i < 3; i++) {
+                particles.push({
+                    x: x + (Math.random() - 0.5) * 20,
+                    y: y,
+                    vx: (Math.random() - 0.5) * 2,
+                    vy: Math.random() * 2 + 1,
+                    life: 1.0,
+                    decay: 0.025,
+                    color: '#cc0000',
+                    size: Math.random() * 3 + 2
+                });
+            }
+        }
+        
         // Update particles
         function updateParticles() {
             for (let i = particles.length - 1; i >= 0; i--) {
@@ -1605,9 +1736,14 @@
             updateBall();
             updatePowerUps();
             updateParticles();
+            updateBallTrail();
+            updateSpecialBricks();
             updateScreenShake();
             updateStars();
             updateUI();
+            
+            // Create ball trail sparkles
+            createBallTrail();
         }
         
         // Update UI
@@ -1653,22 +1789,67 @@
             // Draw stars behind everything
             drawStars();
             
+            // Draw ball trail sparkles first (behind everything else)
+            ballTrailParticles.forEach(particle => {
+                const twinkleAlpha = particle.life * (0.5 + 0.5 * Math.sin(particle.twinkle));
+                ctx.globalAlpha = twinkleAlpha;
+                ctx.fillStyle = particle.color;
+                ctx.beginPath();
+                ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            ctx.globalAlpha = 1;
+            
             // Draw bricks
             for (let row = 0; row < BRICK_ROWS; row++) {
                 for (let col = 0; col < BRICK_COLS; col++) {
                     const brick = bricks[row][col];
                     if (!brick.visible) continue;
                     
-                    const alpha = brick.hits / brick.maxHits;
+                    let alpha = brick.hits / brick.maxHits;
                     const color = brickTypes[brick.type].color;
+                    let brickY = brick.y;
+                    
+                    // Special rendering for ghost bricks
+                    if (brickTypes[brick.type].special === 'ghost') {
+                        // Floating animation
+                        brickY += Math.sin(brick.floatOffset) * 3;
+                        
+                        // Phase in/out effect
+                        if (brick.isPhased) {
+                            alpha *= 0.2; // Very transparent when phased
+                        } else {
+                            alpha *= 0.7; // Semi-transparent when visible
+                        }
+                        
+                        // Add ethereal glow
+                        ctx.shadowColor = color;
+                        ctx.shadowBlur = 15;
+                    }
+                    
+                    // Special rendering for vampire bricks
+                    else if (brickTypes[brick.type].special === 'vampire') {
+                        // Pulsing effect when regenerating
+                        if (brick.regenerationTimer > 7000) { // Last second before regen
+                            const pulse = Math.sin(Date.now() * 0.01) * 0.3 + 0.7;
+                            alpha *= pulse;
+                            
+                            // Add red glow when regenerating
+                            ctx.shadowColor = '#cc0000';
+                            ctx.shadowBlur = 10;
+                        }
+                    }
                     
                     ctx.fillStyle = color + Math.floor(alpha * 255).toString(16).padStart(2, '0');
-                    ctx.fillRect(brick.x, brick.y, brick.width, brick.height);
+                    ctx.fillRect(brick.x, brickY, brick.width, brick.height);
+                    
+                    // Reset shadow
+                    ctx.shadowBlur = 0;
                     
                     // Add border
                     ctx.strokeStyle = '#fff';
                     ctx.lineWidth = 1;
-                    ctx.strokeRect(brick.x, brick.y, brick.width, brick.height);
+                    ctx.strokeRect(brick.x, brickY, brick.width, brick.height);
                 }
             }
             

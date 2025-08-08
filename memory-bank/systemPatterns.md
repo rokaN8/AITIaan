@@ -171,6 +171,71 @@ Effects include:
 - **Event prevention**: Stops default browser behaviors
 - **State switching**: Mouse/keyboard mode detection
 
+## Supernatural Brick System (v1.9.0)
+
+### Enhanced Brick Type Definition
+```javascript
+const brickTypes = {
+    // Regular bricks
+    white: { hits: 1, points: 10, color: '#ffffff' },
+    lightGray: { hits: 1, points: 20, color: '#cccccc' },
+    darkGray: { hits: 2, points: 30, color: '#666666' },
+    bloodRed: { hits: 2, points: 40, color: '#cc0000' },
+    // Supernatural bricks
+    ghost: { hits: 1, points: 50, color: '#88ccff', special: 'ghost' },
+    vampire: { hits: 2, points: 60, color: '#660033', special: 'vampire' }
+};
+```
+
+### Special Brick Properties
+```javascript
+// Ghost brick additional properties
+{
+    phaseTimer: number,      // Phase cycle timing
+    isPhased: boolean,       // Current phase state
+    floatOffset: number      // Floating animation offset
+}
+
+// Vampire brick additional properties
+{
+    regenerationTimer: number,  // Regeneration timing
+    lastRegenTime: number      // Last regeneration timestamp
+}
+```
+
+### Supernatural Systems Integration
+```
+Level Creation → Special Brick Spawning (15% chance from level 3+)
+    ↓
+Ghost Bricks: Phase Cycle (3s visible, 2s invisible) + Floating Animation
+Vampire Bricks: Health Regeneration (every 8s) + Pulsing Effects
+    ↓
+Enhanced Collision Detection → Skip Phased Ghost Bricks
+Special Rendering → Transparency, Glows, Animations
+```
+
+### Ball Trail System
+```javascript
+// Trail particle structure
+{
+    x: number, y: number,           // Position
+    vx: number, vy: number,         // Velocity with gravity
+    life: number, decay: number,    // Fade lifecycle
+    color: string,                  // Random sparkle color
+    size: number,                   // Particle size
+    twinkle: number,                // Twinkle animation phase
+    twinkleSpeed: number            // Twinkle rate
+}
+```
+
+### Trail Particle Flow
+```
+Ball Movement → createBallTrail() → Sparkle Generation → updateBallTrail() → Render with Twinkle
+    ↓
+Performance Limits: Max 50 particles, automatic cleanup, gravity effects
+Colors: ['#ffffff', '#ffdd00', '#88ccff', '#cc88ff'] (white, gold, cyan, purple)
+```
+
 ## Performance Considerations
 
 ### Rendering Optimizations
@@ -178,12 +243,16 @@ Effects include:
 - **Efficient collision detection**: Early exits and bounding box checks
 - **Minimal DOM manipulation**: Canvas rendering vs. DOM updates
 - **Shadow/glow effects**: Applied efficiently without performance impact
+- **Particle limits**: Ball trail capped at 50 particles for performance
+- **Special brick updates**: Efficient timer-based phase and regeneration cycles
 
 ### Memory Management
 - **Particle cleanup**: Remove expired particles from arrays
 - **Power-up cleanup**: Remove off-screen power-ups
 - **Event listener management**: Proper cleanup to prevent memory leaks
 - **State reset**: Clean object reinitialization on game restart
+- **Trail particle management**: Automatic array splicing when limit exceeded
+- **Special brick state**: Proper timer reset and property initialization
 
 ---
 *This architecture successfully balances performance, maintainability, and feature richness while maintaining the constraint of a single HTML file.*

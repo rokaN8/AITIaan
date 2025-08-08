@@ -1,11 +1,42 @@
 # Changelog
 
-All notable changes to Adaptive Breakout will be documented in this file.
+All notable changes to Spooky Breakout will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [1.9.0] - 2025-08-08
+
+### Added
+- **Ghost Bricks**: Semi-transparent supernatural bricks that phase in/out every 5 seconds (3s visible, 2s invisible)
+- **Vampire Bricks**: Dark red/purple bricks that regenerate health every 8 seconds if damaged below maximum
+- **Magical Ball Trail**: Continuous sparkle particles with twinkling effects in multiple colors (white, gold, cyan, purple)
+- **Enhanced Collision System**: Ball passes through phased-out ghost bricks completely
+- **Special Visual Effects**: Floating ghost bricks with ethereal glow, pulsing vampire bricks when regenerating
+- **Blood Drip Particles**: Visual effects when vampire bricks regenerate health
+- **Progressive Difficulty**: 15% chance for special bricks from level 3+ onwards for natural progression
+- **Balanced Scoring**: Higher point values for supernatural bricks (50 for ghost, 60 for vampire)
+
+### Changed
+- **Brick Type System**: Extended to support special properties and behaviors for supernatural bricks
+- **Level Generation**: Enhanced algorithm to include special brick spawning with progressive difficulty
+- **Particle Systems**: Added separate ball trail particle system with gravity effects and performance limits
+- **Rendering Pipeline**: Enhanced to handle transparency, glows, floating animations, and special effects
+- **Update Loop**: Added updateBallTrail() and updateSpecialBricks() functions for new systems
+
+### Technical
+- **Performance Optimization**: Ball trail particles limited to 50 maximum with automatic cleanup
+- **Memory Management**: Efficient particle lifecycle management with proper array splicing
+- **Visual Effects**: Twinkle animations, ethereal glows, and pulsing effects maintain 60fps performance
+- **Code Architecture**: Clean separation of regular and supernatural brick logic
+- **Collision Detection**: Enhanced to skip phased-out ghost bricks while maintaining accuracy
+
+### Fixed
+- **Collision Accuracy**: Ghost bricks properly phase out of collision detection when invisible
+- **Performance**: Particle systems optimized to prevent memory leaks and maintain smooth gameplay
+- **Visual Consistency**: All supernatural effects integrated seamlessly with existing spooky theme
 
 ## [1.8.0] - 2025-08-08
 
@@ -181,6 +212,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Version History
 
+- **1.9.0** (2025-08-08): Supernatural bricks and magical ball trail system
 - **1.8.0** (2025-08-08): Developer mode testing system for endgame scenarios
 - **1.7.0** (2025-08-08): Explosion powerup feature with enhanced UI
 - **1.3.0** (2025-08-08): Hybrid audio & visual horror system with external assets

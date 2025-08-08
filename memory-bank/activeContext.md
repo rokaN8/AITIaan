@@ -1,19 +1,20 @@
 # Active Context
 
 ## Current Work Focus
-**Spooky Breakout v1.8.0 completed** - Developer mode feature successfully implemented for endgame testing scenarios. Enhanced testing capabilities with isolated developer environment and comprehensive documentation updates.
+**Spooky Breakout v1.9.0 completed** - Supernatural bricks and magical ball trail system successfully implemented. Enhanced gameplay with ghost and vampire bricks plus visual magic effects.
 
 ## Recent Changes
-- **Developer mode feature**: "D" key activates testing mode with 5 random bricks and 3 lives
-- **Endgame testing capability**: Quick access to near-completion scenarios for testing explosion mechanics, AI assistance, and power-ups
-- **High score protection**: Developer mode prevents score saving to maintain leaderboard integrity
-- **Visual feedback**: Clear "DEVELOPER MODE - NO SCORE SAVED" warning on game over screen
-- **Random brick selection**: Algorithm randomly selects 5 bricks from all possible positions for varied testing scenarios
-- **State management**: Developer mode flag properly managed through game restart cycle
-- **UI integration**: Developer mode instruction added to control panel ("Press D for developer mode (5 bricks, no score)")
-- **Console logging**: Debug feedback confirms developer mode activation for development workflow
-- **Version updates**: All files updated to v1.8.0 (VERSION.md, index.html, CHANGELOG.md)
-- **Documentation updates**: Memory bank and changelog updated to reflect new testing capabilities
+- **Ghost bricks**: Semi-transparent bricks that phase in/out every 5 seconds (3s visible, 2s invisible)
+- **Vampire bricks**: Dark red/purple bricks that regenerate health every 8 seconds if damaged
+- **Magical ball trail**: Continuous sparkle particles with twinkling effects in multiple colors
+- **Enhanced collision system**: Ball passes through phased-out ghost bricks completely
+- **Special visual effects**: Floating ghost bricks with ethereal glow, pulsing vampire bricks
+- **Particle systems**: Blood drip effects for vampire regeneration, gravity-affected trail sparkles
+- **Progressive difficulty**: 15% chance for special bricks from level 3+ onwards
+- **Balanced scoring**: Higher points for supernatural bricks (50 for ghost, 60 for vampire)
+- **Performance optimization**: Particle limits and efficient rendering maintain 60fps
+- **Version updates**: All files updated to v1.9.0 (VERSION.md, index.html, CHANGELOG.md)
+- **Documentation updates**: Memory bank and changelog updated to reflect supernatural features
 
 ## Next Steps
 **Project enhanced with atmospheric audio** - Sound system successfully integrated. Game ready for continued development:
@@ -75,7 +76,7 @@
 - **File size**: Approximately 67KB for complete game with all features
 - **Repository**: https://github.com/rokaN8/AITIaan.git (main branch)
 - **Version control**: Git tracking established with comprehensive commit history
-- **Current version**: v1.8.0 with developer mode testing feature and enhanced UI
+- **Current version**: v1.9.0 with supernatural bricks and magical ball trail system
 - **Deployment status**: Ready for Git commit and continued development
 
 ---

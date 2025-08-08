@@ -1,7 +1,7 @@
 # Version Management
 
 ## Current Version
-**1.8.0** - Spooky Breakout with developer mode testing system
+**1.9.0** - Spooky Breakout with supernatural bricks and magical ball trail
 
 ## Versioning Strategy
 
@@ -91,6 +91,18 @@ style(v1.0.3): improve visual effects and animations
 7. **Push to repository**
 
 ## Version History
+
+- **1.9.0** (2025-08-08): Supernatural bricks and magical ball trail system
+  - Ghost bricks that phase in/out every 5 seconds (3s visible, 2s invisible)
+  - Vampire bricks that regenerate health every 8 seconds if damaged
+  - Magical sparkle ball trail with twinkling particles in multiple colors
+  - Enhanced collision detection skips phased-out ghost bricks
+  - Special visual effects: floating ghost bricks, pulsing vampire bricks
+  - Blood drip particles when vampire bricks regenerate
+  - Ball trail particles with gravity and fade effects
+  - 15% chance for special bricks from level 3+ for progressive difficulty
+  - Higher point values for supernatural bricks (50 for ghost, 60 for vampire)
+  - Performance optimized with particle limits and efficient rendering
 
 - **1.8.0** (2025-08-08): Developer mode testing system for endgame scenarios
   - Developer mode activated by "D" key for quick endgame scenario testing
