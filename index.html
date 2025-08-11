@@ -303,6 +303,13 @@
                         <div class="legend-details">Reduces ball speed for 20 seconds</div>
                     </div>
                 </div>
+                <div class="legend-item">
+                    <div class="legend-icon" id="multiballIcon"></div>
+                    <div class="legend-description">
+                        <div class="legend-name">Multiball</div>
+                        <div class="legend-details">Spawns 2 extra balls for 30 seconds</div>
+                    </div>
+                </div>
             </div>
             
             <div class="legend-section">
@@ -351,7 +358,7 @@
 
     <script>
         // Version tracking
-        const GAME_VERSION = '1.13.0';
+        const GAME_VERSION = '1.14.1';
         
         // Game canvas and context
         const canvas = document.getElementById('gameCanvas');
@@ -399,7 +406,8 @@
             originalWidth: PADDLE_WIDTH
         };
         
-        const ball = {
+        // Ball system - now supports multiple balls
+        let balls = [{
             x: CANVAS_WIDTH / 2,
             y: paddle.y - BALL_RADIUS - 1,
             vx: 0,
@@ -408,7 +416,10 @@
             speed: 4,
             originalSpeed: 4,
             onPaddle: true
-        };
+        }];
+        
+        // Backward compatibility - main ball reference
+        let ball = balls[0];
         
         // Brick types - Spooky theme: white to red gradient + supernatural bricks
         const brickTypes = {
@@ -437,6 +448,11 @@
                 duration: 20000, 
                 color: '#ff4444',
                 name: 'Slow Ball'
+            },
+            multiball: {
+                duration: 30000,
+                color: '#ff8800',
+                name: 'Multiball'
             }
         };
         
@@ -466,10 +482,7 @@
             const timeSinceStart = Date.now() - playerMetrics.levelStartTime;
             const avgTimePerBrick = timeSinceStart / Math.max(1, playerMetrics.bricksHit);
             
-            // High struggle indicators
-            if (playerMetrics.consecutiveDeaths >= 3 || accuracy < 0.3) return 2;
-            
-            // Medium struggle indicators  
+            // Struggle indicators (simplified to binary system)
             if (playerMetrics.consecutiveDeaths >= 2 || accuracy < 0.6 || avgTimePerBrick > 10000) return 1;
             
             // No struggle
@@ -484,9 +497,8 @@
             const struggleLevel = getStruggleLevel();
             const baseChance = 0.1;
             
-            // Increase power-up chance based on struggle
+            // Increase power-up chance based on struggle (simplified to binary system)
             switch(struggleLevel) {
-                case 2: return Math.random() < baseChance * 3; // 30% chance
                 case 1: return Math.random() < baseChance * 2; // 20% chance
                 default: return Math.random() < baseChance;    // 10% chance
             }
@@ -505,7 +517,7 @@
                 
                 // Only apply if ball is reasonably close and moving toward paddle
                 if (distance < 100 && ball.vy > 0 && ball.y > paddle.y - 100) {
-                    const magnetStrength = assistanceLevel === 2 ? 0.3 : 0.15;
+                    const magnetStrength = 0.15; // Fixed subtle assistance
                     ball.vx += (ballToPaddle > 0 ? magnetStrength : -magnetStrength);
                 }
             }
@@ -517,7 +529,7 @@
             if (assistanceLevel === 0) return false; // No help
             
             // Expand collision detection for struggling players
-            const expansion = assistanceLevel === 2 ? 8 : 4;
+            const expansion = 4; // Fixed subtle assistance
             
             // Check expanded paddle collision
             if (ball.y + ball.radius >= paddle.y - expansion &&
@@ -1061,6 +1073,21 @@
                 ghostBrickIcon.style.animation = 'ghostPulse 2s ease-in-out infinite';
             }
             
+            // Multiball Icon
+            const multiballIcon = document.getElementById('multiballIcon');
+            if (multiballIcon) {
+                multiballIcon.style.background = 'linear-gradient(to right, #ff8800, #ffdd00)';
+                multiballIcon.style.border = '2px solid #ff8800';
+                multiballIcon.style.position = 'relative';
+                multiballIcon.style.borderRadius = '3px';
+                // Add three circles in triangular formation
+                multiballIcon.innerHTML = `
+                    <div style="position: absolute; top: 3px; left: 50%; width: 8px; height: 8px; background: #fff; border-radius: 50%; transform: translateX(-50%);"></div>
+                    <div style="position: absolute; bottom: 3px; left: 25%; width: 8px; height: 8px; background: #fff; border-radius: 50%; transform: translateX(-50%);"></div>
+                    <div style="position: absolute; bottom: 3px; right: 25%; width: 8px; height: 8px; background: #fff; border-radius: 50%; transform: translateX(50%);"></div>
+                `;
+            }
+            
             // Vampire Brick Icon
             const vampireBrickIcon = document.getElementById('vampireBrickIcon');
             if (vampireBrickIcon) {
@@ -1302,11 +1329,20 @@
         
         // Reset ball to paddle
         function resetBall() {
-            ball.x = paddle.x + paddle.width / 2;
-            ball.y = paddle.y - BALL_RADIUS - 1;
-            ball.vx = 0;
-            ball.vy = 0;
-            ball.onPaddle = true;
+            // Reinitialize balls array with a single ball
+            balls = [{
+                x: paddle.x + paddle.width / 2,
+                y: paddle.y - BALL_RADIUS - 1,
+                vx: 0,
+                vy: 0,
+                radius: BALL_RADIUS,
+                speed: 4,
+                originalSpeed: 4,
+                onPaddle: true
+            }];
+            
+            // Update main ball reference
+            ball = balls[0];
             gameState = 'waiting';
         }
         
@@ -1347,73 +1383,92 @@
         
         // Update ball position and physics
         function updateBall() {
-            if (ball.onPaddle) return;
-            
-            // Apply AI physics assistance
-            applyPhysicsAssistance();
-            
-            ball.x += ball.vx;
-            ball.y += ball.vy;
-            
-            // Wall collisions
-            if (ball.x - ball.radius <= 0 || ball.x + ball.radius >= CANVAS_WIDTH) {
-                ball.vx = -ball.vx;
-                ball.x = Math.max(ball.radius, Math.min(CANVAS_WIDTH - ball.radius, ball.x));
-                playerMetrics.totalBallBounces++;
+            // Update all balls
+            for (let i = balls.length - 1; i >= 0; i--) {
+                const currentBall = balls[i];
+                
+                if (currentBall.onPaddle) continue;
+                
+                // Apply AI physics assistance (only to main ball)
+                if (currentBall === ball) {
+                    applyPhysicsAssistance();
+                }
+                
+                currentBall.x += currentBall.vx;
+                currentBall.y += currentBall.vy;
+                
+                // Wall collisions
+                if (currentBall.x - currentBall.radius <= 0 || currentBall.x + currentBall.radius >= CANVAS_WIDTH) {
+                    currentBall.vx = -currentBall.vx;
+                    currentBall.x = Math.max(currentBall.radius, Math.min(CANVAS_WIDTH - currentBall.radius, currentBall.x));
+                    playerMetrics.totalBallBounces++;
+                }
+                
+                if (currentBall.y - currentBall.radius <= 0) {
+                    currentBall.vy = -currentBall.vy;
+                    currentBall.y = currentBall.radius;
+                    playerMetrics.totalBallBounces++;
+                }
+                
+                // Ball fell off bottom
+                if (currentBall.y - currentBall.radius > CANVAS_HEIGHT) {
+                    // Remove this ball from the array
+                    balls.splice(i, 1);
+                    
+                    // If this was the main ball, update reference
+                    if (currentBall === ball && balls.length > 0) {
+                        ball = balls[0];
+                    }
+                    
+                    // If no balls left, lose a life
+                    if (balls.length === 0) {
+                        loseLife();
+                        return;
+                    }
+                    continue;
+                }
+                
+                // Paddle collision
+                checkPaddleBallCollision(currentBall);
+                
+                // Brick collisions
+                checkBrickCollisions(currentBall);
             }
-            
-            if (ball.y - ball.radius <= 0) {
-                ball.vy = -ball.vy;
-                ball.y = ball.radius;
-                playerMetrics.totalBallBounces++;
-            }
-            
-            // Ball fell off bottom
-            if (ball.y - ball.radius > CANVAS_HEIGHT) {
-                loseLife();
-                return;
-            }
-            
-            // Paddle collision
-            checkPaddleBallCollision();
-            
-            // Brick collisions
-            checkBrickCollisions();
         }
         
         // Check paddle-ball collision
-        function checkPaddleBallCollision() {
-            // First try AI assistance for struggling players
-            if (applyCollisionAssistance()) {
+        function checkPaddleBallCollision(currentBall) {
+            // First try AI assistance for struggling players (only for main ball)
+            if (currentBall === ball && applyCollisionAssistance()) {
                 return; // AI assistance handled the collision
             }
             
             // Normal collision detection
-            if (ball.y + ball.radius >= paddle.y &&
-                ball.y - ball.radius <= paddle.y + paddle.height &&
-                ball.x >= paddle.x &&
-                ball.x <= paddle.x + paddle.width) {
+            if (currentBall.y + currentBall.radius >= paddle.y &&
+                currentBall.y - currentBall.radius <= paddle.y + paddle.height &&
+                currentBall.x >= paddle.x &&
+                currentBall.x <= paddle.x + paddle.width) {
                 
                 // Calculate hit position on paddle (-1 to 1)
-                const hitPos = (ball.x - (paddle.x + paddle.width / 2)) / (paddle.width / 2);
+                const hitPos = (currentBall.x - (paddle.x + paddle.width / 2)) / (paddle.width / 2);
                 
                 // Adjust ball angle based on hit position
-                ball.vx = hitPos * 5;
-                ball.vy = -Math.abs(ball.vy);
+                currentBall.vx = hitPos * 5;
+                currentBall.vy = -Math.abs(currentBall.vy);
                 
                 // Ensure minimum upward velocity
-                if (Math.abs(ball.vy) < 3) {
-                    ball.vy = -3;
+                if (Math.abs(currentBall.vy) < 3) {
+                    currentBall.vy = -3;
                 }
                 
-                ball.y = paddle.y - ball.radius;
+                currentBall.y = paddle.y - currentBall.radius;
                 playerMetrics.paddleHits++;
                 playerMetrics.totalBallBounces++;
             }
         }
         
         // Check brick collisions
-        function checkBrickCollisions() {
+        function checkBrickCollisions(currentBall) {
             for (let row = 0; row < BRICK_ROWS; row++) {
                 for (let col = 0; col < BRICK_COLS; col++) {
                     const brick = bricks[row][col];
@@ -1424,23 +1479,23 @@
                         continue;
                     }
                     
-                    if (ball.x + ball.radius >= brick.x &&
-                        ball.x - ball.radius <= brick.x + brick.width &&
-                        ball.y + ball.radius >= brick.y &&
-                        ball.y - ball.radius <= brick.y + brick.height) {
+                    if (currentBall.x + currentBall.radius >= brick.x &&
+                        currentBall.x - currentBall.radius <= brick.x + brick.width &&
+                        currentBall.y + currentBall.radius >= brick.y &&
+                        currentBall.y - currentBall.radius <= brick.y + brick.height) {
                         
                         // Determine collision side
-                        const overlapLeft = (ball.x + ball.radius) - brick.x;
-                        const overlapRight = (brick.x + brick.width) - (ball.x - ball.radius);
-                        const overlapTop = (ball.y + ball.radius) - brick.y;
-                        const overlapBottom = (brick.y + brick.height) - (ball.y - ball.radius);
+                        const overlapLeft = (currentBall.x + currentBall.radius) - brick.x;
+                        const overlapRight = (brick.x + brick.width) - (currentBall.x - currentBall.radius);
+                        const overlapTop = (currentBall.y + currentBall.radius) - brick.y;
+                        const overlapBottom = (brick.y + brick.height) - (currentBall.y - currentBall.radius);
                         
                         const minOverlap = Math.min(overlapLeft, overlapRight, overlapTop, overlapBottom);
                         
                         if (minOverlap === overlapLeft || minOverlap === overlapRight) {
-                            ball.vx = -ball.vx;
+                            currentBall.vx = -currentBall.vx;
                         } else {
-                            ball.vy = -ball.vy;
+                            currentBall.vy = -currentBall.vy;
                         }
                         
                         // Damage brick
@@ -1675,7 +1730,17 @@
         // Spawn power-up
         function spawnPowerUp(x, y) {
             const types = Object.keys(powerUpTypes);
-            const type = types[Math.floor(Math.random() * types.length)];
+            let type;
+            
+            // Weighted selection: multiball is rarer (33% vs 50% each for others)
+            const rand = Math.random();
+            if (rand < 0.33) {
+                type = 'multiball';
+            } else if (rand < 0.665) {
+                type = 'widePaddle';
+            } else {
+                type = 'slowBall';
+            }
             
             powerUps.push({
                 x: x,
@@ -1759,6 +1824,24 @@
                         const ratio = ball.speed / currentSpeed;
                         ball.vx *= ratio;
                         ball.vy *= ratio;
+                    }
+                    break;
+                case 'multiball':
+                    // Spawn 2 additional balls if we only have 1 ball
+                    if (balls.length === 1) {
+                        for (let i = 0; i < 2; i++) {
+                            const newBall = {
+                                x: ball.x,
+                                y: ball.y,
+                                vx: (Math.random() - 0.5) * 6, // Random horizontal velocity
+                                vy: -Math.abs(ball.vy), // Same upward velocity as main ball
+                                radius: BALL_RADIUS,
+                                speed: ball.speed,
+                                originalSpeed: ball.originalSpeed,
+                                onPaddle: false
+                            };
+                            balls.push(newBall);
+                        }
                     }
                     break;
             }
@@ -1872,28 +1955,31 @@
         
         // Create ball trail sparkles
         function createBallTrail() {
-            if (ball.onPaddle) return;
-            
-            // Create sparkle particles at ball position
-            const colors = ['#ffffff', '#ffdd00', '#88ccff', '#cc88ff'];
-            const color = colors[Math.floor(Math.random() * colors.length)];
-            
-            ballTrailParticles.push({
-                x: ball.x + (Math.random() - 0.5) * 4,
-                y: ball.y + (Math.random() - 0.5) * 4,
-                vx: (Math.random() - 0.5) * 2,
-                vy: (Math.random() - 0.5) * 2,
-                life: 1.0,
-                decay: 0.03,
-                color: color,
-                size: Math.random() * 2 + 1,
-                twinkle: Math.random() * Math.PI * 2,
-                twinkleSpeed: Math.random() * 0.1 + 0.05
+            // Create sparkle particles for each ball
+            balls.forEach(currentBall => {
+                if (currentBall.onPaddle) return;
+                
+                // Create sparkle particles at ball position
+                const colors = ['#ffffff', '#ffdd00', '#88ccff', '#cc88ff'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                ballTrailParticles.push({
+                    x: currentBall.x + (Math.random() - 0.5) * 4,
+                    y: currentBall.y + (Math.random() - 0.5) * 4,
+                    vx: (Math.random() - 0.5) * 2,
+                    vy: (Math.random() - 0.5) * 2,
+                    life: 1.0,
+                    decay: 0.03,
+                    color: color,
+                    size: Math.random() * 2 + 1,
+                    twinkle: Math.random() * Math.PI * 2,
+                    twinkleSpeed: Math.random() * 0.1 + 0.05
+                });
             });
             
             // Limit trail particles to prevent performance issues
-            if (ballTrailParticles.length > 50) {
-                ballTrailParticles.splice(0, ballTrailParticles.length - 50);
+            if (ballTrailParticles.length > 100) { // Increased limit for multiple balls
+                ballTrailParticles.splice(0, ballTrailParticles.length - 100);
             }
         }
         
@@ -2329,20 +2415,22 @@
             ctx.lineWidth = 2;
             ctx.strokeRect(paddle.x, paddle.y, paddle.width, paddle.height);
             
-            // Draw ball (hollow with white border)
-            ctx.strokeStyle = '#ffffff';
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
-            ctx.stroke();
-            
-            // Add ball glow
-            ctx.shadowColor = '#ffffff';
-            ctx.shadowBlur = 15;
-            ctx.beginPath();
-            ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
-            ctx.stroke();
-            ctx.shadowBlur = 0;
+            // Draw all balls (hollow with white border)
+            balls.forEach(currentBall => {
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(currentBall.x, currentBall.y, currentBall.radius, 0, Math.PI * 2);
+                ctx.stroke();
+                
+                // Add ball glow
+                ctx.shadowColor = '#ffffff';
+                ctx.shadowBlur = 15;
+                ctx.beginPath();
+                ctx.arc(currentBall.x, currentBall.y, currentBall.radius, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.shadowBlur = 0;
+            });
             
             // Draw power-ups with unique styles
             powerUps.forEach(powerUp => {
@@ -2402,6 +2490,37 @@
                     ctx.moveTo(centerX + radius - 2, centerY);
                     ctx.lineTo(centerX + radius - 6, centerY);
                     ctx.stroke();
+                    
+                } else if (powerUp.type === 'multiball') {
+                    // Multiball: Draw as three circles in triangular formation
+                    const radius = 6;
+                    
+                    // Draw background rectangle
+                    ctx.fillStyle = powerUpTypes[powerUp.type].color;
+                    ctx.fillRect(powerUp.x, powerUp.y, powerUp.width, powerUp.height);
+                    
+                    // Add border
+                    ctx.strokeStyle = '#ffffff';
+                    ctx.lineWidth = 2;
+                    ctx.strokeRect(powerUp.x, powerUp.y, powerUp.width, powerUp.height);
+                    
+                    // Draw three balls in triangular formation
+                    ctx.fillStyle = '#ffffff';
+                    
+                    // Top ball
+                    ctx.beginPath();
+                    ctx.arc(centerX, centerY - 4, radius, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    // Bottom left ball
+                    ctx.beginPath();
+                    ctx.arc(centerX - 6, centerY + 4, radius, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    // Bottom right ball
+                    ctx.beginPath();
+                    ctx.arc(centerX + 6, centerY + 4, radius, 0, Math.PI * 2);
+                    ctx.fill();
                 }
                 
                 ctx.shadowBlur = 0;

@@ -1,22 +1,22 @@
 # Active Context
 
 ## Current Work Focus
-**Spooky Breakout v1.13.0 completed** - Legend panel and enhanced gameplay features successfully implemented. Game now features comprehensive visual guidance through legend panel, improved power-up identification, special blocks from level 1, and lives reset system.
+**Spooky Breakout v1.14.1 completed** - Critical ball respawn bug fixed and multiball power-up system enhanced. Game now features reliable ball respawn mechanics, new multiball power-up, and improved gameplay stability.
 
 ## Recent Changes
-- **Legend panel implementation**: Added comprehensive legend panel on right side of screen
-- **Power-up descriptions**: Wide Paddle and Slow Ball with detailed descriptions and animated icons
-- **Special block descriptions**: Ghost Brick and Vampire Brick with mechanics explanations and visual effects
-- **Animated legend icons**: Ghost brick icon with ethereal pulsing, vampire brick with blood-red effects
-- **Enhanced power-up visuals**: Wide Paddle appears as wider rectangle with paddle design, Slow Ball as circle with clock markings
-- **Special block availability**: Ghost and vampire bricks now start from level 1 instead of level 2
-- **Lives reset system**: Lives now reset to 3 at the start of each new level for better progression
-- **Power-up identification**: Unique visual styles make power-ups instantly recognizable during gameplay
-- **User experience enhancement**: Legend panel provides clear visual guidance for all game elements
-- **Gameplay balance improvement**: Earlier introduction of special blocks creates more engaging gameplay from start
-- **Accessibility enhancement**: Lives reset system provides fresh start for each level while maintaining challenge
-- **Version updates**: All files updated to v1.13.0 (VERSION.md, index.html, CHANGELOG.md)
-- **Documentation updates**: Memory bank, changelog, and version files updated to reflect new features
+- **Ball respawn bug fix**: Fixed critical issue where ball wouldn't respawn on paddle after first miss
+- **Multiball power-up implementation**: Added new multiball power-up that spawns 2 extra balls for 30 seconds
+- **Enhanced ball system**: Complete rewrite of ball physics to support multiple balls simultaneously
+- **Improved power-up balance**: Multiball has 33% spawn probability vs 50% each for other power-ups
+- **Smart life system**: Only lose life when ALL balls fall off screen during multiball
+- **Unique multiball visual**: Orange-to-yellow gradient rectangle with three white circles in triangular formation
+- **Enhanced collision detection**: Each ball independently handles paddle and brick collisions
+- **Ball trail system**: Enhanced to support multiple balls with increased particle limit (100 particles)
+- **Memory management**: Proper cleanup of balls when they fall off screen
+- **resetBall() function rewrite**: Complete reinitialization of balls array with proper ball reference management
+- **Multiball physics**: Independent collision detection, trails, and physics for each ball
+- **Version updates**: All files updated to v1.14.1 (VERSION.md, index.html, CHANGELOG.md)
+- **Bug fix documentation**: Memory bank and changelog updated to reflect critical fix
 
 ## Next Steps
 **Project enhanced with atmospheric audio** - Sound system successfully integrated. Game ready for continued development:

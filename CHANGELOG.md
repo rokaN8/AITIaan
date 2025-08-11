@@ -2,6 +2,38 @@
 
 All notable changes to Spooky Breakout will be documented in this file.
 
+## [1.14.1] - 2025-01-08
+
+### Fixed
+- **Critical Ball Respawn Bug**: Fixed issue where ball wouldn't respawn on paddle after first miss
+- **resetBall() Function**: Complete rewrite with proper balls array reinitialization
+- **Ball Reference Management**: Ensured main ball pointer stays valid after array changes
+- **Memory Management**: Proper cleanup of balls when they fall off screen
+
+### Improved
+- **Game Stability**: Critical stability improvement ensuring reliable gameplay continuation after ball loss
+- **Ball System Reliability**: Enhanced ball system robustness for multiball scenarios
+
+## [1.14.0] - 2025-01-08
+
+### Added
+- **Multiball Power-up**: New power-up that spawns 2 additional balls for 30 seconds
+- **Multiball Visual Design**: Three circles in triangular formation with orange-to-yellow gradient
+- **Multiball Legend Entry**: Added to legend panel with animated icon showing three circles
+- **Multiple Ball Physics**: Independent collision detection and physics for each ball
+- **Enhanced Ball Trail**: Supports multiple balls with increased particle limit (50→100)
+
+### Changed
+- **AI Assistance Simplified**: Removed level 2 active assistance, now binary system (no help/subtle help)
+- **Struggle Detection**: Simplified to single threshold for cleaner, more predictable assistance
+- **Power-up Balance**: Multiball has 33% spawn probability vs 50% each for Wide Paddle and Slow Ball
+- **Lives System**: Only lose life when ALL balls fall off screen during multiball
+
+### Improved
+- **Ball Rendering**: All balls now render with individual trails and collision detection
+- **Performance**: Optimized multi-ball systems while maintaining 60fps
+- **User Experience**: Clearer AI assistance behavior with binary on/off system
+
 ## [1.13.0] - 2025-01-08
 
 ### Added

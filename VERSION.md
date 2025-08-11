@@ -1,5 +1,24 @@
 # Version History
 
+## v1.14.1 - Ball Respawn Bug Fix (2025-01-08)
+- **CRITICAL FIX**: Fixed ball respawn bug where ball wouldn't respawn on paddle after first miss
+- **ENHANCED**: Complete rewrite of resetBall() function with proper balls array reinitialization
+- **STABILITY**: Ball reference management ensuring main ball pointer stays valid after array changes
+- **RELIABILITY**: Proper memory management with cleanup of balls when they fall off screen
+- **GAMEPLAY**: Critical stability improvement ensuring reliable gameplay continuation after ball loss
+
+## v1.14.0 - AI Simplification & Multiball Power-up (2025-01-08)
+- **SIMPLIFIED**: Removed level 2 AI assistance, now binary system (no help/subtle help)
+- **AI**: Simplified struggle detection to single threshold for cleaner assistance
+- **NEW**: Multiball power-up spawns 2 additional balls for 30 seconds
+- **NEW**: Multiball visual design with three circles in triangular formation
+- **NEW**: Added multiball to legend panel with animated icon
+- **ENHANCED**: Multiple ball physics system with independent collision detection
+- **ENHANCED**: Ball trail system supports multiple balls with increased particle limit
+- **BALANCE**: Multiball has 33% spawn probability vs 50% for other power-ups
+- **GAMEPLAY**: Only lose life when ALL balls fall off screen during multiball
+- **PERFORMANCE**: Optimized multi-ball rendering and collision systems
+
 ## v1.13.0 - Legend Panel & Enhanced Gameplay (2025-01-08)
 - **NEW**: Added comprehensive legend panel on right side of screen
 - **NEW**: Legend shows power-ups (Wide Paddle, Slow Ball) with descriptions and animated icons
