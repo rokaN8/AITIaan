@@ -294,7 +294,7 @@
     - Version synchronization across all files and documentation to v1.14.1
     - Critical stability improvement ensuring reliable gameplay continuation after ball loss
 
-19. **✅ Modularization & Bug Fixes** (Latest milestone - v1.15.0)
+19. **✅ Modularization & Bug Fixes** (v1.15.0)
     - **Complete modularization**: Split monolithic game into 7 specialized JavaScript modules
     - **CSS extraction**: Moved all styles from index.html to assets/css/styles.css
     - **System separation**: gameLogic, soundManager, aiSystem, visualEffects, physics, brickSystem, powerUpSystem
@@ -310,6 +310,20 @@
     - **5 random bricks**: Developer mode creates minimal brick layout for quick testing
     - Version synchronization across all files and documentation to v1.15.0
     - Complete modularization while maintaining all functionality and performance
+
+20. **✅ Bomb Explosion Bug Fixes & Title Update** (Latest milestone - v1.16.0)
+    - **Critical explosion timing bug fixed**: Added explosion state management with 1-second delay for particle animation
+    - **Multi-ball explosion support**: Enhanced explodeBall() function to create explosions at ALL ball positions
+    - **Game over input conflict resolved**: Added game state checks to prevent keyboard shortcuts during name entry
+    - **Enhanced visual effects**: Multiple particle systems with increased screen shake intensity (12 vs 8)
+    - **Delayed state changes**: Visual effects continue updating during explosion before game state transitions
+    - **Game title simplification**: Changed from "AITIaan - Spooky Breakout" to just "Spooky Breakout"
+    - **Consistent branding**: Updated both browser tab title and page heading for unified naming
+    - **Explosion state object**: Added timing management with callback system for proper sequencing
+    - **Input filtering**: Conditional logic prevents unwanted key presses during game over screen
+    - **Spectacular explosions**: Increased particle count (25 per ball) and enhanced screen shake effects
+    - Version synchronization across all files and documentation to v1.16.0
+    - Complete bomb functionality restoration with all critical bugs resolved
 
 ## Upcoming Milestones
 **No upcoming milestones** - Project is complete, deployed, and meets all requirements.

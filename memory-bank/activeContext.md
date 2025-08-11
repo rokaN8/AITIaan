@@ -1,33 +1,27 @@
 # Active Context
 
 ## Current Work Focus
-**Spooky Breakout v1.15.0 completed** - Major modularization and bug fixes completed. Game successfully split into modular subsystems with all visual elements restored and developer mode functionality enhanced.
+**Spooky Breakout v1.16.0 completed** - Critical bomb explosion bugs fixed and game title updated. All explosion functionality now works perfectly with proper timing, visual effects, and game state management.
 
 ## Recent Changes
-### **Phase 1: Modularization (v1.15.0)**
-- **CSS extraction**: Moved all styles from index.html to assets/css/styles.css
-- **JavaScript modularization**: Split monolithic game into 7 specialized subsystems:
-  - `gameLogic.js` - Core game loop and state management
-  - `soundManager.js` - Audio system with background music and sound effects
-  - `aiSystem.js` - Intelligent player assistance and metrics tracking
-  - `visualEffects.js` - Particles, screen shake, stars, and image rendering
-  - `physics.js` - Ball/paddle physics and collision detection
-  - `brickSystem.js` - Brick creation, special behaviors, and level generation
-  - `powerUpSystem.js` - Power-up spawning, effects, and management
+### **Phase 1: Bomb Explosion Bug Fixes (v1.16.0)**
+- **Bug 1 - Explosion timing fixed**: Added explosion state management with 1-second delay to allow particles to animate
+- **Bug 2 - Multi-ball explosion support**: Now creates explosions at ALL ball positions when multiball is active
+- **Bug 3 - Input conflict resolution**: Added game state checks to prevent keyboard shortcuts during game over screen
+- **Enhanced visual effects**: Multiple particle systems with increased screen shake intensity for dramatic explosions
+- **Delayed state changes**: Visual effects continue updating during explosion animation before game state changes
 
-### **Phase 2: Bug Fixes (v1.15.0)**
-- **Missing images restored**: Fixed background image, game over face, and floating ghost sprites
-- **Ball/paddle styling fixed**: Restored hollow balls with glow effects and black paddle with white borders
-- **Paddle movement during reset**: Players can now position paddle while ball is waiting to launch
-- **Auto-restart after high score**: Game automatically resets to level 1 after score submission
-- **Developer mode restoration**: Full developer mode functionality restored with enhanced features
+### **Phase 2: Game Title Update (v1.16.0)**
+- **Title simplification**: Changed from "AITIaan - Spooky Breakout" to just "Spooky Breakout"
+- **Browser tab title**: Updated HTML title tag for cleaner branding
+- **Page heading**: Updated main H1 heading to match simplified title
+- **Consistent branding**: Game now uses unified "Spooky Breakout" name throughout
 
-### **Phase 3: Developer Mode Enhancement (v1.15.0)**
-- **'D' key activation**: Toggle developer mode with visual indicator and console feedback
-- **Lives control (+/-)**: Adjust lives between 1-10 with real-time UI updates
-- **Level control ([/])**: Adjust level difficulty between 1-99 with automatic level recreation
-- **Enhanced developer experience**: Visual "DEV MODE" indicator with control hints on canvas
-- **5 random bricks**: Developer mode creates minimal brick layout for quick testing
+### **Phase 3: Technical Implementation (v1.16.0)**
+- **Explosion state object**: Added timing management with callback system for delayed actions
+- **Multi-ball iteration**: Enhanced explodeBall() function to handle multiple balls simultaneously
+- **Input filtering**: Conditional logic prevents unwanted key presses during name entry
+- **Visual enhancement**: Increased particle count and screen shake for more spectacular explosions
 
 ## Next Steps
 **Project enhanced with atmospheric audio** - Sound system successfully integrated. Game ready for continued development:

@@ -24,6 +24,14 @@ class GameLogic {
         this.canvas = null;
         this.ctx = null;
         
+        // Explosion state management
+        this.explosionState = {
+            active: false,
+            timer: 0,
+            duration: 1000, // 1 second delay
+            callback: null
+        };
+        
         // Leaderboard
         this.leaderboard = this.loadLeaderboard();
     }
@@ -115,6 +123,17 @@ class GameLogic {
 
     // Handle keyboard input
     handleKeyDown(e) {
+        // During game over, only allow essential keys for name entry
+        if (this.gameState === 'gameOver') {
+            // Allow Enter to submit score
+            if (e.code === 'Enter') {
+                e.preventDefault();
+                this.submitScore();
+            }
+            // Block all other game controls during name entry
+            return;
+        }
+        
         switch(e.code) {
             case 'ArrowLeft':
             case 'KeyA':
@@ -158,6 +177,9 @@ class GameLogic {
                 if (this.isDeveloperMode) {
                     this.adjustLevel(1);
                 }
+                break;
+            case 'KeyB':
+                this.explodeBall();
                 break;
         }
     }
@@ -227,6 +249,24 @@ class GameLogic {
             });
         }
         
+        // Always update visual effects (including during explosions)
+        window.visualEffects.update();
+        
+        // Handle explosion state timing
+        if (this.explosionState.active) {
+            this.explosionState.timer += 16; // Assuming 60fps
+            if (this.explosionState.timer >= this.explosionState.duration) {
+                // Explosion animation complete, execute callback
+                this.explosionState.active = false;
+                this.explosionState.timer = 0;
+                if (this.explosionState.callback) {
+                    this.explosionState.callback();
+                    this.explosionState.callback = null;
+                }
+            }
+            // Don't return here - continue updating other systems during explosion
+        }
+        
         if (this.gameState !== 'playing') return;
         
         // Update balls
@@ -265,7 +305,6 @@ class GameLogic {
         // Update systems
         window.brickSystem.updateSpecialBricks(this.bricks);
         window.powerUpSystem.update(this.paddle);
-        window.visualEffects.update();
         
         // Create ball trail effects
         window.visualEffects.createBallTrail(this.balls);
@@ -335,9 +374,59 @@ class GameLogic {
         window.soundManager.stopBackgroundMusic();
     }
 
+    // Explode ball at current position
+    explodeBall() {
+        // Only allow explosion during active gameplay when ball is not on paddle
+        if (this.gameState !== 'playing' || this.balls.some(ball => ball.onPaddle) || this.explosionState.active) {
+            return;
+        }
+        
+        // Don't explode if no balls exist
+        if (this.balls.length === 0) return;
+        
+        const explosionRadius = 180;
+        let totalPoints = 0;
+        
+        // Play explosion sound
+        window.soundManager.playExplosion();
+        
+        // Create explosions at ALL ball positions for multiball support
+        this.balls.forEach(ball => {
+            // Create explosion visual effects for each ball
+            window.visualEffects.createExplosionParticles(ball.x, ball.y, 25);
+            
+            // Get bricks in explosion radius and destroy them
+            const result = window.brickSystem.getBricksInExplosionRadius(
+                ball.x, ball.y, explosionRadius, this.bricks
+            );
+            
+            totalPoints += result.totalPoints;
+        });
+        
+        // Add intense screen shake for multiple explosions
+        window.visualEffects.addScreenShake(12, 600);
+        
+        // Award points for all destroyed bricks
+        this.score += totalPoints;
+        
+        // Set explosion state to delay game state changes
+        this.explosionState.active = true;
+        this.explosionState.timer = 0;
+        
+        // Check if level is complete BEFORE losing life
+        if (window.brickSystem.isLevelComplete(this.bricks)) {
+            // Level complete - advance to next level and reset lives to 3
+            this.explosionState.callback = () => this.completeLevel();
+        } else {
+            // Level not complete - lose a life
+            this.explosionState.callback = () => this.loseLife();
+        }
+    }
+
     // Complete current level
     completeLevel() {
         this.level++;
+        this.lives = 3; // Reset lives to 3 when completing level
         this.createLevel();
         this.resetBallToPaddle();
         

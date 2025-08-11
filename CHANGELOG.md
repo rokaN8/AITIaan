@@ -2,6 +2,30 @@
 
 All notable changes to Spooky Breakout will be documented in this file.
 
+## [1.16.0] - 2025-01-11
+
+### Critical Bug Fixes
+- **Explosion Timing Bug**: Fixed critical issue where game would pause and particles wouldn't update during bomb explosions
+- **Multi-ball Explosion Support**: Enhanced explodeBall() function to create explosions at ALL ball positions when multiball is active
+- **Game Over Input Conflicts**: Resolved keyboard shortcut conflicts during game over screen name entry
+
+### Enhanced Visual Effects
+- **Explosion State Management**: Added 1-second delay system allowing particles to animate before game state changes
+- **Multiple Particle Systems**: Each ball now creates its own explosion with 25 particles per explosion
+- **Increased Screen Shake**: Enhanced from intensity 8 to 12 for more dramatic explosion feedback
+- **Delayed State Changes**: Visual effects continue updating during explosion animation before game transitions
+
+### Game Title Update
+- **Simplified Branding**: Changed from "AITIaan - Spooky Breakout" to just "Spooky Breakout"
+- **Consistent Naming**: Updated both browser tab title and main page heading
+- **Unified Identity**: Game now uses clean, consistent "Spooky Breakout" branding throughout
+
+### Technical Improvements
+- **Explosion State Object**: Added timing management with callback system for proper action sequencing
+- **Input Filtering**: Conditional logic prevents unwanted key presses during game over screen
+- **Enhanced Spectacle**: Spectacular multi-ball explosions with increased particle count and screen shake
+- **Performance**: Maintained 60fps performance with enhanced visual effects
+
 ## [1.15.0] - 2025-01-11
 
 ### Major Modularization

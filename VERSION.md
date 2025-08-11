@@ -1,5 +1,18 @@
 # Version History
 
+## v1.16.0 - Bomb Explosion Bug Fixes & Title Update (2025-01-11)
+- **CRITICAL FIX**: Fixed explosion timing bug - added 1-second delay for particle animation
+- **ENHANCED**: Multi-ball explosion support - creates explosions at ALL ball positions
+- **BUG FIX**: Game over input conflict resolved - prevents keyboard shortcuts during name entry
+- **VISUAL**: Enhanced explosion effects with multiple particle systems and increased screen shake (12 vs 8)
+- **TIMING**: Delayed state changes allow visual effects to complete before game state transitions
+- **BRANDING**: Game title simplified from "AITIaan - Spooky Breakout" to just "Spooky Breakout"
+- **UI**: Updated both browser tab title and page heading for consistent branding
+- **ARCHITECTURE**: Added explosion state object with timing management and callback system
+- **INPUT**: Conditional logic prevents unwanted key presses during game over screen
+- **SPECTACLE**: Increased particle count (25 per ball) for more dramatic explosion effects
+- **PERFORMANCE**: Maintained 60fps performance with enhanced visual effects
+
 ## v1.15.0 - Modularization & Bug Fixes (2025-01-11)
 - **MODULARIZATION**: Split monolithic game into 7 specialized JavaScript modules
 - **ARCHITECTURE**: Extracted CSS to assets/css/styles.css for better organization
