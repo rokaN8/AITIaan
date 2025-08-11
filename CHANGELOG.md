@@ -2,6 +2,31 @@
 
 All notable changes to Spooky Breakout will be documented in this file.
 
+## [1.15.0] - 2025-01-11
+
+### Major Modularization
+- **Complete Modularization**: Split monolithic game into 7 specialized JavaScript modules
+- **CSS Extraction**: Moved all styles from index.html to assets/css/styles.css for better organization
+- **System Separation**: Created dedicated modules for gameLogic, soundManager, aiSystem, visualEffects, physics, brickSystem, powerUpSystem
+
+### Critical Bug Fixes
+- **Missing Images Restored**: Fixed background image, game over face, and floating ghost sprites that were lost during modularization
+- **Ball/Paddle Styling Fixed**: Restored hollow balls with glow effects and black paddle with white borders
+- **Paddle Movement Enhancement**: Players can now position paddle while ball is waiting to launch
+- **Auto-restart Feature**: Game automatically resets to level 1 after high score submission
+
+### Developer Mode Enhancement
+- **'D' Key Activation**: Toggle developer mode with visual indicator and console feedback
+- **Lives Control**: '+/-' keys adjust lives between 1-10 with real-time UI updates
+- **Level Control**: '[/]' keys adjust level difficulty between 1-99 with automatic level recreation
+- **Visual Feedback**: "DEV MODE" indicator with control hints displayed on canvas
+- **Quick Testing**: Developer mode creates 5 random bricks for rapid testing scenarios
+
+### Technical Improvements
+- **Modular Architecture**: Clean separation of concerns while maintaining all functionality
+- **Performance**: Maintained 60fps performance across all modular systems
+- **Code Organization**: Enhanced maintainability and extensibility through proper module structure
+
 ## [1.14.1] - 2025-01-08
 
 ### Fixed

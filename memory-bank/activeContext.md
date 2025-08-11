@@ -1,22 +1,33 @@
 # Active Context
 
 ## Current Work Focus
-**Spooky Breakout v1.14.1 completed** - Critical ball respawn bug fixed and multiball power-up system enhanced. Game now features reliable ball respawn mechanics, new multiball power-up, and improved gameplay stability.
+**Spooky Breakout v1.15.0 completed** - Major modularization and bug fixes completed. Game successfully split into modular subsystems with all visual elements restored and developer mode functionality enhanced.
 
 ## Recent Changes
-- **Ball respawn bug fix**: Fixed critical issue where ball wouldn't respawn on paddle after first miss
-- **Multiball power-up implementation**: Added new multiball power-up that spawns 2 extra balls for 30 seconds
-- **Enhanced ball system**: Complete rewrite of ball physics to support multiple balls simultaneously
-- **Improved power-up balance**: Multiball has 33% spawn probability vs 50% each for other power-ups
-- **Smart life system**: Only lose life when ALL balls fall off screen during multiball
-- **Unique multiball visual**: Orange-to-yellow gradient rectangle with three white circles in triangular formation
-- **Enhanced collision detection**: Each ball independently handles paddle and brick collisions
-- **Ball trail system**: Enhanced to support multiple balls with increased particle limit (100 particles)
-- **Memory management**: Proper cleanup of balls when they fall off screen
-- **resetBall() function rewrite**: Complete reinitialization of balls array with proper ball reference management
-- **Multiball physics**: Independent collision detection, trails, and physics for each ball
-- **Version updates**: All files updated to v1.14.1 (VERSION.md, index.html, CHANGELOG.md)
-- **Bug fix documentation**: Memory bank and changelog updated to reflect critical fix
+### **Phase 1: Modularization (v1.15.0)**
+- **CSS extraction**: Moved all styles from index.html to assets/css/styles.css
+- **JavaScript modularization**: Split monolithic game into 7 specialized subsystems:
+  - `gameLogic.js` - Core game loop and state management
+  - `soundManager.js` - Audio system with background music and sound effects
+  - `aiSystem.js` - Intelligent player assistance and metrics tracking
+  - `visualEffects.js` - Particles, screen shake, stars, and image rendering
+  - `physics.js` - Ball/paddle physics and collision detection
+  - `brickSystem.js` - Brick creation, special behaviors, and level generation
+  - `powerUpSystem.js` - Power-up spawning, effects, and management
+
+### **Phase 2: Bug Fixes (v1.15.0)**
+- **Missing images restored**: Fixed background image, game over face, and floating ghost sprites
+- **Ball/paddle styling fixed**: Restored hollow balls with glow effects and black paddle with white borders
+- **Paddle movement during reset**: Players can now position paddle while ball is waiting to launch
+- **Auto-restart after high score**: Game automatically resets to level 1 after score submission
+- **Developer mode restoration**: Full developer mode functionality restored with enhanced features
+
+### **Phase 3: Developer Mode Enhancement (v1.15.0)**
+- **'D' key activation**: Toggle developer mode with visual indicator and console feedback
+- **Lives control (+/-)**: Adjust lives between 1-10 with real-time UI updates
+- **Level control ([/])**: Adjust level difficulty between 1-99 with automatic level recreation
+- **Enhanced developer experience**: Visual "DEV MODE" indicator with control hints on canvas
+- **5 random bricks**: Developer mode creates minimal brick layout for quick testing
 
 ## Next Steps
 **Project enhanced with atmospheric audio** - Sound system successfully integrated. Game ready for continued development:

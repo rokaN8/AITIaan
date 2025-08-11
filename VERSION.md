@@ -1,5 +1,21 @@
 # Version History
 
+## v1.15.0 - Modularization & Bug Fixes (2025-01-11)
+- **MODULARIZATION**: Split monolithic game into 7 specialized JavaScript modules
+- **ARCHITECTURE**: Extracted CSS to assets/css/styles.css for better organization
+- **MODULES**: gameLogic, soundManager, aiSystem, visualEffects, physics, brickSystem, powerUpSystem
+- **BUG FIX**: Restored missing background image, game over face, and floating ghost sprites
+- **BUG FIX**: Fixed ball/paddle styling - hollow balls with glow, black paddle with white borders
+- **ENHANCEMENT**: Paddle movement now allowed during ball reset for better positioning
+- **ENHANCEMENT**: Auto-restart after high score submission returns to level 1
+- **DEVELOPER**: Full developer mode restoration with enhanced features
+- **CONTROLS**: 'D' key toggles developer mode with visual indicator and console feedback
+- **CONTROLS**: '+/-' keys adjust lives (1-10) with real-time UI updates in developer mode
+- **CONTROLS**: '[/]' keys adjust level difficulty (1-99) with automatic recreation in developer mode
+- **UI**: Visual "DEV MODE" indicator with control hints displayed on canvas
+- **TESTING**: Developer mode creates 5 random bricks for quick testing scenarios
+- **PERFORMANCE**: Maintained 60fps performance across all modular systems
+
 ## v1.14.1 - Ball Respawn Bug Fix (2025-01-08)
 - **CRITICAL FIX**: Fixed ball respawn bug where ball wouldn't respawn on paddle after first miss
 - **ENHANCED**: Complete rewrite of resetBall() function with proper balls array reinitialization

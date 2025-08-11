@@ -279,7 +279,7 @@
     - Version synchronization across all files and documentation to v1.13.0
     - Complete legend and gameplay enhancement maintaining 60fps performance and all existing functionality
 
-18. **✅ Ball Respawn Bug Fix & Multiball Power-up** (Latest milestone - v1.14.1)
+18. **✅ Ball Respawn Bug Fix & Multiball Power-up** (v1.14.1)
     - Critical ball respawn bug fixed where ball wouldn't respawn on paddle after first miss
     - Complete rewrite of resetBall() function with proper balls array reinitialization
     - Multiball power-up implementation spawning 2 extra balls for 30 seconds duration
@@ -293,6 +293,23 @@
     - Ball reference management ensuring main ball pointer stays valid after array changes
     - Version synchronization across all files and documentation to v1.14.1
     - Critical stability improvement ensuring reliable gameplay continuation after ball loss
+
+19. **✅ Modularization & Bug Fixes** (Latest milestone - v1.15.0)
+    - **Complete modularization**: Split monolithic game into 7 specialized JavaScript modules
+    - **CSS extraction**: Moved all styles from index.html to assets/css/styles.css
+    - **System separation**: gameLogic, soundManager, aiSystem, visualEffects, physics, brickSystem, powerUpSystem
+    - **Missing images restored**: Fixed background image, game over face, and floating ghost sprites
+    - **Ball/paddle styling fixed**: Restored hollow balls with glow effects and black paddle with white borders
+    - **Paddle movement during reset**: Players can now position paddle while ball is waiting to launch
+    - **Auto-restart after high score**: Game automatically resets to level 1 after score submission
+    - **Developer mode restoration**: Full functionality restored with enhanced features
+    - **'D' key activation**: Toggle developer mode with visual indicator and console feedback
+    - **Lives control (+/-)**: Adjust lives between 1-10 with real-time UI updates
+    - **Level control ([/])**: Adjust level difficulty between 1-99 with automatic level recreation
+    - **Enhanced developer experience**: Visual "DEV MODE" indicator with control hints on canvas
+    - **5 random bricks**: Developer mode creates minimal brick layout for quick testing
+    - Version synchronization across all files and documentation to v1.15.0
+    - Complete modularization while maintaining all functionality and performance
 
 ## Upcoming Milestones
 **No upcoming milestones** - Project is complete, deployed, and meets all requirements.
