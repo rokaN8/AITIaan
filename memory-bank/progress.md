@@ -311,7 +311,7 @@
     - Version synchronization across all files and documentation to v1.15.0
     - Complete modularization while maintaining all functionality and performance
 
-20. **✅ Bomb Explosion Bug Fixes & Title Update** (Latest milestone - v1.16.0)
+20. **✅ Bomb Explosion Bug Fixes & Title Update** (v1.16.0)
     - **Critical explosion timing bug fixed**: Added explosion state management with 1-second delay for particle animation
     - **Multi-ball explosion support**: Enhanced explodeBall() function to create explosions at ALL ball positions
     - **Game over input conflict resolved**: Added game state checks to prevent keyboard shortcuts during name entry
@@ -324,6 +324,20 @@
     - **Spectacular explosions**: Increased particle count (25 per ball) and enhanced screen shake effects
     - Version synchronization across all files and documentation to v1.16.0
     - Complete bomb functionality restoration with all critical bugs resolved
+
+21. **✅ Missing UI Features Restoration** (Latest milestone - v1.16.1)
+    - **Version number display restored**: Added "Version: v1.16.0" to game-info section alongside Score, Lives, and Level
+    - **Attribution link restored**: Added proper credit link for DeepAI.org background image at bottom-right of page
+    - **Post-modularization fixes**: Identified and restored features lost during v1.15.0 modularization process
+    - **Consistent UI integration**: Both features positioned with existing spooky theme aesthetic and color scheme
+    - **CSS styling additions**: Added .attribution class with fixed positioning, hover effects, and proper z-index
+    - **Unobtrusive design**: Attribution link positioned at bottom-right with subtle opacity and small font size
+    - **Proper accessibility**: Attribution opens in new tab with security attributes (target="_blank" rel="noopener noreferrer")
+    - **Theme consistency**: All new elements use spooky red/black/white color scheme with gray to red hover transitions
+    - **HTML structure updates**: Clean integration into existing modular file system without affecting functionality
+    - **Complete UI restoration**: All missing features from pre-modularization version now properly restored
+    - Version synchronization across all files and documentation to v1.16.1
+    - Full UI feature parity achieved with enhanced modular architecture
 
 ## Upcoming Milestones
 **No upcoming milestones** - Project is complete, deployed, and meets all requirements.

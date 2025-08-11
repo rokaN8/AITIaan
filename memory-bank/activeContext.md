@@ -1,27 +1,26 @@
 # Active Context
 
 ## Current Work Focus
-**Spooky Breakout v1.16.0 completed** - Critical bomb explosion bugs fixed and game title updated. All explosion functionality now works perfectly with proper timing, visual effects, and game state management.
+**Spooky Breakout v1.16.1 completed** - Missing UI features restored after modularization. Version display and background image attribution now properly integrated into the modular file system.
 
 ## Recent Changes
-### **Phase 1: Bomb Explosion Bug Fixes (v1.16.0)**
-- **Bug 1 - Explosion timing fixed**: Added explosion state management with 1-second delay to allow particles to animate
-- **Bug 2 - Multi-ball explosion support**: Now creates explosions at ALL ball positions when multiball is active
-- **Bug 3 - Input conflict resolution**: Added game state checks to prevent keyboard shortcuts during game over screen
-- **Enhanced visual effects**: Multiple particle systems with increased screen shake intensity for dramatic explosions
-- **Delayed state changes**: Visual effects continue updating during explosion animation before game state changes
+### **Phase 1: Missing Features Restoration (v1.16.1)**
+- **Version number display**: Added "Version: v1.16.0" to game-info section alongside Score, Lives, and Level
+- **Attribution link**: Added proper credit link for DeepAI.org background image at bottom-right of page
+- **UI integration**: Both features positioned consistently with existing spooky theme aesthetic
+- **CSS styling**: Added attribution styling with hover effects and proper positioning
 
-### **Phase 2: Game Title Update (v1.16.0)**
-- **Title simplification**: Changed from "AITIaan - Spooky Breakout" to just "Spooky Breakout"
-- **Browser tab title**: Updated HTML title tag for cleaner branding
-- **Page heading**: Updated main H1 heading to match simplified title
-- **Consistent branding**: Game now uses unified "Spooky Breakout" name throughout
+### **Phase 2: Post-Modularization Fixes (v1.16.1)**
+- **Feature identification**: Discovered version display and attribution link were lost during v1.15.0 modularization
+- **Consistent styling**: Attribution link uses spooky theme colors (gray to red hover transition)
+- **Unobtrusive placement**: Fixed positioning at bottom-right corner with subtle opacity
+- **Proper linking**: Attribution opens in new tab with security attributes
 
-### **Phase 3: Technical Implementation (v1.16.0)**
-- **Explosion state object**: Added timing management with callback system for delayed actions
-- **Multi-ball iteration**: Enhanced explodeBall() function to handle multiple balls simultaneously
-- **Input filtering**: Conditional logic prevents unwanted key presses during name entry
-- **Visual enhancement**: Increased particle count and screen shake for more spectacular explosions
+### **Phase 3: Technical Implementation (v1.16.1)**
+- **HTML updates**: Added version display to game-info div and attribution div before scripts
+- **CSS additions**: Added .attribution class with fixed positioning and hover effects
+- **Theme consistency**: All new elements match existing spooky red/black/white color scheme
+- **Accessibility**: Proper link attributes and readable font sizing
 
 ## Next Steps
 **Project enhanced with atmospheric audio** - Sound system successfully integrated. Game ready for continued development:

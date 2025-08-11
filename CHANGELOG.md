@@ -2,6 +2,24 @@
 
 All notable changes to Spooky Breakout will be documented in this file.
 
+## [1.16.1] - 2025-01-11
+
+### Restored Features
+- **Version Number Display**: Added "Version: v1.16.0" to game-info section alongside Score, Lives, and Level
+- **Attribution Link**: Added proper credit link for DeepAI.org background image at bottom-right of page
+- **Post-Modularization Fixes**: Identified and restored features that were lost during v1.15.0 modularization process
+
+### UI Improvements
+- **Consistent Integration**: Both features positioned with existing spooky theme aesthetic and color scheme
+- **Unobtrusive Design**: Attribution link positioned at bottom-right with subtle opacity (60%) and small font size (10px)
+- **Theme Consistency**: All new elements use spooky red/black/white color scheme with gray to red hover transitions
+
+### Technical Enhancements
+- **CSS Styling**: Added .attribution class with fixed positioning, hover effects, and proper z-index (100)
+- **Accessibility**: Attribution opens in new tab with security attributes (target="_blank" rel="noopener noreferrer")
+- **Clean Integration**: HTML structure updates integrated seamlessly into modular file system without affecting functionality
+- **Complete Restoration**: Full UI feature parity achieved with enhanced modular architecture
+
 ## [1.16.0] - 2025-01-11
 
 ### Critical Bug Fixes

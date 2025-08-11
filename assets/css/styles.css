@@ -251,3 +251,24 @@ button:disabled {
     0%, 100% { box-shadow: 0 0 5px #660033; }
     50% { box-shadow: 0 0 15px #cc0000; }
 }
+
+/* Attribution styling */
+.attribution {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    font-size: 10px;
+    opacity: 0.6;
+    z-index: 100;
+}
+
+.attribution a {
+    color: #888;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.attribution a:hover {
+    color: #cc0000;
+    text-decoration: underline;
+}

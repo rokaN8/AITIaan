@@ -1,5 +1,17 @@
 # Version History
 
+## v1.16.1 - Missing UI Features Restoration (2025-01-11)
+- **RESTORED**: Version number display added to game-info section alongside Score, Lives, and Level
+- **RESTORED**: Attribution link for DeepAI.org background image at bottom-right of page
+- **POST-MODULARIZATION**: Identified and fixed features lost during v1.15.0 modularization process
+- **UI INTEGRATION**: Both features positioned consistently with existing spooky theme aesthetic
+- **CSS STYLING**: Added .attribution class with fixed positioning, hover effects, and proper z-index
+- **UNOBTRUSIVE DESIGN**: Attribution positioned at bottom-right with subtle opacity (60%) and small font (10px)
+- **ACCESSIBILITY**: Attribution opens in new tab with security attributes (target="_blank" rel="noopener noreferrer")
+- **THEME CONSISTENCY**: All elements use spooky red/black/white color scheme with gray to red hover transitions
+- **CLEAN INTEGRATION**: HTML structure updates integrated into modular file system without affecting functionality
+- **COMPLETE RESTORATION**: Full UI feature parity achieved with enhanced modular architecture
+
 ## v1.16.0 - Bomb Explosion Bug Fixes & Title Update (2025-01-11)
 - **CRITICAL FIX**: Fixed explosion timing bug - added 1-second delay for particle animation
 - **ENHANCED**: Multi-ball explosion support - creates explosions at ALL ball positions
