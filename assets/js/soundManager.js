@@ -204,14 +204,28 @@ class SoundManager {
         // Handle background music based on sound state
         if (!this.soundEnabled) {
             this.stopBackgroundMusic();
-        } else if (window.gameState === 'playing' || window.gameState === 'waiting') {
-            // Only restart music if we're in an active game state
-            if (window.gameState === 'playing') {
+        } else if (window.gameState === 'playing' || window.gameState === 'waiting' || window.gameState === 'paused') {
+            // Restart music if we're in any active game state (including paused)
+            if (window.gameState === 'playing' || window.gameState === 'paused') {
                 this.startBackgroundMusic();
             }
         }
         
         return this.soundEnabled;
+    }
+    
+    // New method to handle pause state - keeps music playing
+    pauseGame() {
+        // Background music continues playing during pause
+        // Only stop other sound effects if needed
+    }
+    
+    // New method to handle unpause state
+    unpauseGame() {
+        // Ensure background music is still playing if sound is enabled
+        if (this.soundEnabled && !this.musicStarted && this.backgroundMusic) {
+            this.startBackgroundMusic();
+        }
     }
 }
 

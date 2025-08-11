@@ -224,8 +224,10 @@ class GameLogic {
     togglePause() {
         if (this.gameState === 'playing') {
             this.gameState = 'paused';
+            window.soundManager.pauseGame(); // Keep background music playing
         } else if (this.gameState === 'paused') {
             this.gameState = 'playing';
+            window.soundManager.unpauseGame(); // Ensure music continues
         }
         window.gameState = this.gameState;
     }
@@ -569,6 +571,17 @@ class GameLogic {
             this.ctx.font = '26px ScaryFont, Courier New, monospace';
             this.ctx.textAlign = 'center';
             this.ctx.fillText('Press SPACE to launch ball', this.canvas.width / 2, this.canvas.height / 2);
+        }
+        
+        // Draw pause message
+        if (this.gameState === 'paused') {
+            this.ctx.fillStyle = '#ff4444';
+            this.ctx.font = '32px ScaryFont, Courier New, monospace';
+            this.ctx.textAlign = 'center';
+            this.ctx.fillText('PAUSED', this.canvas.width / 2, this.canvas.height / 2);
+            this.ctx.fillStyle = '#ffff00';
+            this.ctx.font = '18px ScaryFont, Courier New, monospace';
+            this.ctx.fillText('Press P to resume', this.canvas.width / 2, this.canvas.height / 2 + 40);
         }
         
         // Draw developer mode indicator
