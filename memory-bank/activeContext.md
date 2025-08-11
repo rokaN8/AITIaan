@@ -1,26 +1,26 @@
 # Active Context
 
 ## Current Work Focus
-**Spooky Breakout v1.16.1 completed** - Missing UI features restored after modularization. Version display and background image attribution now properly integrated into the modular file system.
+**Spooky Breakout v1.16.2 completed** - Reset button functionality corrected and keyboard game reset added. Reset button now properly clears high scores from localStorage, and "R" key provides convenient game reset functionality.
 
 ## Recent Changes
-### **Phase 1: Missing Features Restoration (v1.16.1)**
-- **Version number display**: Added "Version: v1.16.0" to game-info section alongside Score, Lives, and Level
-- **Attribution link**: Added proper credit link for DeepAI.org background image at bottom-right of page
-- **UI integration**: Both features positioned consistently with existing spooky theme aesthetic
-- **CSS styling**: Added attribution styling with hover effects and proper positioning
+### **Phase 1: Reset Button Correction (v1.16.2)**
+- **Reset button functionality**: Changed from resetGame() to clearHighScores() with confirmation dialog
+- **High score management**: Reset button now properly clears localStorage and updates leaderboard display
+- **User confirmation**: Added "Are you sure?" dialog to prevent accidental score deletion
+- **Console feedback**: Added logging when high scores are successfully cleared
 
-### **Phase 2: Post-Modularization Fixes (v1.16.1)**
-- **Feature identification**: Discovered version display and attribution link were lost during v1.15.0 modularization
-- **Consistent styling**: Attribution link uses spooky theme colors (gray to red hover transition)
-- **Unobtrusive placement**: Fixed positioning at bottom-right corner with subtle opacity
-- **Proper linking**: Attribution opens in new tab with security attributes
+### **Phase 2: Keyboard Game Reset (v1.16.2)**
+- **"R" key functionality**: Added KeyR case to handleKeyDown() method for convenient game reset
+- **Game reset access**: Players can now reset game instantly during any game state (except game over)
+- **UI instructions**: Added "Press R to reset game" to the control instructions list
+- **Consistent behavior**: R key calls existing resetGame() method maintaining all reset functionality
 
-### **Phase 3: Technical Implementation (v1.16.1)**
-- **HTML updates**: Added version display to game-info div and attribution div before scripts
-- **CSS additions**: Added .attribution class with fixed positioning and hover effects
-- **Theme consistency**: All new elements match existing spooky red/black/white color scheme
-- **Accessibility**: Proper link attributes and readable font sizing
+### **Phase 3: Technical Implementation (v1.16.2)**
+- **Event listener update**: Changed resetButton click handler from resetGame() to clearHighScores()
+- **Keyboard handling**: Added KeyR case in switch statement for game reset functionality
+- **HTML updates**: Added R key instruction to control list in proper position
+- **Method separation**: Clear distinction between game reset (R key) and score reset (button)
 
 ## Next Steps
 **Project enhanced with atmospheric audio** - Sound system successfully integrated. Game ready for continued development:

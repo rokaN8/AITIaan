@@ -116,7 +116,7 @@ class GameLogic {
         this.canvas.addEventListener('click', (e) => this.handleClick(e));
         
         // UI button events
-        document.getElementById('resetButton').addEventListener('click', () => this.resetGame());
+        document.getElementById('resetButton').addEventListener('click', () => this.clearHighScores());
         document.getElementById('submitScore').addEventListener('click', () => this.submitScore());
         document.getElementById('playAgain').addEventListener('click', () => this.playAgain());
     }
@@ -180,6 +180,9 @@ class GameLogic {
                 break;
             case 'KeyB':
                 this.explodeBall();
+                break;
+            case 'KeyR':
+                this.resetGame();
                 break;
         }
     }
@@ -616,6 +619,16 @@ class GameLogic {
 
     saveLeaderboard() {
         localStorage.setItem('breakoutLeaderboard', JSON.stringify(this.leaderboard));
+    }
+
+    // Clear high scores from localStorage
+    clearHighScores() {
+        if (confirm('Are you sure you want to clear all high scores? This cannot be undone.')) {
+            this.leaderboard = [];
+            localStorage.removeItem('breakoutLeaderboard');
+            this.updateLeaderboard();
+            console.log('High scores cleared');
+        }
     }
 
     isHighScore(score) {
