@@ -1,28 +1,22 @@
 # Active Context
 
 ## Current Work Focus
-**Spooky Breakout v1.12.0 completed** - Enhanced floating ghost system successfully implemented as the final atmospheric feature. Game now features dramatically improved ghostly presence with larger, more numerous floating ghosts across the entire webpage.
+**Spooky Breakout v1.13.0 completed** - Legend panel and enhanced gameplay features successfully implemented. Game now features comprehensive visual guidance through legend panel, improved power-up identification, special blocks from level 1, and lives reset system.
 
 ## Recent Changes
-- **Visual styling improvements**: Enhanced paddle and ball appearance for better visual appeal
-- **Paddle redesign**: Changed from white paddle with red glow to black paddle with clean white border
-- **Ball redesign**: Changed from solid white ball to hollow ball with white border and transparent center
-- **Enhanced floating ghost system**: Dramatically improved ghostly atmosphere with larger, more numerous floating ghosts
-- **Ghost size enhancement**: Doubled ghost size from 40-70 pixels to 80-140 pixels for much greater visibility
-- **Ghost population increase**: Increased maximum ghost count from 4 to 8 for enhanced atmospheric presence
-- **Full webpage coverage**: Ghosts now float across entire browser window, not just game canvas area
-- **Directional rotation**: Ghost sprites rotate to face their movement direction for realistic floating behavior
-- **Smart opacity system**: Ghosts become transparent when passing over game area to avoid obscuring gameplay
-- **Ghost audio integration**: Random ghost sounds every 25+ seconds at half background music volume
-- **Performance optimization**: Efficient DOM-based rendering with proper cleanup for up to 8 simultaneous ghosts
-- **Atmospheric background integration**: Added spooky forest background from deepai.org with proper attribution
-- **Ball speed accessibility**: Reduced initial ball speed by 20% (from 5 to 4 units) for improved player comfort
-- **Game scale enhancement**: Increased entire game by 10% for better readability and modern screen compatibility
-- **Canvas expansion**: Upgraded from 800x600 to 880x660 pixels with proportional element scaling
-- **UI improvements**: Font sizes increased (18px→20px main UI, 24px→26px canvas text)
-- **Leaderboard enhancement**: Width increased from 250px to 275px for better proportions
-- **Version updates**: All files updated to v1.12.0 (VERSION.md, index.html, CHANGELOG.md)
-- **Documentation updates**: Memory bank and changelog updated to reflect ghost system enhancements
+- **Legend panel implementation**: Added comprehensive legend panel on right side of screen
+- **Power-up descriptions**: Wide Paddle and Slow Ball with detailed descriptions and animated icons
+- **Special block descriptions**: Ghost Brick and Vampire Brick with mechanics explanations and visual effects
+- **Animated legend icons**: Ghost brick icon with ethereal pulsing, vampire brick with blood-red effects
+- **Enhanced power-up visuals**: Wide Paddle appears as wider rectangle with paddle design, Slow Ball as circle with clock markings
+- **Special block availability**: Ghost and vampire bricks now start from level 1 instead of level 2
+- **Lives reset system**: Lives now reset to 3 at the start of each new level for better progression
+- **Power-up identification**: Unique visual styles make power-ups instantly recognizable during gameplay
+- **User experience enhancement**: Legend panel provides clear visual guidance for all game elements
+- **Gameplay balance improvement**: Earlier introduction of special blocks creates more engaging gameplay from start
+- **Accessibility enhancement**: Lives reset system provides fresh start for each level while maintaining challenge
+- **Version updates**: All files updated to v1.13.0 (VERSION.md, index.html, CHANGELOG.md)
+- **Documentation updates**: Memory bank, changelog, and version files updated to reflect new features
 
 ## Next Steps
 **Project enhanced with atmospheric audio** - Sound system successfully integrated. Game ready for continued development:

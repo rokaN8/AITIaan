@@ -2,310 +2,205 @@
 
 All notable changes to Spooky Breakout will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
-## [Unreleased]
-
-## [1.12.1] - 2025-08-08
-
-### Changed
-- **Paddle visual redesign** - Changed from white paddle with red glow to black paddle with clean white border (2px)
-- **Ball visual redesign** - Changed from solid white ball to hollow ball with white border and transparent center
-- **Enhanced visual contrast** - Both paddle and ball now provide better contrast against spooky background
-- **Modern aesthetic** - Updated styling creates more distinctive and visually appealing game elements
-
-### Technical Details
-- **Paddle rendering**: Updated to use black fill (`#000000`) with white stroke border
-- **Ball rendering**: Changed from `ctx.fill()` to `ctx.stroke()` for hollow circle effect
-- **Maintained functionality**: All collision detection, AI assistance, and visual effects preserved
-- **Performance impact**: No performance changes, purely cosmetic improvements
-
-## [1.12.0] - 2025-08-08
+## [1.13.0] - 2025-01-08
 
 ### Added
-- **Enhanced floating ghost system** with dramatically improved atmospheric presence
-- **Doubled ghost size** from 40-70 pixels to 80-140 pixels for much greater visibility
-- **Increased ghost population** from 4 to 8 maximum simultaneous ghosts for enhanced spooky atmosphere
-- **Full webpage coverage** - ghosts now float across entire browser window, not just game canvas
-- **Directional rotation system** - ghost sprites rotate to face their movement direction using Math.atan2 calculations
-- **Smart opacity management** - ghosts become transparent when overlapping game area to avoid obscuring gameplay
-- **Ghost audio integration** - random ghost sounds every 25+ seconds at half background music volume
-- **DOM-based rendering** - efficient CSS positioning and transforms for full-page ghost coverage
+- **Legend Panel**: Comprehensive legend panel on right side of screen showing power-ups and special blocks
+- **Power-up Descriptions**: Wide Paddle and Slow Ball with detailed descriptions and animated icons
+- **Special Block Descriptions**: Ghost Brick and Vampire Brick with mechanics explanations
+- **Animated Legend Icons**: Ghost brick icon with ethereal pulsing, vampire brick with blood-red effects
+- **Enhanced Power-up Visuals**: Wide Paddle appears as wider rectangle with paddle design, Slow Ball as circle with clock markings
 
 ### Changed
-- **Ghost spawning system** - now uses full browser window dimensions (window.innerWidth/Height) instead of canvas-only
-- **Ghost rendering architecture** - switched from canvas rendering to DOM elements for true full-page coverage
-- **Performance optimization** - enhanced cleanup system for up to 8 simultaneous ghosts with proper DOM management
-- **Atmospheric experience** - dramatically more immersive with larger, more numerous ghosts across entire webpage
+- **Special Block Availability**: Ghost and vampire bricks now start from level 1 instead of level 2
+- **Lives System**: Lives now reset to 3 at the start of each new level for better progression
+- **Power-up Identification**: Unique visual styles make power-ups instantly recognizable during gameplay
 
-### Technical Details
-- **DOM element management**: Fixed positioning with CSS transforms for rotation and positioning
-- **Full page dimensions**: Ghost spawning and movement across entire browser viewport
-- **Directional physics**: Math.atan2(vy, vx) + 90° offset for realistic head-forward movement
-- **Smart layering**: z-index management and opacity reduction when overlapping game elements
-- **Audio timing**: Random ghost sound intervals (25-35 seconds) integrated with existing sound system
-- **Performance maintained**: 60fps gameplay preserved with enhanced ghost system and cleanup
+### Improved
+- **User Experience**: Legend panel provides clear visual guidance for all game elements
+- **Gameplay Balance**: Earlier introduction of special blocks creates more engaging gameplay from start
+- **Accessibility**: Lives reset system provides fresh start for each level while maintaining challenge
 
-## [1.11.0] - 2025-08-08
+## [1.12.1] - 2025-01-08
 
-### Added
-- **Atmospheric spooky forest background** from deepai.org with proper attribution link
-- **Enhanced visual experience** with detailed forest scene featuring hanging lanterns and twisted trees
-- **Background image loading system** with error handling and fallback to black background
-- **Attribution credit** discretely placed in instructions area linking to deepai.org
-
-### Changed
-- **Ball speed reduced by 20%** from 5 to 4 units for improved accessibility and player comfort
-- **Game scale increased by 10%** across all elements for better readability and modern screen compatibility
-- **Canvas dimensions** expanded from 800x600 to 880x660 pixels (10% larger)
-- **All game elements scaled proportionally**: paddle (110x17), ball radius (9px), bricks (83x22)
-- **UI font sizes increased**: main UI (18px→20px), canvas text (24px→26px), leaderboard width (250px→275px)
-- **Enhanced user experience** with larger, more readable interface elements
-
-### Technical Details
-- **Background rendering system**: Image drawn first with stars and game elements layered on top
-- **Proportional scaling**: All game constants updated to maintain perfect gameplay balance
-- **Performance maintained**: 60fps gameplay preserved with larger canvas and background image
-- **Graceful fallback**: Game works perfectly even if background image fails to load
-- **Asset integration**: Background image properly integrated into existing asset structure
-- **Attribution compliance**: Proper credit given to deepai.org for background image generation
-
-### Improved Accessibility
-- **Slower ball speed**: 20% reduction makes game more approachable for all skill levels
-- **Larger interface**: 10% scale increase improves readability and reduces eye strain
-- **Better proportions**: Enhanced element sizing provides more comfortable gameplay experience
-- **Maintained balance**: All gameplay mechanics and AI assistance remain perfectly calibrated
-
-## [1.10.0] - 2025-08-08
-
-### Added
-- **Enhanced developer mode controls** for level navigation using +/- keys
-- **Developer mode life management** with [ and ] keys (0-10 lives range)
-- **Improved debugging capabilities** for gameplay testing and balancing
-- **Full level layouts** available in developer mode for comprehensive testing
-
-### Changed
-- **Special bricks appearance level** - now appear from level 2 instead of level 3 (15% chance)
-- **UI instructions updated** to include new developer mode controls
-- **Developer mode functionality** expanded beyond basic 5-brick testing
-
-### Technical Details
-- **Level navigation system**: +/- keys change levels in developer mode with full brick layouts
-- **Life adjustment system**: [ and ] keys modify lives with bounds checking (0-10 range)
-- **Enhanced testing environment**: Full level generation instead of limited 5-brick setup
-- **Console logging**: Debug feedback for level changes and life adjustments
-- **Game balance improvement**: Earlier special brick introduction for better progression
-
-## [1.9.0] - 2025-08-08
-
-### Added
-- **Ghost Bricks**: Semi-transparent supernatural bricks that phase in/out every 5 seconds (3s visible, 2s invisible)
-- **Vampire Bricks**: Dark red/purple bricks that regenerate health every 8 seconds if damaged below maximum
-- **Magical Ball Trail**: Continuous sparkle particles with twinkling effects in multiple colors (white, gold, cyan, purple)
-- **Enhanced Collision System**: Ball passes through phased-out ghost bricks completely
-- **Special Visual Effects**: Floating ghost bricks with ethereal glow, pulsing vampire bricks when regenerating
-- **Blood Drip Particles**: Visual effects when vampire bricks regenerate health
-- **Progressive Difficulty**: 15% chance for special bricks from level 3+ onwards for natural progression
-- **Balanced Scoring**: Higher point values for supernatural bricks (50 for ghost, 60 for vampire)
-
-### Changed
-- **Brick Type System**: Extended to support special properties and behaviors for supernatural bricks
-- **Level Generation**: Enhanced algorithm to include special brick spawning with progressive difficulty
-- **Particle Systems**: Added separate ball trail particle system with gravity effects and performance limits
-- **Rendering Pipeline**: Enhanced to handle transparency, glows, floating animations, and special effects
-- **Update Loop**: Added updateBallTrail() and updateSpecialBricks() functions for new systems
+### Enhanced
+- **Floating Ghost System**: Dramatically improved with doubled ghost size (80-140 pixels)
+- **Ghost Population**: Increased from 4 to 8 simultaneous ghosts for enhanced atmosphere
+- **Full Page Coverage**: Ghosts now float across entire browser window using DOM rendering
+- **Directional Movement**: Ghosts rotate to face their movement direction for realistic behavior
+- **Smart Opacity**: Ghosts become transparent when overlapping game area to avoid obscuring gameplay
+- **Ghost Audio**: Random ghost sounds every 25+ seconds at half background music volume
 
 ### Technical
-- **Performance Optimization**: Ball trail particles limited to 50 maximum with automatic cleanup
-- **Memory Management**: Efficient particle lifecycle management with proper array splicing
-- **Visual Effects**: Twinkle animations, ethereal glows, and pulsing effects maintain 60fps performance
-- **Code Architecture**: Clean separation of regular and supernatural brick logic
-- **Collision Detection**: Enhanced to skip phased-out ghost bricks while maintaining accuracy
+- **Performance**: Efficient DOM-based rendering with CSS transforms and automatic cleanup
+- **Atmosphere**: Complete haunted webpage environment while maintaining 60fps
 
-### Fixed
-- **Collision Accuracy**: Ghost bricks properly phase out of collision detection when invisible
-- **Performance**: Particle systems optimized to prevent memory leaks and maintain smooth gameplay
-- **Visual Consistency**: All supernatural effects integrated seamlessly with existing spooky theme
-
-## [1.8.0] - 2025-08-08
+## [1.12.0] - 2025-01-08
 
 ### Added
-- **Developer mode testing system** activated by "D" key for quick endgame scenario testing
-- **Isolated testing environment** with 5 randomly selected bricks and 3 lives for rapid testing
-- **High score protection** prevents developer mode scores from affecting leaderboard integrity
-- **Clear visual feedback** with "DEVELOPER MODE - NO SCORE SAVED" warning message on game over
-- **Random brick selection algorithm** provides varied testing scenarios on each activation
-- **UI integration** with developer mode instruction added to control panel
-- **Console logging** provides debug feedback for development workflow
+- **Background Image**: Atmospheric spooky forest background from deepai.org with proper attribution
+- **Game Scaling**: Increased entire game by 10% for better readability on modern screens
+- **Canvas Expansion**: Upgraded from 800x600 to 880x660 pixels with proportional scaling
 
 ### Changed
-- **Game over screen enhancement** - dynamic content based on developer mode state
-- **High score system modification** - conditional high score checking excludes developer mode
-- **Game restart behavior** - developer mode flag properly reset on game restart
-- **Testing workflow improvement** - enhanced capabilities for testing explosion mechanics, AI assistance, and power-ups
+- **Ball Speed**: Reduced by 20% (from 5 to 4 units) for improved accessibility and player comfort
+- **UI Scaling**: Font sizes increased (18px→20px main UI, 24px→26px canvas text)
+- **Leaderboard**: Width increased from 250px to 275px for better proportions
 
-### Technical Details
-- **Developer mode state management**: Boolean flag tracks developer mode activation
-- **Random brick distribution**: Algorithm shuffles all brick positions and selects first 5 for visibility
-- **Score system isolation**: Developer mode scores completely separated from legitimate gameplay
-- **State persistence**: Developer mode persists until manual game restart
-- **Debug integration**: Console logging confirms activation and provides development feedback
-- **UI responsiveness**: Instructions panel updated to include developer mode control
+### Technical
+- **Performance**: Maintained smooth 60fps with larger canvas and background image processing
+- **Compatibility**: All elements scaled proportionally for consistent experience
 
-## [1.7.0] - 2025-08-08
+## [1.11.0] - 2025-01-08
+
+### Enhanced
+- **Developer Mode**: Added level navigation with +/- keys for comprehensive testing
+- **Life Management**: Added [/] keys for life adjustment (0-10 range) in developer mode
+- **Special Block Balance**: Changed special bricks to appear from level 2+ instead of level 3+
 
 ### Added
-- **Explosion powerup feature** triggered by "B" key during active gameplay
-- **180-pixel explosion radius** that destroys all bricks within range (doubled from initial 90px)
-- **Strategic risk/reward mechanic** - explosion costs a life but can complete levels on 0 lives
-- **Enhanced visual effects** with 25 explosion particles in red/orange colors and intense screen shake
-- **Explosion sound integration** using `assets/audio/explosion.mp3` with high volume (0.8)
-- **Life cost warning** prominently displayed in instructions: "Press B to explode ball (costs a life!)"
+- **Full Level Testing**: Developer mode now provides complete level layouts instead of limited 5-brick setup
+- **Debug Logging**: Console feedback for level changes and life adjustments
+- **UI Instructions**: Updated control instructions to include new developer mode features
+
+## [1.10.0] - 2025-01-08
+
+### Added
+- **Ghost Bricks**: Phase in/out mechanics every 5 seconds (3s visible, 2s invisible)
+- **Vampire Bricks**: Regenerate health every 8 seconds if damaged below maximum
+- **Ball Trail System**: Magical sparkle trail with twinkling particles in multiple colors
+- **Special Visual Effects**: Floating ghost bricks with ethereal glow, pulsing vampire bricks
+- **Blood Drip Effects**: Particle effects when vampire bricks regenerate health
 
 ### Changed
-- **UI reorganization** - instructions moved from below game to leaderboard sidebar for better layout
-- **Instruction format** - converted to clean bullet-point format with each control on separate line
-- **Enhanced game logic** - level completion check occurs before life loss, allowing victory on 0 lives
-- **Sound system expansion** - added explosion sound to existing audio architecture
-- **Strategic gameplay** - explosion provides powerful area-of-effect brick clearing for difficult situations
+- **Special Brick Progression**: 15% chance for supernatural bricks from level 3+ onwards
+- **Scoring System**: Higher points for supernatural bricks (50 ghost, 60 vampire)
 
-### Technical Details
-- **Explosion mechanics**: Radius-based brick destruction with distance calculation from ball center
-- **Particle system enhancement**: 25 explosion particles with varied colors and enhanced decay
-- **Screen shake intensification**: 8 intensity, 400ms duration for dramatic explosion feedback
-- **Audio integration**: Explosion sound properly integrated with sound toggle functionality
-- **Game state management**: Smart level completion logic prevents unfair game over scenarios
-- **UI layout optimization**: Instructions positioned in leaderboard sidebar with proper styling
+### Technical
+- **Enhanced Collision**: System skips phased-out ghost bricks
+- **Performance**: Particle limits (max 50 trail particles) maintaining 60fps
+- **Gravity Effects**: Ball trail particles with natural fade-out over time
 
-## [1.3.0] - 2025-08-08
+## [1.9.0] - 2025-01-08
 
 ### Added
-- **Hybrid audio system** combining external MP3 files with Web Audio API programmatic sounds
-- **Background ambient music** from `assets/audio/background.mp3` with looping and volume control (0.3)
-- **Dramatic end game sound** from `assets/audio/endgame.mp3` for frightening climax (0.7 volume)
-- **Spooky game over image** from `assets/sprites/face.png` that replaces entire canvas on game over
-- **Image preloading system** with proper error handling and loading state management
-- **Multi-file architecture** with organized asset folder structure (HTML + assets)
-- **Audio timing coordination** - background music starts on ball launch, stops on game over
+- **Developer Mode**: Activated by 'D' key for quick endgame scenario testing
+- **Explosion Powerup**: 'B' key triggers 180-pixel destruction radius explosion
+- **Strategic Mechanics**: Explosion costs a life but can complete levels on 0 lives
+- **Enhanced Effects**: 25 explosion particles with intense screen shake and sound
 
 ### Changed
-- **Architecture transition** from single-file to multi-file distribution with asset dependencies
-- **Game over experience** now features dramatic visual shock with full-canvas face image
-- **Audio experience** enhanced with rich external audio files alongside existing sound effects
-- **Distribution method** now requires HTML file + assets folder for complete experience
+- **UI Layout**: Instructions moved to leaderboard sidebar in bullet-point format
+- **High Score Protection**: Developer mode scores don't affect leaderboard integrity
+- **Testing Environment**: Isolated 5-brick setup with 3 lives for quick testing
 
-### Technical Details
-- **HTML5 Audio API integration** for external MP3 file playback with volume control
-- **Image loading management** with preload, error handling, and state tracking
-- **Canvas rendering enhancement** for full-screen image display during game over
-- **Asset organization** with logical folder structure for audio and sprite files
-- **Performance maintained** - 60fps gameplay preserved with additional audio and image processing
+### Technical
+- **Smart Logic**: Prevents unfair game over when explosion completes level
+- **Console Logging**: Debug feedback for development workflow
+- **State Management**: Developer mode properly managed through game restart cycle
 
-## [1.2.0] - 2025-08-08
+## [1.8.0] - 2025-01-08
+
+### Major Changes
+- **Game Rename**: Transformed from "Adaptive Breakout" to "Spooky Breakout"
+- **Font Integration**: ScaryFont applied throughout entire game interface
+- **Leaderboard System**: Comprehensive top 10 high scores with localStorage persistence
 
 ### Added
-- **Spooky sound system** with Web Audio API-based programmatic sound generation
-- **Three atmospheric sound effects**: Dull thump (brick hit), glass shattering (brick break), high-pitch violin screech (life lost)
-- **Sound toggle controls** with visual button (🔊/🔇) and M key shortcut for quick muting
-- **Graceful audio fallback** for browsers without Web Audio API support
-- **Performance-optimized audio** maintaining 60fps gameplay with sound processing
+- **Name Entry**: 3-character validation system for high scores
+- **Data Migration**: Automatic migration from old Adaptive Breakout scores
+- **Reset Functionality**: Confirmation dialog to clear all leaderboard data
+- **UI Reorganization**: Left-side leaderboard with power-up timers below scores
+
+### Technical
+- **Storage Enhancement**: Error handling and seamless data migration
+- **Always Display**: All 10 leaderboard slots with "---" placeholders for empty positions
+- **Version Sync**: Synchronized versioning across all files and documentation
+
+## [1.7.0] - 2025-01-08
+
+### Added
+- **External Audio**: MP3 files for rich atmospheric experience
+- **Background Music**: Looping ambient music (assets/audio/background.mp3)
+- **End Game Sound**: Dramatic climax sound (assets/audio/endgame.mp3)
+- **Game Over Image**: Spooky face image replacing entire canvas on game over
+- **Image Preloading**: System with error handling and state management
 
 ### Changed
-- **Background music removed** per user preference - now features event-based sound effects only
-- **Sound integration** seamlessly woven into existing game events and collision system
-- **Version updated** to 1.2.0 to reflect sound system addition
+- **Architecture**: Transition to multi-file structure with organized assets folder
+- **Audio Timing**: Music starts on ball launch, stops on game over
+- **Volume Control**: Balanced audio levels for optimal experience
 
-### Technical Details
-- **Web Audio API implementation**: Oscillators, gain nodes, and filters for realistic sound synthesis
-- **Zero external dependencies**: All sounds generated programmatically, no audio files required
-- **Efficient audio processing**: Sounds created on-demand without memory leaks
-- **Cross-browser compatibility**: Maintains compatibility with graceful degradation
-- **Single-file architecture preserved**: Audio system integrated without breaking portability
+### Technical
+- **Complete Horror Experience**: Combined audio and visual shock elements
+- **Asset Management**: Organized file structure while maintaining core functionality
 
-## [1.1.0] - 2025-08-08
+## [1.6.0] - 2025-01-08
 
 ### Added
-- **Moving starry background** with 75 twinkling white stars that scroll horizontally
-- **Dark spooky theme** with complete white/black/red color transformation
-- **Gothic brick design** with spooky gradient progression (white → light gray → dark gray → blood red)
-- **Red glowing effects** throughout all UI elements and game components
-- **Performance-optimized star system** with efficient twinkling animation and wrapping
-- **Enhanced atmospheric experience** while maintaining smooth 60fps gameplay
+- **Web Audio API**: Advanced sound manager with programmatic sound generation
+- **Sound Effects**: Three atmospheric effects (dull thump, glass shattering, violin screech)
+- **Sound Controls**: Toggle button (🔊/🔇) and M key shortcut
+- **Audio Synthesis**: Efficient sound generation without external dependencies
 
-### Changed
-- **Color scheme transformation**: Complete visual overhaul from cyberpunk cyan to spooky red theme
-- **Brick layout optimization**: Reduced from 10 to 9 columns to ensure proper fit within canvas
-- **Ball size adjustment**: Reduced radius from 12px back to 8px for better proportions
-- **Paddle appearance**: White paddle with red glow instead of cyan
-- **Power-up colors**: Updated to red theme variants for consistency
-- **Canvas border**: Red glowing border instead of cyan
-- **UI accents**: All interface elements now use red accent colors
+### Technical
+- **Graceful Fallback**: Support for browsers without Web Audio API
+- **Performance**: Optimized audio processing maintaining 60fps
+- **Memory Management**: Proper audio context handling and cleanup
 
-### Technical Details
-- **Star system architecture**: 75 star objects with individual twinkling phases and speeds
-- **Performance maintained**: All visual enhancements preserve 60fps target
-- **Memory efficiency**: Star system uses minimal computational overhead
-- **Animation smoothness**: Stars move at varying speeds for depth perception
-- **Theme consistency**: All visual elements unified under spooky aesthetic
+## [1.5.0] - 2025-01-08
 
-## [1.0.0] - 2025-01-08
+### Major Visual Overhaul
+- **Dark Spooky Theme**: Complete transformation from cyberpunk to horror aesthetic
+- **Moving Stars**: 75 twinkling stars with horizontal scrolling animation
+- **Color Scheme**: White/black/red throughout entire interface
+- **Gothic Bricks**: Spooky gradient progression (white → gray → red)
 
-### Added
-- Complete adaptive breakout game with AI assistance system
-- Three-level AI assistance system (none, subtle, active) based on player performance
-- Performance tracking system monitoring accuracy, deaths, and struggle indicators
-- Physics assistance with subtle ball magnetism for struggling players
-- Collision assistance with expanded paddle hit detection when needed
-- Smart power-up spawning with increased frequency based on player performance
-- Power-up system with Wide Paddle and Slow Ball effects
-- Visual timer system for active power-ups
-- Particle explosion effects on brick destruction
-- Screen shake effects for enhanced feedback
-- Dark cyberpunk visual theme with neon glowing effects
-- Cross-browser compatibility (Chrome, Firefox, Safari, Edge)
-- Single HTML file architecture with zero external dependencies
-- Offline functionality - works completely in browser
-- Smooth 60fps gameplay with HTML5 Canvas rendering
-- Four brick types (red, orange, yellow, green) with different hit points and scores
-- Score tracking and lives system with level progression
-- Mouse and keyboard controls (arrow keys and mouse movement)
-- Game state management (waiting, playing, gameOver)
-- Enhanced ball visibility with 12-pixel radius for accessibility
-- Object pooling for efficient particle system memory management
-- Responsive paddle physics with proper collision detection
-- Infinite level progression with increasing challenge
-- Memory bank documentation system for project continuity
+### Technical Changes
+- **Ball Optimization**: Reduced from 12 to 8 pixels for better proportions
+- **Layout**: Reduced brick columns from 10 to 9 for perfect canvas fit
+- **Performance**: Maintained 60fps with new star system and visual effects
+- **Red Glowing**: Updated all visual elements to match spooky theme
 
-### Technical Details
-- **File Size**: ~67KB single HTML file
-- **Performance**: 60fps target with RequestAnimationFrame
-- **Architecture**: Modular JavaScript with separated update/render cycles
-- **AI System**: Rule-based conditional logic (no external services)
-- **Rendering**: HTML5 Canvas API with efficient state management
-- **Input**: Event-driven keyboard and mouse handling
-- **Effects**: Object-pooled particle system with cleanup
-- **Compatibility**: Modern browsers with Canvas support
+## [1.4.0] - 2025-01-08
 
-### Game Features
-- **Paddle**: Responsive controls with visual feedback
-- **Ball**: Enhanced 12px radius with physics-based movement
-- **Bricks**: 4 types requiring 1-4 hits each with different point values
-- **Power-ups**: Wide Paddle (doubles width) and Slow Ball (reduces speed)
-- **AI Assistance**: Invisible help system that adapts to player skill
-- **Visual Effects**: Particle explosions, screen shake, glowing elements
-- **Scoring**: Points vary by brick type (10-40 points each)
-- **Lives**: 3 lives system with game over screen
-- **Levels**: Infinite progression with brick layout regeneration
+### Development Infrastructure
+- **Git Repository**: Setup and GitHub integration (https://github.com/rokaN8/AITIaan.git)
+- **Version Control**: Conventional commits and upstream tracking configured
+- **Documentation**: Memory bank system established for project continuity
+- **Semantic Versioning**: Professional versioning system implemented
 
----
+### Workflow
+- **Commit History**: Comprehensive project history established
+- **Collaboration**: Ready for collaborative development and deployment
 
-## Version History
+## [1.3.0] - 2025-01-08
 
-- **1.9.0** (2025-08-08): Supernatural bricks and magical ball trail system
-- **1.8.0** (2025-08-08): Developer mode testing system for endgame scenarios
-- **1.7.0** (2025-08-08): Explosion powerup feature with enhanced UI
-- **1.3.0** (2025-08-08): Hybrid audio & visual horror system with external assets
-- **1.2.0** (2025-08-08): Spooky sound system with atmospheric effects
-- **1.1.0** (2025-08-08): Dark spooky theme with moving starry background
-- **1.0.0** (2025-01-08): Initial release with complete game and AI system
+### Accessibility
+- **Ball Size**: Increased for better visibility and improved playability
+- **Player Comfort**: Enhanced accessibility for players of different skill levels
+- **Visual Clarity**: Better game element visibility
+
+## [1.2.0] - 2025-01-08
+
+### Visual Effects
+- **Particle System**: Explosion effects for brick destruction
+- **Screen Shake**: Impact feedback for collisions and power-ups
+- **Glowing Effects**: Red-themed visual enhancements
+- **Object Pooling**: Efficient memory management for particles
+
+### Performance
+- **60fps Maintained**: Smooth gameplay with new visual systems
+- **Memory Optimization**: Proper particle cleanup and reuse
+
+## [1.1.0] - 2025-01-08
+
+### Power-up System
+- **Wide Paddle**: 15-second duration paddle expansion
+- **Slow Ball**: 20-second ball speed reduction
+- **Visual Timers**: Real-time effect duration display
+- **AI Integration**: Smart spawning based on player performance
+
+### Game Balance
+- **Assistance Integration**: Power-ups spawn more frequently for struggling players
+- **Visual Feedback**: Clear indication of active
