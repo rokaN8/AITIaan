@@ -1,10 +1,17 @@
 # Active Context
 
 ## Current Work Focus
-**Spooky Breakout v1.16.2 - Memory Bank Update Complete** - All memory bank files updated to accurately reflect the current state of the comprehensive horror-themed breakout game with modular architecture and extensive feature set.
+**Spooky Breakout v1.17.0 - Enhanced Slow Ball Power-Up** - Improved slow ball power-up effectiveness and applied to all balls including multiball scenarios.
 
 ## Recent Changes
-### **Memory Bank Comprehensive Update (Current Session)**
+### **Enhanced Slow Ball Power-Up (v1.17.0)**
+- **Increased effectiveness**: Changed speed multiplier from 0.7 to 0.5 (50% speed reduction vs 30%)
+- **Multi-ball support**: Slow ball effect now applies to ALL balls in window.balls array
+- **Consistent behavior**: New balls spawned during multiball inherit slow effect if active
+- **Strategic value**: Power-up now provides significant tactical advantage for players
+- **User experience**: Players can clearly feel the difference when collecting slow ball power-up
+
+### **Memory Bank Comprehensive Update (Previous Session)**
 - **Complete documentation overhaul**: Updated all memory bank files to reflect actual v1.16.2 game state
 - **Architecture correction**: Updated from outdated "single-file" description to current modular architecture
 - **Feature accuracy**: Documented all implemented features including bomb system, developer mode, legend panel
@@ -122,7 +129,7 @@
 
 ### **Current Game Identity**
 - **Name**: "Spooky Breakout" (simplified from "AITIaan - Spooky Breakout")
-- **Version**: v1.16.2 with comprehensive feature set
+- **Version**: v1.17.0 with enhanced slow ball power-up
 - **Architecture**: Modular JavaScript (7 modules) + extracted CSS
 - **Repository**: https://github.com/rokaN8/AITIaan.git (main branch)
 

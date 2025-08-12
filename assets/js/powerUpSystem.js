@@ -112,14 +112,17 @@ class PowerUpSystem {
                 window.paddle.width = window.paddle.originalWidth * 1.5;
                 break;
             case 'slowBall':
-                window.ball.speed = window.ball.originalSpeed * 0.7;
-                // Adjust current velocity
-                const currentSpeed = Math.sqrt(window.ball.vx * window.ball.vx + window.ball.vy * window.ball.vy);
-                if (currentSpeed > 0) {
-                    const ratio = window.ball.speed / currentSpeed;
-                    window.ball.vx *= ratio;
-                    window.ball.vy *= ratio;
-                }
+                // Apply slow effect to all balls
+                window.balls.forEach(ball => {
+                    ball.speed = ball.originalSpeed * 0.5;
+                    // Adjust current velocity
+                    const currentSpeed = Math.sqrt(ball.vx * ball.vx + ball.vy * ball.vy);
+                    if (currentSpeed > 0) {
+                        const ratio = ball.speed / currentSpeed;
+                        ball.vx *= ratio;
+                        ball.vy *= ratio;
+                    }
+                });
                 break;
             case 'multiball':
                 // Spawn 2 additional balls if we only have 1 ball
@@ -131,7 +134,7 @@ class PowerUpSystem {
                             vx: (Math.random() - 0.5) * 6, // Random horizontal velocity
                             vy: -Math.abs(window.ball.vy), // Same upward velocity as main ball
                             radius: window.ball.radius,
-                            speed: window.ball.speed,
+                            speed: window.ball.speed, // Inherit current speed (may be slowed)
                             originalSpeed: window.ball.originalSpeed,
                             onPaddle: false
                         };
@@ -149,14 +152,17 @@ class PowerUpSystem {
                 window.paddle.width = window.paddle.originalWidth;
                 break;
             case 'slowBall':
-                window.ball.speed = window.ball.originalSpeed;
-                // Adjust current velocity
-                const currentSpeed = Math.sqrt(window.ball.vx * window.ball.vx + window.ball.vy * window.ball.vy);
-                if (currentSpeed > 0) {
-                    const ratio = window.ball.speed / currentSpeed;
-                    window.ball.vx *= ratio;
-                    window.ball.vy *= ratio;
-                }
+                // Remove slow effect from all balls
+                window.balls.forEach(ball => {
+                    ball.speed = ball.originalSpeed;
+                    // Adjust current velocity
+                    const currentSpeed = Math.sqrt(ball.vx * ball.vx + ball.vy * ball.vy);
+                    if (currentSpeed > 0) {
+                        const ratio = ball.speed / currentSpeed;
+                        ball.vx *= ratio;
+                        ball.vy *= ratio;
+                    }
+                });
                 break;
         }
     }

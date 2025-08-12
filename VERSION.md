@@ -1,6 +1,14 @@
 # Version History
 
-## v1.16.2 (Current)
+## v1.17.0 (Current)
+**Enhanced Slow Ball Power-Up**
+- **ENHANCED**: Slow ball power-up now reduces speed to 50% (was 70%) for much more noticeable effect
+- **IMPROVED**: Slow ball effect now applies to ALL balls including multiball scenarios
+- **FIXED**: New balls spawned during multiball inherit slow effect if active
+- **BALANCED**: Power-up now provides significant strategic advantage
+- **UX**: Players can clearly feel the difference when collecting slow ball power-up
+
+## v1.16.2
 **Reset Button Functionality Fix & Keyboard Game Reset**
 - **FIXED**: Reset button now properly clears high scores from localStorage instead of resetting game
 - **ADDED**: "R" key functionality to reset game during gameplay
