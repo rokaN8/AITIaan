@@ -300,7 +300,6 @@ cd AITIaan
 - **Life management**: Only lose life when ALL balls are lost
 
 ### **Explosion State Management**
-- **Timing coordination**: 1-second delay for visual effects
 - **Multi-ball support**: Explosions at all ball positions
 - **State callbacks**: Proper sequencing of game state changes
 - **Visual effect integration**: Particles continue during state transitions

@@ -28,7 +28,7 @@ class GameLogic {
         this.explosionState = {
             active: false,
             timer: 0,
-            duration: 1000, // 1 second delay
+            duration: 100, // 0 second delay
             callback: null
         };
         

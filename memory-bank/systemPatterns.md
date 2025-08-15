@@ -16,7 +16,6 @@
 - **Delta time independence**: Consistent behavior across different frame rates
 - **Separated concerns**: Update logic completely separate from rendering
 - **State machine**: Clean transitions between waiting/playing/paused/gameOver states
-- **Explosion state management**: Delayed state changes with visual effect timing
 
 ### **Object-Oriented Game Entities**
 - **Game objects**: Paddle, balls array, bricks, power-ups as structured objects
@@ -80,9 +79,8 @@ Enhanced Explosion Process:
 5. Apply intense screen shake (12 intensity, 600ms duration)
 6. Calculate 180-pixel radius from each ball position
 7. Destroy all bricks within any radius and award points
-8. Set explosion state with 1-second delay for visual effects
-9. Check level completion before applying life cost
-10. Execute callback: advance level or lose life
+8. Check level completion before applying life cost
+9. Execute callback: advance level or lose life
 ```
 
 ### **Developer Mode System Integration**

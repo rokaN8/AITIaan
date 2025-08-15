@@ -28,10 +28,8 @@ All notable changes to Spooky Breakout will be documented in this file.
 - **Game Over Input Conflicts**: Resolved keyboard shortcut conflicts during game over screen name entry
 
 ### Enhanced Visual Effects
-- **Explosion State Management**: Added 1-second delay system allowing particles to animate before game state changes
 - **Multiple Particle Systems**: Each ball now creates its own explosion with 25 particles per explosion
 - **Increased Screen Shake**: Enhanced from intensity 8 to 12 for more dramatic explosion feedback
-- **Delayed State Changes**: Visual effects continue updating during explosion animation before game transitions
 
 ### Game Title Update
 - **Simplified Branding**: Changed from "AITIaan - Spooky Breakout" to just "Spooky Breakout"
